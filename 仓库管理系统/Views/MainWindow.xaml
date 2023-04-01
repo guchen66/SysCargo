@@ -1,0 +1,143 @@
+﻿<mah:MetroWindow x:Class="仓库管理系统.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:仓库管理系统.Views"
+        xmlns:prism="http://prismlibrary.com/"
+        xmlns:global="clr-namespace:仓库管理系统.Global"
+        xmlns:region="clr-namespace:Moudles.Common;assembly=Moudles"
+        prism:ViewModelLocator.AutoWireViewModel="True"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        WindowStartupLocation="CenterScreen"
+        Title="{Binding appData.SystemName}"
+        Height="760" Width="1200" >
+    <Window.Resources>
+        
+        <ControlTemplate TargetType="Button" x:Key="CloseButtonTemplate">
+            <Border Background="Transparent" Name="back" CornerRadius="0 5 0 0">
+                <Path Data="M0 0 12 12M0 12 12 0" Stroke="White" StrokeThickness="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Border>
+            <!---鼠标移动、点击改变颜色-->
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="back" Property="Background" Value="#22FFFFFF"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter TargetName="back" Property="Background" Value="#44FFFFFF"/>
+                </Trigger>
+
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Border Panel.ZIndex="1" Background="#fff">
+            <Border.Effect>
+                <DropShadowEffect Color="#848484" BlurRadius="20" ShadowDepth="10" Opacity="0.1"/>
+            </Border.Effect>
+        </Border>
+        <!--左侧菜单-->
+        <Grid Panel.ZIndex="1" Cursor="Hand">
+            <Grid.Background>
+                <ImageBrush ImageSource="../Assets/Images/雪花.jpeg" Stretch="Fill" Opacity="0.2"/>
+            </Grid.Background>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="仓库管理系统" HorizontalAlignment="Center" 
+                       VerticalAlignment="Center"
+                       FontSize="22" FontWeight="Light"/>
+
+            <Border x:Name="Border_Btn" Margin="30,0,30,0" BorderBrush="DarkGray" BorderThickness="0 0 0 1"/>
+
+
+            <!--左侧使用ListBox-->
+            <StackPanel Grid.Row="1">
+                <ListBox Grid.Row="1" ItemsSource="{Binding appData.Modules}"  Background="Transparent"  BorderThickness="0">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                        <Grid>
+                                            <Border Name="border"/>
+                                            <ContentPresenter/>
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="Background" TargetName="border" Value="Transparent"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+
+                    <ListBox.ItemTemplate>
+
+                        <DataTemplate>
+                            <RadioButton 
+                            VerticalContentAlignment="Center" 
+                            Command="{Binding RelativeSource={RelativeSource FindAncestor,
+                                AncestorType={x:Type local:MainWindow}},
+                            Path=DataContext.SelectCommand,Mode=TwoWay}"
+                            Style="{StaticResource RadioButtonStyle}"
+                            CommandParameter="{Binding Title}">
+                                <RadioButton.IsChecked>
+                                    <Binding Path="IsSelected" 
+                                             RelativeSource="{RelativeSource AncestorType=ListBoxItem}" 
+                                             Mode="TwoWay"/>
+                                </RadioButton.IsChecked>
+                                <StackPanel Orientation="Horizontal" Margin="40 0 0 0">
+                                    <TextBlock  Text="{Binding IconFont}" FontFamily="../Assets/Fonts/#iconfont"  
+                                                   HorizontalAlignment="Right" />
+                                    <TextBlock Margin="15 0 0 0" Text="{Binding Title}" x:Name="txt"
+                                               VerticalAlignment="Center" FontSize="15"/>
+                                </StackPanel>
+
+                            </RadioButton>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+            </StackPanel>
+
+        </Grid>
+
+        <!--右侧-->
+       
+        <Grid Grid.Column="1" Background="AliceBlue">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80"/>
+                <RowDefinition/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+
+            <!--DataContext  RegionContext-->
+            <ContentControl Grid.Row="0" 
+                            prism:RegionManager.RegionName="{x:Static region:RegionNames.HeaderRegion}"/>
+
+            <Border BorderBrush="DarkGray" BorderThickness="0 0 0 1"/>
+
+            <ContentControl Grid.Row="1" prism:RegionManager.RegionName="{x:Static region:RegionNames.ContentRegion}" />
+            <!--<ContentControl Grid.Row="1" prism:RegionManager.RegionName="ContentRegion"/>-->
+
+            
+            <ContentControl Grid.Row="2"
+                            prism:RegionManager.RegionName="{x:Static region:RegionNames.FooterRegion}" 
+                            prism:RegionManager.RegionContext="{Binding DataContext,ElementName=Border_Btn}"/>
+
+            <Border Grid.Row="2" BorderBrush="DarkGray" BorderThickness="0 1 0 0"/>
+        </Grid>
+    </Grid>
+
+</mah:MetroWindow>

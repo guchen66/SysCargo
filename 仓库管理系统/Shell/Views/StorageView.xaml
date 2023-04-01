@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="仓库管理系统.Shell.Views.StorageView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:仓库管理系统.Shell.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="AliceBlue">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5 5 0 0" >
+            <TextBox Width="200" Height="30" Text="{Binding Search}"  />
+            <Button Width="100" Height="30" Content="查询" Margin="10 0 10 0" Command="{Binding QueryCommand}"/>
+            <Button Width="100" Height="30" Content="新增" Command="{Binding AddCommand}"/>
+            <Button Width="100" Height="30" Content="修改" Margin="10 0 10 0"/>
+            <Button Width="100" Height="30" Content="删除"/>
+            <Button Width="100" Height="30" Content="审核" Margin="10 0 10 0"/>
+        </StackPanel>
+
+        <ListView Grid.Row="1" VerticalAlignment="Top" 
+                  HorizontalAlignment="Stretch"
+                  ItemsSource="{Binding CargoTypeList}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="物资Id" DisplayMemberBinding="{Binding Id}" />
+                    <GridViewColumn Header="物资名称" DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Header="备注" DisplayMemberBinding="{Binding Tag}" />
+                    <GridViewColumn Header="创建日期" DisplayMemberBinding="{Binding GreateTime}" />
+                    <GridViewColumn Header="用户Id" DisplayMemberBinding="{Binding UserId}" />
+                    <GridViewColumn Header="用户名称" DisplayMemberBinding="{Binding UserName}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+    </Grid>
+    
+</UserControl>

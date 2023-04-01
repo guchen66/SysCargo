@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Assets\Fonts\iconfont.ttf" />
+    <None Remove="Assets\Images\0.jpg" />
+    <None Remove="Assets\Images\bg.jpeg" />
+    <None Remove="Assets\Images\Header.jpeg" />
+    <None Remove="Assets\Images\home.jpg" />
+    <None Remove="Assets\Images\set.png" />
+    <None Remove="Assets\Images\雪花.jpeg" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MahApps.Metro" Version="2.4.9" />
+    <PackageReference Include="MaterialDesignColors" Version="2.1.2" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.8.0" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+    <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ContentMoudle\ContentModule.csproj" />
+    <ProjectReference Include="..\Moudles\Moudles.csproj" />
+    <ProjectReference Include="..\SqlSugar.DbAccess.Model\SqlSugar.DbAccess.Model.csproj" />
+    <ProjectReference Include="..\SqlSugar.DbAccess\SqlSugar.DbAccess.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Fonts\iconfont.ttf" />
+    <Resource Include="Assets\Images\0.jpg" />
+    <Resource Include="Assets\Images\bg.jpeg" />
+    <Resource Include="Assets\Images\Header.jpeg" />
+    <Resource Include="Assets\Images\home.jpg" />
+    <Resource Include="Assets\Images\set.png" />
+    <Resource Include="Assets\Images\雪花.jpeg" />
+  </ItemGroup>
+</Project>
