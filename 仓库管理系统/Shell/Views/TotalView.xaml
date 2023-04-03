@@ -5,11 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:仓库管理系统.Shell.Views"
              mc:Ignorable="d" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:region="clr-namespace:Moudles.Common;assembly=Moudles"
              xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
              Dialog:DialogParticipation.Register="{Binding}"
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="980"
+             Background="AliceBlue">
     <UserControl.Resources>
 
         <ResourceDictionary Source="../../Assets/Styles/DataGridDataCenterStyle.xaml"/>
@@ -19,12 +23,15 @@
             <RowDefinition Height="40"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5 5 0 0" >
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top"
+                     Margin="5 5 0 0" >
             <TextBox Width="200" Height="30" Text="{Binding Search}"  />
             <Button Width="100" Height="30" Content="查询" Margin="10 0 10 0" Command="{Binding QueryCommand}"/>
             <Button Width="100" Height="30" Content="新增" Command="{Binding AddCommand}"/>
-            <Button Width="100" Height="30" Content="删除" Margin="10 0 10 0" Command="{Binding DeleteCommand}"/>
-            <Button Width="100" Height="30" Content="刷新" Command="{Binding RefreshCommand}"/>
+            <Button Width="100" Height="30" Content="下载" Command="{Binding DownLoadCommand}" 
+                    CommandParameter="{Binding Search}" Margin="10 0 0 0"/>
+            <Button Width="100" Height="30" Content="刷新" Command="{Binding RefreshCommand}" 
+                    Margin="10 0 10 0"/>
         </StackPanel>
 
         <DataGrid Grid.Row="1" IsReadOnly="True" 
@@ -56,7 +63,8 @@
                                     ElementStyle="{StaticResource CenterStyle}"
                                     HeaderStyle="{StaticResource CenteredHeaderStyle}"/>
 
-                <DataGridTextColumn Header="创建日期" Binding="{Binding CreateTime, StringFormat='yyyy/MM/dd'}"
+                <DataGridTextColumn Header="创建日期" Binding="{Binding CreateTime, 
+                    StringFormat='yyyy/MM/dd'}"
                                     ElementStyle="{StaticResource CenterStyle}"
                                     HeaderStyle="{StaticResource CenteredHeaderStyle}"/>
                 
@@ -76,10 +84,12 @@
                             <StackPanel Orientation="Horizontal">
                                 <Button Content="修改" Width="60" Height="25" Background="Green" Foreground="Black" 
                                         CommandParameter="{Binding Id}"
-                                        Command="{Binding DataContext.UpdateCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}"/>
+                                        Command="{Binding DataContext.UpdateCommand,
+                                        RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}"/>
                                 <Button Content="删除" Width="60" Height="25" Background="Red" Foreground="Black"
                                         CommandParameter="{Binding Id}"
-                                         Command="{Binding DataContext.DeleteCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}"/>
+                                        Command="{Binding DataContext.DeleteCommand,
+                                        RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

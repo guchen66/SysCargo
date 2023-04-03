@@ -12,6 +12,9 @@ using System.Text;
 using System.Threading.Tasks;
 using MahApps.Metro.Controls.Dialogs;
 using SqlSugar.DbAccess.Services;
+using System.Data;
+using System.IO;
+using System.Windows;
 
 namespace 仓库管理系统.Shell.ViewModels
 {
@@ -24,7 +27,7 @@ namespace 仓库管理系统.Shell.ViewModels
         private readonly IDialogService _dialogService;
         
         private IDialogCoordinator _dialogCoordinator;
-        List<Cargo> dataList = new List<Cargo>();
+      //  IEnumerable<Cargo> dataList=null;
         public TotalViewModel(IDialogService dialogService, IDialogCoordinator dialogCoordinator)
         {
 
@@ -72,27 +75,20 @@ namespace 仓库管理系统.Shell.ViewModels
 
         void ExecuteQueryCmd()
         {
-            var dataList =db.GetAllCargos().ToList().Where(it=>it.Name==Search);
+            
+            var dataList = db.GetAllCargos().ToList().Where(it => it.Id.ToString().Contains(Search)
+            || it.Name.Contains(Search)||it.UserName.Contains(Search)
+            );
             GridModelList = new ObservableCollection<Cargo>();
             if (dataList != null)
             {
-                db.GetAllCargos().ForEach(x => GridModelList.Add(x));
-               
+                dataList.ToList().ForEach(o => GridModelList.Add(o));
+
             }
         }
 
 
-        private ObservableCollection<Cargo> _addCargo;
-        public ObservableCollection<Cargo> AddCargo
-        {
-            get { return _addCargo ?? (_addCargo = new ObservableCollection<Cargo>()); }
-            set
-            {
-                SetProperty(ref _addCargo, value);
-            }
-        }
-
-
+        
         //新增
         private DelegateCommand _addCommand;
         public DelegateCommand AddCommand =>
@@ -100,34 +96,62 @@ namespace 仓库管理系统.Shell.ViewModels
 
         void ExecuteAddCmd()
         {
-            DialogParameters keyValuePairs = new DialogParameters();
-            _dialogService.ShowDialog("AddUserDialogView", r =>
+            DialogParameters paramters = new DialogParameters();
+            paramters.Add("RefreshValue", new Action(Refresh));
+            _dialogService.ShowDialog("AddCargoDialogView", paramters,r =>
             {
-                if (r.Result == ButtonResult.Yes)
+                /*if (r.Result == ButtonResult.Yes)
                 {
                     Refresh();
-                }
+                }*/
             });
         }
 
+      
         //修改
-        private DelegateCommand _updateCommand;
-        public DelegateCommand UpdateCommand =>
-            _updateCommand ?? (_updateCommand = new DelegateCommand(ExecuteUpdateCmd));
+        private DelegateCommand<int?> _updateCommand;
+        public DelegateCommand<int?> UpdateCommand =>
+            _updateCommand ?? (_updateCommand = new DelegateCommand<int?>(ExecuteUpdateCmd));
 
-        void ExecuteUpdateCmd()
+        private void ExecuteUpdateCmd(int? id)
         {
-            DialogParameters keyValuePairs = new DialogParameters();
-            _dialogService.ShowDialog("AddCargoDialogView", r =>
+            var dataList=db.GetAllCargos().Where(it=>it.Id==id);
+            DialogParameters paramters = new DialogParameters();
+
+            paramters.Add("dataList", dataList);
+
+            paramters.Add("RefreshValue", new Action(Refresh));
+
+           
+            _dialogService.ShowDialog("UpdateCargoDialogView", paramters, r =>
             {
-                if (r.Result == ButtonResult.Yes)
-                {
-                    //刷新
-                    //AddUser = GetLessUserGrad();
-                }
+
             });
         }
 
+        //下载
+        private DelegateCommand<string> _downloadCommand;
+        public DelegateCommand<string> DownLoadCommand =>
+            _downloadCommand ?? (_downloadCommand = new DelegateCommand<string>(ExecuteDownLoadCommand));
+
+        private void ExecuteDownLoadCommand(string search)
+        {
+
+            //var dataList = sdb.GetList();
+            // DataTable dt = FileData.ListToDataTable(dataList);
+
+            var data = GridModelList;
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(data);
+            File.WriteAllText(@"E:\VS Workspace\Apply\仓库管理系统\ContentMoudle\DownLoad\Total.json", json);
+
+            string path = @"E:\VS Workspace\Apply\仓库管理系统\ContentMoudle\DownLoad\Total.json";
+            if (File.Exists(path))
+            {
+                MessageBox.Show("文件下载成功！");
+            }
+        }
+
+        //删除
         private DelegateCommand<int?> _deleteCommand { get; set; }
         public DelegateCommand<int?> DeleteCommand
         {

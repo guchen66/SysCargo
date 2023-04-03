@@ -1,4 +1,5 @@
-﻿using ContentModule.Models;
+﻿using ContentModule.Helpers;
+using ContentModule.Models;
 using ContentModule.Views;
 using HandyControl.Controls;
 using Prism.Commands;
@@ -58,7 +59,7 @@ namespace ContentModule.ViewModels
         }
 
 
-        private string _name="123";
+        private string _name;
 
         public string InputName
         {
@@ -66,7 +67,7 @@ namespace ContentModule.ViewModels
             set { SetProperty<string>(ref _name, value); }
         }
 
-        private string _password="122";
+        private string _password;
 
         public string InputPassword
         {
@@ -104,10 +105,11 @@ namespace ContentModule.ViewModels
 
         private void ExecuteSaveCmd(string parameter)
         {
+            MD5Helper mD5Helper = new MD5Helper();
             User user = new User()
             {
                 Name = InputName,
-                Password = InputPassword,
+                Password = mD5Helper.GetMD5Provider2(InputPassword,InputName),
                 CreateTime = DateValue,
                 Role = Role
             };

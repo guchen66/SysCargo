@@ -8,4 +8,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
     </Style>
+    <Style x:Key="ListViewItemStyle" TargetType="{x:Type ListViewItem}">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+    </Style>
 </ResourceDictionary>

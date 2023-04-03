@@ -15,6 +15,12 @@ using SqlSugar.DbAccess.Services;
 using ContentModule.Views;
 using Prism.Events;
 using 仓库管理系统.Global;
+using System.Windows.Controls.Primitives;
+using System.Windows.Controls;
+using System.Windows;
+using System.Data;
+using OfficeOpenXml;
+using System.IO;
 
 namespace 仓库管理系统.Shell.ViewModels
 {
@@ -96,16 +102,6 @@ namespace 仓库管理系统.Shell.ViewModels
         }
 
 
-        private ObservableCollection<User> _addUser;
-        public ObservableCollection<User> AddUser
-        {
-            get { return _addUser ?? (_addUser = new ObservableCollection<User>()); }
-            set
-            {
-                SetProperty(ref _addUser, value);
-            }
-        }
-
 
         //新增
         private DelegateCommand _addCommand;
@@ -143,8 +139,6 @@ namespace 仓库管理系统.Shell.ViewModels
         {
             var dataList=sdb.GetList().Where(it => it.Id==id);
             DialogParameters paramters = new DialogParameters();
-            
-           
             paramters.Add("dataList", dataList);
            
             paramters.Add("RefreshValue", new Action(Refresh));
@@ -207,33 +201,24 @@ namespace 仓库管理系统.Shell.ViewModels
             set => _downLoadCommand = value;
         }
 
-        private async void ExecuteDownLoadCommand(string search)
+        private void ExecuteDownLoadCommand(string search)
         {
-            var model = sdb.GetList().Where(it => it.Name==Search);
+            
+            //var dataList = sdb.GetList();
+           // DataTable dt = FileData.ListToDataTable(dataList);
 
-            if (model != null)
+            var data = GridModelList;
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(data);
+            File.WriteAllText(@"E:\VS Workspace\Apply\仓库管理系统\ContentMoudle\DownLoad\User.json", json);
+
+            string path = @"E:\VS Workspace\Apply\仓库管理系统\ContentMoudle\DownLoad\User.json";
+            if (File.Exists(path))
             {
-                var settings = new MetroDialogSettings
-                {
-                    ColorScheme = MetroDialogColorScheme.Accented,
-                    AnimateShow = false,
-                    AnimateHide = false,
-                    AffirmativeButtonText = "确认"
-                };
-                var result = await this._dialogCoordinator.ShowMessageAsync(this, "是否下载表单?", "下载", MessageDialogStyle.AffirmativeAndNegative, settings);
-                if (result == MessageDialogResult.Affirmative)
-                {
-                    //刷新
-                   // sdb.Delete(model);
-                    Refresh();
-                }
-                if (result == MessageDialogResult.Negative)
-                {
-                    Refresh();
-                }
+                MessageBox.Show("文件下载成功！");
             }
-
         }
+
+
 
         //刷新
         private DelegateCommand _refreshCommand;

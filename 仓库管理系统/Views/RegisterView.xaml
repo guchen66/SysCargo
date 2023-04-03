@@ -8,12 +8,10 @@
         Title="RegisterView" Height="450" Width="800"
         Icon="../Assets/Images/雪花.jpeg"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls">
+
     <Grid>
-        <StackPanel Orientation="Horizontal" Margin="0 30 0 0" TextBlock.TextAlignment="Right">
-            <TextBlock Name="lblDate" Text="1111" VerticalAlignment="Center" HorizontalAlignment="Center" 
-                       Foreground="Aqua" FontSize="20" Height="30" Width="150"/>
-            <TextBlock  Name="lblTime" Height="30" Width="150" Text="222222" 
-                       FontSize="20" Foreground="Aqua" HorizontalAlignment="Right"/>
-        </StackPanel>
+        <mah:HamburgerMenu>
+            
+        </mah:HamburgerMenu>
     </Grid>
 </mah:MetroWindow>

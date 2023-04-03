@@ -1,4 +1,6 @@
-﻿using Prism.Commands;
+﻿using ContentModule.Helpers;
+using HandyControl.Controls;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using SqlSugar.DbAccess.Model.Models;
@@ -8,13 +10,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using System.Xml.Linq;
 
 namespace ContentModule.ViewModels
 {
-    internal class TestViewModel : BindableBase, IDialogAware
+    public class UpdateCargoDialogViewModel : BindableBase, IDialogAware
     {
+
         CargoService db = new CargoService(new DatabaseService());
-        public TestViewModel()
+        public UpdateCargoDialogViewModel()
         {
 
 
@@ -33,12 +38,39 @@ namespace ContentModule.ViewModels
 
         public void OnDialogClosed()
         {
-           
+            action();
         }
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
-           
+
+
+            if (parameters.ContainsKey("dataList"))
+            {
+                cargos = parameters.GetValue<IEnumerable<Cargo>>("dataList");
+                foreach (var cargo in cargos)
+                {
+                    CurrentId = cargo.Id;
+                    Name = cargo.Name;
+                    InputTypeName = cargo.MaterialType;
+                    InputAmount=cargo.Amount;
+                    InputPrice=cargo.Price;
+                    InputTag = cargo.Tag;
+                    DateValue = cargo.CreateTime;
+                    InputUserId = cargo.UserId;
+                    InputUserName = cargo.UserName;
+
+
+                }
+
+            }
+            if (parameters.ContainsKey("RefreshValue"))
+            {
+                action = parameters.GetValue<Action>("RefreshValue");
+
+            }
+
+            //action();
         }
 
         private int _currentId;
@@ -49,14 +81,14 @@ namespace ContentModule.ViewModels
             set { SetProperty<int>(ref _currentId, value); }
         }
 
-        private string _name;
+        private string _name ;
 
         public string Name
         {
             get { return _name; }
             set { SetProperty<string>(ref _name, value); }
         }
-        private string _type;
+        private string _type ;
 
         public string InputTypeName
         {
@@ -72,12 +104,12 @@ namespace ContentModule.ViewModels
             set { SetProperty<int?>(ref _amount, value); }
         }
 
-        private decimal? _price;
+        private decimal _price;
 
-        public decimal? InputPrice
+        public decimal InputPrice
         {
             get { return _price; }
-            set { SetProperty<decimal?>(ref _price, value); }
+            set { SetProperty<decimal>(ref _price, value); }
         }
         private string _tag;
 
@@ -116,39 +148,38 @@ namespace ContentModule.ViewModels
 
         private void ExecuteSaveCmd(int? id)
         {
-
-          /*  var cargoList = db.GetAllCargos().Where(x => x.Id == id);
+           
+            var cargoList = db.GetAllCargos().Where(x => x.Id == id);
             var model = cargoList.FirstOrDefault(o => o.Id == id);
-
+           
             if (model != null)
             {
                 model.Name = Name;
                 model.MaterialType = InputTypeName;
-                 model.Amount = (int)InputAmount;
-                 model.Price =(decimal)InputPrice;
+                model.Amount = InputAmount;
+                model.Price = InputPrice;
                 model.CreateTime = DateValue;
-                 model.UserId = (int)InputUserId;
+                model.UserId = InputUserId;
                 model.UserName = InputUserName;
-
+             
             }
             db.UpdateCargo(model);
-*/
-           // RaiseRequestClose(new DialogResult(ButtonResult.OK));
 
-           /* if (Convert.ToBoolean(parameter) == db.AddUser(user))
+            RaiseRequestClose(new DialogResult(ButtonResult.OK));
+           
+            /*if (Convert.ToBoolean(parameter) == db.AddUser(user))
             {
                 RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
             }
             else
             {
                 HandyControl.Controls.Dialog.Show(new ErrorDialog());
-            }
-           */
+            }*/
         }
 
+        
 
-
-       /* private DelegateCommand<string> _closeCmd;
+        private DelegateCommand<string> _closeCmd;
         public DelegateCommand<string> CloseCmd =>
             _closeCmd ?? (_closeCmd = new DelegateCommand<string>(ExecuteCloseCmd));
 
@@ -160,6 +191,7 @@ namespace ContentModule.ViewModels
         public virtual void RaiseRequestClose(IDialogResult dialogResult)
         {
             RequestClose?.Invoke(dialogResult);
-        }*/
+        }
+
     }
 }

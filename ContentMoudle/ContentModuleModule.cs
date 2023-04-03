@@ -24,7 +24,7 @@ namespace ContentModule
             containerRegistry.RegisterDialog<AddUserDialogView, AddUserDialogViewModel>();
             containerRegistry.RegisterDialog<UpdateUserDialogView, UpdateUserDialogViewModel>();
             containerRegistry.RegisterDialog<AddCargoDialogView, AddCargoDialogViewModel>();
-
+            containerRegistry.RegisterDialog<UpdateCargoDialogView, UpdateCargoDialogViewModel>();
             containerRegistry.RegisterDialog<TestView, TestViewModel>();
         }
     }

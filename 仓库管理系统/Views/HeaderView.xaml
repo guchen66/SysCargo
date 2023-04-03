@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
-             d:DesignHeight="450" d:DesignWidth="860">
+             d:DesignHeight="450" d:DesignWidth="980">
     <Grid Background="AliceBlue">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -23,7 +23,7 @@
                     HorizontalAlignment="Right" 
                     Margin="0 40 0 0">
             <TextBlock Name="lblDate" 
-                       Foreground="Aqua" FontSize="20" Height="30" Width="150" />
+                       Foreground="Aqua" FontSize="20" Height="30" Width="220" />
             <TextBlock  Name="lblTime" Height="30" Width="100" 
                        FontSize="20" Foreground="Aqua" Margin="0 0 20 0"/>
         </StackPanel>

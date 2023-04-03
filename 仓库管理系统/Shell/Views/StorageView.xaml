@@ -3,38 +3,73 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:仓库管理系统.Shell.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             xmlns:local="clr-namespace:仓库管理系统.Shell.Views"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:region="clr-namespace:Moudles.Common;assembly=Moudles"
+             xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+             Dialog:DialogParticipation.Register="{Binding}"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             d:DesignHeight="450" d:DesignWidth="980"
+             Background="AliceBlue">
+    <UserControl.Resources>
+        <Style x:Key="ListViewItemStyle2" TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+    </UserControl.Resources>
     <Grid Background="AliceBlue">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5 5 0 0" >
-            <TextBox Width="200" Height="30" Text="{Binding Search}"  />
-            <Button Width="100" Height="30" Content="查询" Margin="10 0 10 0" Command="{Binding QueryCommand}"/>
-            <Button Width="100" Height="30" Content="新增" Command="{Binding AddCommand}"/>
-            <Button Width="100" Height="30" Content="修改" Margin="10 0 10 0"/>
-            <Button Width="100" Height="30" Content="删除"/>
-            <Button Width="100" Height="30" Content="审核" Margin="10 0 10 0"/>
-        </StackPanel>
 
-        <ListView Grid.Row="1" VerticalAlignment="Top" 
-                  HorizontalAlignment="Stretch"
-                  ItemsSource="{Binding CargoTypeList}">
+
+        <ListView Grid.Row="1" ItemsSource="{Binding Source={StaticResource ResourceKey=ListViewItemStyle2}}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="物资Id" DisplayMemberBinding="{Binding Id}" />
-                    <GridViewColumn Header="物资名称" DisplayMemberBinding="{Binding Name}" />
-                    <GridViewColumn Header="备注" DisplayMemberBinding="{Binding Tag}" />
-                    <GridViewColumn Header="创建日期" DisplayMemberBinding="{Binding GreateTime}" />
-                    <GridViewColumn Header="用户Id" DisplayMemberBinding="{Binding UserId}" />
-                    <GridViewColumn Header="用户名称" DisplayMemberBinding="{Binding UserName}" />
+
+                    <GridView.Columns >
+                        <GridViewColumn Width="150" Header="Id"
+                                        DisplayMemberBinding="{Binding Path=Id}">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Id}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="150" Header="姓名"
+                                        DisplayMemberBinding="{Binding Path=Name}"/>
+                        <GridViewColumn Width="150" Header="密码"
+                                        DisplayMemberBinding="{Binding Path=Password}"/>
+                        <GridViewColumn Width="150" Header="职位"
+                                        DisplayMemberBinding="{Binding Path=Role}"/>
+                        <GridViewColumn Width="150" Header="创建日期" 
+                                        DisplayMemberBinding="{Binding CreateTime, StringFormat='yyyy/MM/dd'}"/>
+
+                        <!--DisplayMemberBinding不是唯一选择可以使用CellTemplate-->
+
+                        <GridViewColumn Width="300" x:Name="column" Header="操作">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <Button Content="修改" Width="60" Height="25" 
+                                        Background="LightGreen" Foreground="Black" 
+                                        CommandParameter="{Binding Id}"
+                                        Command="{Binding DataContext.UpdateCommand,
+                                        RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}"/>
+                                        <Button Content="删除" Width="50" Height="25"
+                                        Background="Red" Foreground="Black"
+                                        CommandParameter="{Binding Id}"
+                                        Command="{Binding DataContext.DeleteCommand,
+                                    RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView.Columns>
+
                 </GridView>
             </ListView.View>
         </ListView>
 
     </Grid>
-    
+
 </UserControl>
