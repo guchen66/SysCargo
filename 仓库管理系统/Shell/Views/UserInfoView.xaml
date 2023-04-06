@@ -25,8 +25,9 @@
         
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top"
                      Margin="5 5 0 0" >
-            <TextBox Width="200" Height="30" Text="{Binding Search}"  />
-            <Button Width="100" Height="30" Content="查询" Margin="10 0 10 0" Command="{Binding QueryCommand}"/>
+            <TextBox Width="200" Height="30" Text="{Binding Search,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  />
+            <Button Width="100" Height="30" Content="查询" Margin="10 0 10 0"
+                    Command="{Binding QueryCommand}"/>
             <Button Width="100" Height="30" Content="新增" Command="{Binding AddCommand}"/>
             <Button Width="100" Height="30" Content="下载" Command="{Binding DownLoadCommand}" 
                     CommandParameter="{Binding Search}" Margin="10 0 0 0" />

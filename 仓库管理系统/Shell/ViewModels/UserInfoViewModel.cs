@@ -19,22 +19,25 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Controls;
 using System.Windows;
 using System.Data;
-using OfficeOpenXml;
 using System.IO;
+using HandyControl.Controls;
+using System.Windows.Threading;
+using MessageBox = System.Windows.MessageBox;
 
 namespace 仓库管理系统.Shell.ViewModels
 {
     public class UserInfoViewModel : BindableBase
     {
+       
         public SimpleClient<User> sdb = new SimpleClient<User>(DatabaseService.CreateClient());
-
-
         public DataBaseProvider<User> db = new DataBaseProvider<User>();
         private readonly IDialogService _dialogService;
         private readonly IDialogCoordinator _dialogCoordinator;
         private readonly IEventAggregator _eventAggregator;  //事件管理器发布订阅消息
         List<User> dataList = new List<User>();
 
+        private DispatcherTimer _timer;
+        private bool _isDelaying;
         public UserInfoViewModel(IDialogService dialogService,
             IDialogCoordinator dialogCoordinator, IEventAggregator eventAggregator)
         {
@@ -63,7 +66,7 @@ namespace 仓库管理系统.Shell.ViewModels
 
 
         //查询全部
-        public ObservableCollection<User> SelectAll()
+      /*  public ObservableCollection<User> SelectAll()
         {
             List<User> users = new List<User>();
             if (users != null)
@@ -72,7 +75,7 @@ namespace 仓库管理系统.Shell.ViewModels
                 users.ForEach(x => GridModelList.Add(x));
             }
             return GridModelList;
-        }
+        }*/
 
         //TextBox初始为Empty
         private string search = string.Empty;
@@ -80,7 +83,32 @@ namespace 仓库管理系统.Shell.ViewModels
         public string Search
         {
             get { return search; }
-            set { search = value; RaisePropertyChanged(); }
+            set 
+            { 
+                search = value; RaisePropertyChanged();
+                if (_timer == null)
+                {
+                    _timer = new DispatcherTimer();
+                    _timer.Interval = TimeSpan.FromSeconds(1);
+                    _timer.Tick += _timer_Tick;
+                }
+                if (!_isDelaying)
+                {
+                    _isDelaying = true;
+                    _timer.IsEnabled = false;
+                    _timer.Start();
+                }
+            }
+        }
+
+        private void _timer_Tick(object sender, EventArgs e)
+        {
+            //取消上一次操作
+            _timer.Stop();
+            _isDelaying=false;
+
+            //执行搜索操作
+            ExecuteQueryCmd();
         }
 
 
@@ -89,7 +117,7 @@ namespace 仓库管理系统.Shell.ViewModels
         public DelegateCommand QueryCommand =>
             _queryCommand ?? (_queryCommand = new DelegateCommand(ExecuteQueryCmd));
 
-        void ExecuteQueryCmd()
+        private void ExecuteQueryCmd()
         {
             var dataList = sdb.GetList().Where(it=>it.Id.ToString().Contains(Search)
             ||it.Name.Contains(Search)
