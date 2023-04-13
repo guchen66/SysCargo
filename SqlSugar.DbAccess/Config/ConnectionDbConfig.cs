@@ -8,9 +8,9 @@ namespace SqlSugar.DbAccess.Config
 {
     public class ConnectionDbConfig
     {
-        public static string ConnectionString = "Data Source=DESKTOP-TO33PA4;" +
+        public static string ConnectionString = "Data Source=********" +
                                     "Initial Catalog=CargoDB;" +
                                     "User ID=sa;" +
-                                    "Password=211314";
+                                    "Password=****";
     }
 }

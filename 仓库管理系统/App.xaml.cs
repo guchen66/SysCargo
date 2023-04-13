@@ -1,7 +1,11 @@
 ﻿using ContentModule;
 using ControlzEx.Theming;
+using Dm;
 using MahApps.Metro.Controls.Dialogs;
 using Moudles.Common;
+using NLog;
+using NLog.Config;
+using NLog.Targets;
 using Prism.DryIoc;
 using Prism.Ioc;
 using Prism.Modularity;
@@ -11,6 +15,7 @@ using System.Windows;
 using 仓库管理系统.Shell.Views;
 using 仓库管理系统.ViewModels;
 using 仓库管理系统.Views;
+using LogLevel = NLog.LogLevel;
 
 namespace 仓库管理系统
 {
@@ -22,6 +27,28 @@ namespace 仓库管理系统
     /// </summary>
     public partial class App:PrismApplication
     {
+
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            //SugarGlobal.Initialized(); //初始化数据库自动生成表
+            // ThemeManager.Current.ChangeTheme(this, "Dark.Green");
+            // 设置日志级别
+            LogManager.Configuration = new LoggingConfiguration();
+            var target = new FileTarget { FileName = "log.txt" };
+            LogManager.Configuration.AddTarget("file", target);
+            LogManager.Configuration.AddRule(LogLevel.Debug, LogLevel.Fatal, "file");
+
+            logger.Info("Application has started.");
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            base.OnExit(e);
+            logger.Info("Application has exited.");
+        }
         protected override Window CreateShell()
         {
             return Container.Resolve<MainWindow>();
@@ -41,12 +68,7 @@ namespace 仓库管理系统
 
         }
 
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            base.OnStartup(e);
-            //SugarGlobal.Initialized(); //初始化数据库自动生成表
-            // ThemeManager.Current.ChangeTheme(this, "Dark.Green");
-        }
+       
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
 

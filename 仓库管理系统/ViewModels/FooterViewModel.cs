@@ -18,19 +18,20 @@ namespace 仓库管理系统.ViewModels
         IRegionManager _regionManager;//区域管理
         IDialogService _dialogService;
         IEventAggregator _eventAggregator;
-
+        private IRegionNavigationJournal _journal;
         public FooterViewModel()
         {
 
         }
         public FooterViewModel(IDialogService dialogService,
                                         IRegionManager regionManager, IRegionNavigationJournal navigationJournal,
-                                        IEventAggregator eventAggregator)
+                                        IEventAggregator eventAggregator, IRegionNavigationJournal journal)
         {
             _dialogService = dialogService;
             _regionManager = regionManager;
             _navigationJournal = navigationJournal;
             _eventAggregator = eventAggregator;
+            _journal = journal;
             // regionManager.RegisterViewWithRegion("ContentRegion", typeof(HomeView));
 
 
@@ -45,6 +46,7 @@ namespace 仓库管理系统.ViewModels
         {
             //返回有这种，其他的应该也有类似的
             _regionManager.Regions["ContentRegion"].NavigationService.Journal.GoBack();
+            //_journal.GoBack();  失败
         }
 
         private DelegateCommand _forWardCommand;
@@ -54,7 +56,7 @@ namespace 仓库管理系统.ViewModels
         public void DoForWard()
         {
             _regionManager.Regions["ContentRegion"].NavigationService.Journal.GoForward();
-
+           // _journal.GoForward();
         }
 
 

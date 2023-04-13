@@ -22,6 +22,7 @@
     <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Cargo.Log\Cargo.Log.csproj" />
     <ProjectReference Include="..\ContentMoudle\ContentModule.csproj" />
     <ProjectReference Include="..\Moudles\Moudles.csproj" />
     <ProjectReference Include="..\SqlSugar.DbAccess.Model\SqlSugar.DbAccess.Model.csproj" />

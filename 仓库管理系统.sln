@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moudles", "Moudles\Moudles.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContentModule", "ContentMoudle\ContentModule.csproj", "{DC692391-1707-43AD-96CA-7C3256F3E19B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cargo.Log", "Cargo.Log\Cargo.Log.csproj", "{7158F9AA-21AD-4335-8E24-6373A71ECFF4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{DC692391-1707-43AD-96CA-7C3256F3E19B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC692391-1707-43AD-96CA-7C3256F3E19B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC692391-1707-43AD-96CA-7C3256F3E19B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7158F9AA-21AD-4335-8E24-6373A71ECFF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7158F9AA-21AD-4335-8E24-6373A71ECFF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7158F9AA-21AD-4335-8E24-6373A71ECFF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7158F9AA-21AD-4335-8E24-6373A71ECFF4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
