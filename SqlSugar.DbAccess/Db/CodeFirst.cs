@@ -18,11 +18,11 @@ namespace SqlSugar.DbAccess.Db
             SqlSugarClient db = new SqlSugarClient(new ConnectionConfig()
             {
                 DbType = DbType.SqlServer,
-                ConnectionString = "Data Source=.;" +
-                                    "Initial Catalog=CargoDB;" +
+                ConnectionString = "Data Source=xxx;" +
+                                    "Initial Catalog=xxx;" +
                                     //"Integrated Security=True"+集成验证
-                                    "User ID=sa;" +
-                                    "Password=211314",
+                                    "User ID=xxx;" +
+                                    "Password=xxx",
                 InitKeyType = InitKeyType.Attribute,//释放事务
                 IsAutoCloseConnection = true//读取主键自增
             });
