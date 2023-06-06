@@ -18,7 +18,7 @@ namespace ContentModule.ViewModels
     public class UpdateCargoDialogViewModel : BindableBase, IDialogAware
     {
 
-        CargoService db = new CargoService(new DatabaseService());
+        CargoService db = new CargoService();
         public UpdateCargoDialogViewModel()
         {
 

@@ -20,7 +20,7 @@ namespace ContentModule.ViewModels
     {
 
         public Action action { get; set; }
-        CargoService db = new CargoService(new DatabaseService());
+        CargoService db = new CargoService();
         public AddCargoDialogViewModel()
         {
 

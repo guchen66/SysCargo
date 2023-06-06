@@ -13,7 +13,7 @@ namespace ContentModule.ViewModels
 {
     internal class TestViewModel : BindableBase, IDialogAware
     {
-        CargoService db = new CargoService(new DatabaseService());
+        CargoService db = new CargoService();
         public TestViewModel()
         {
 

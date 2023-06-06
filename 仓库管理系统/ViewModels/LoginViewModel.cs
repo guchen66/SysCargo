@@ -21,8 +21,8 @@ namespace 仓库管理系统.ViewModels
     public class LoginViewModel:BindableBase
     {
         public AppData appData { get; set; }=AppData.Instance;
-        public SimpleClient<User> sdb = new SimpleClient<User>(DatabaseService.CreateClient());
-        UserService db = new UserService(new DatabaseService());
+        public SimpleClient<User> sdb = new SimpleClient<User>();
+        UserService db = new UserService();
 
         public LoginViewModel()
         {

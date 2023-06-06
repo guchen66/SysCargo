@@ -24,7 +24,7 @@ namespace 仓库管理系统.ViewModels
     public class MainWindowViewModel : BindableBase
     {
         public AppData appData { get; set; } = AppData.Instance;
-        public SimpleClient<User> sdb = new SimpleClient<User>(DatabaseService.CreateClient());
+        public SimpleClient<User> sdb = new SimpleClient<User>();
 
        
         //public BaseOperate<User> BaseOperate { get; set; }
@@ -42,7 +42,6 @@ namespace 仓库管理系统.ViewModels
             _navigationJournal= navigationJournal;
 
             regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, typeof(HomeView));
-            regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, typeof(SetView));
             regionManager.RegisterViewWithRegion(RegionNames.HeaderRegion, typeof(HeaderView));
             regionManager.RegisterViewWithRegion(RegionNames.FooterRegion, typeof(FooterView));
             /*_eventAggregator.GetEvent<MyEvent2>().Subscribe(DoGoBack);

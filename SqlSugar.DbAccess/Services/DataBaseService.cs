@@ -9,18 +9,24 @@ namespace SqlSugar.DbAccess.Services
 {
     public class DatabaseService
     {
-        public static SqlSugarClient CreateClient()
+        private static readonly Lazy<SqlSugarClient> _db = new Lazy<SqlSugarClient>(() =>
         {
-            using (var db = new SqlSugarClient(new ConnectionConfig
+            var db = new SqlSugarClient(new ConnectionConfig
             {
                 ConnectionString = ConnectionDbConfig.ConnectionString,
                 DbType = DbType.SqlServer,
                 IsAutoCloseConnection = true,
                 InitKeyType = InitKeyType.Attribute
-            }))
-            {
-                return db;
-            }
+            });
+
+            // 配置 SqlSugarClient 对象
+
+            return db;
+        });
+
+        public static SqlSugarClient GetClient()
+        {
+            return _db.Value;
         }
     }
 }

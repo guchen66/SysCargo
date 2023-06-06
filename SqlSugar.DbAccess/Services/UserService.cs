@@ -10,41 +10,57 @@ namespace SqlSugar.DbAccess.Services
 {
     public class UserService
     {
-        private readonly SqlSugarClient _db;
-
-        public UserService(DatabaseService databaseService)
+        private readonly SqlSugarClient db;
+        public UserService()
         {
-            _db = DatabaseService.CreateClient();
+            db = DatabaseService.GetClient();
         }
         public List<User> GetAllUsers()
         {
-            return _db.Queryable<User>().ToList();
+            using (db)
+            {
+                return db.Queryable<User>().ToList();
+            }
+           
         }
 
         public User GetUserById(int id)
         {
-            return _db.Queryable<User>().Where(u => u.Id == id).First();
-           
+            using (db)
+            {
+                return db.Queryable<User>().Where(u => u.Id == id).First();
+            }
         }
 
         public bool AddUser(User User)
         {
-           
-            if (_db.Insertable(User).ExecuteCommand()>0)
+            using (db)
             {
-                return true;
+                if (db.Insertable(User).ExecuteCommand() > 0)
+                {
+                    return true;
+                }
+                return false;
             }
-            return false;
+           
         }
 
         public void UpdateUser(User User)
         {
-            _db.Updateable(User).ExecuteCommand();
+            using (db)
+            {
+                db.Updateable(User).ExecuteCommand();
+            }
+            
         }
 
         public void DeleteUser(int id)
         {
-            _db.Deleteable<User>().Where(u => u.Id == id).ExecuteCommand();
+            using (db)
+            {
+                db.Deleteable<User>().Where(u => u.Id == id).ExecuteCommand();
+            }
+            
         }
     }
 }

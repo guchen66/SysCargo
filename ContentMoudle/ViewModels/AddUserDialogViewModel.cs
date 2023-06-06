@@ -26,7 +26,7 @@ namespace ContentModule.ViewModels
     {
         //public DataBaseProvider<User> db = new DataBaseProvider<User>();
        
-        UserService db = new UserService(new DatabaseService());
+        UserService db = new UserService();
         public AddUserDialogViewModel()
         {
            

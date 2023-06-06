@@ -9,26 +9,23 @@ namespace SqlSugar.DbAccess.Services
 {
     public class CargoTypeService
     {
-        private readonly SqlSugarClient _db;
-
-        public CargoTypeService(DatabaseService databaseService)
+        private readonly SqlSugarClient db;
+        public CargoTypeService()
         {
-            _db = DatabaseService.CreateClient();
+            db = DatabaseService.GetClient();
         }
-
-        public List<Cargo> GetAllCargos()
-        {
-            return _db.Queryable<Cargo>().ToList();
-        }
-
         public Cargo GetCargoById(int id)
         {
-            return _db.Queryable<Cargo>().Where(u => u.Id == id).First();
+            using (db)
+            {
+                return db.Queryable<Cargo>().Where(u => u.Id == id).First();
+            }
+           
         }
 
         public void AddCargo(Cargo cargo)
         {
-            using (var db = DatabaseService.CreateClient())
+            using (db)
             {
                 db.Insertable(cargo).ExecuteCommand();
             }
@@ -36,12 +33,20 @@ namespace SqlSugar.DbAccess.Services
 
         public void UpdateCargo(Cargo Cargo)
         {
-            _db.Updateable(Cargo).ExecuteCommand();
+            using (db)
+            {
+                db.Updateable(Cargo).ExecuteCommand();
+            }
+            
         }
 
         public void DeleteCargo(int id)
         {
-            _db.Deleteable<Cargo>().Where(u => u.Id == id).ExecuteCommand();
+            using (db)
+            {
+                db.Deleteable<Cargo>().Where(u => u.Id == id).ExecuteCommand();
+            }
+            
         }
     }
 }

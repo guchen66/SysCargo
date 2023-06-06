@@ -9,35 +9,54 @@ namespace SqlSugar.DbAccess.Services
 {
     public class FlowMeterService
     {
-        private readonly SqlSugarClient _db;
-
-        public FlowMeterService(DatabaseService databaseService)
+        private readonly SqlSugarClient db;
+        public FlowMeterService()
         {
-            _db = DatabaseService.CreateClient();
+            db = DatabaseService.GetClient();
         }
         public List<FlowMeter> GetAllFlowMeters()
         {
-            return _db.Queryable<FlowMeter>().ToList();
+            using (db)
+            {
+                return db.Queryable<FlowMeter>().ToList();
+            }
+           
         }
 
         public FlowMeter GetFlowMeterById(int id)
         {
-            return _db.Queryable<FlowMeter>().Where(u => u.CargoId == id).First();
+            using (db)
+            {
+                return db.Queryable<FlowMeter>().Where(u => u.CargoId == id).First();
+            }
+            
         }
 
         public void AddFlowMeter(FlowMeter FlowMeter)
         {
-            _db.Insertable(FlowMeter).ExecuteCommand();
+            using (db)
+            {
+                db.Insertable(FlowMeter).ExecuteCommand();
+            }
+            
         }
 
         public void UpdateFlowMeter(FlowMeter FlowMeter)
         {
-            _db.Updateable(FlowMeter).ExecuteCommand();
+            using (db)
+            {
+                db.Updateable(FlowMeter).ExecuteCommand();
+            }
+           
         }
 
         public void DeleteFlowMeter(int id)
         {
-            _db.Deleteable<FlowMeter>().Where(u => u.CargoId == id).ExecuteCommand();
+            using (db)
+            {
+                db.Deleteable<FlowMeter>().Where(u => u.CargoId == id).ExecuteCommand();
+            }
+            
         }
     }
 }

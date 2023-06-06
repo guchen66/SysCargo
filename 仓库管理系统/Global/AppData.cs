@@ -39,7 +39,7 @@ namespace 仓库管理系统.Global
         {
             Init();
         }
-        public SimpleClient<User> sdb = new (DatabaseService.CreateClient());
+        public SimpleClient<User> sdb = new ();
 
         public List<User> GetTreeListProducts()
         {

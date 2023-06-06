@@ -3,6 +3,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Assets\Fonts\iconfont.ttf" />
@@ -12,6 +13,10 @@
     <None Remove="Assets\Images\home.jpg" />
     <None Remove="Assets\Images\set.png" />
     <None Remove="Assets\Images\雪花.jpeg" />
+    <None Remove="favicon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="favicon.ico" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MahApps.Metro" Version="2.4.9" />
@@ -22,8 +27,8 @@
     <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Cargo.Log\Cargo.Log.csproj" />
     <ProjectReference Include="..\ContentMoudle\ContentModule.csproj" />
+    <ProjectReference Include="..\LogModules\LogModules.csproj" />
     <ProjectReference Include="..\Moudles\Moudles.csproj" />
     <ProjectReference Include="..\SqlSugar.DbAccess.Model\SqlSugar.DbAccess.Model.csproj" />
     <ProjectReference Include="..\SqlSugar.DbAccess\SqlSugar.DbAccess.csproj" />
@@ -36,5 +41,6 @@
     <Resource Include="Assets\Images\home.jpg" />
     <Resource Include="Assets\Images\set.png" />
     <Resource Include="Assets\Images\雪花.jpeg" />
+    <Resource Include="favicon.ico" />
   </ItemGroup>
 </Project>

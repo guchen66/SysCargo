@@ -10,6 +10,11 @@
         WindowStartupLocation="CenterScreen"
         Title="{Binding appData.SystemName}"
         Height="760" Width="1200" >
+    <!-- Window的Icon -->
+    <Window.Icon>
+        <BitmapImage x:Name="loginIcon" UriSource="/favicon.ico"/>
+    </Window.Icon>
+
     <Window.Resources>
         
         <ControlTemplate TargetType="Button" x:Key="CloseButtonTemplate">

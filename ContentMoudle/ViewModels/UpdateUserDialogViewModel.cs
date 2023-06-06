@@ -20,7 +20,7 @@ namespace ContentModule.ViewModels
     public class UpdateUserDialogViewModel : BindableBase, IDialogAware
     {
         
-        UserService db = new UserService(new DatabaseService());
+        UserService db = new UserService();
         public UpdateUserDialogViewModel()
         {
 

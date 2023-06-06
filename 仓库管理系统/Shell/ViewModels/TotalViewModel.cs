@@ -22,7 +22,7 @@ namespace 仓库管理系统.Shell.ViewModels
     public class TotalViewModel : BindableBase
     {
 
-        CargoService db = new CargoService(new DatabaseService());
+        CargoService db = new CargoService();
        
         private readonly IDialogService _dialogService;
         

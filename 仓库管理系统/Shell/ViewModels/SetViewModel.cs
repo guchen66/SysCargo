@@ -29,11 +29,6 @@ namespace 仓库管理系统.Shell.ViewModels
                     win.Title = "设置1";
                     win.ShowDialog();
                     break;
-
-                
-
-               
-
             }
         }
     }
