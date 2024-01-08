@@ -1,5 +1,4 @@
-﻿
-namespace 仓库管理系统.Global
+﻿namespace 仓库管理系统.Global
 {
     public class  AppData:BindableBase
     {
@@ -31,8 +30,7 @@ namespace 仓库管理系统.Global
         }
 
         public ObservableCollection<ModuleInfos> Modules { get; set; }
-       
-        public MenuTitle MenuTitle { get; set; }
+  
         private void Init()
         {
             Modules = new()

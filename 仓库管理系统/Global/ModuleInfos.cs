@@ -1,5 +1,4 @@
-﻿
-namespace 仓库管理系统.Models
+﻿namespace 仓库管理系统.Global
 {
     public class ModuleInfos
     {
@@ -7,6 +6,6 @@ namespace 仓库管理系统.Models
 
         public string Title { get; set; }
 
-        public MenuTitle MenuTitle { get; set; }
+      //  public MenuTitle MenuTitle { get; set; }
     }
 }

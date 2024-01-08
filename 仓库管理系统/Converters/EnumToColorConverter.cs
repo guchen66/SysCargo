@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
-using 仓库管理系统.Models;
 
 namespace 仓库管理系统.Converters
 {

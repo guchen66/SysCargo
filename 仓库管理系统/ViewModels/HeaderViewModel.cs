@@ -1,5 +1,4 @@
-﻿
-namespace 仓库管理系统.ViewModels
+﻿namespace 仓库管理系统.ViewModels
 {
     public class HeaderViewModel : BindableBase
     {

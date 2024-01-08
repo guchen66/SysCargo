@@ -70,45 +70,7 @@ namespace 仓库管理系统.ViewModels
 
         }
 
-        MenuDict menuDict = null;
-        public void DoSelect2(string menuTitle)
-        {
-            menuDict = new MenuDict();
-            foreach (var item in menuDict.GetDict())
-            {
-
-                if (menuTitle==item.Value)
-                {
-                    // Navigate((item.Value+"View").ToString());
-                    switch (menuTitle)
-                    {
-                        case "首页":
-                            Navigate("HomeView");
-                            break;
-                        case "设置":
-                            Navigate("SetView");
-                            break;
-                        case "用户信息":
-                            Navigate("User");
-                            break;
-                        case "仓库汇总":
-                            Navigate("Total");
-                            break;
-                        case "入库信息":
-                            Navigate("StorageView");
-                            break;
-                        case "出库信息":
-                            Navigate("Outbound");
-                            break;
-                        case "智能报警":
-                            Navigate("Alarm");
-                            break;
-                    }
-                }
-                
-            }
-            
-        }
+       
         private void Navigate(string navigatePath)
         {
             if (navigatePath != null)
