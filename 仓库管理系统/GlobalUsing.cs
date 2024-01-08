@@ -36,7 +36,7 @@ global using System.Security.Cryptography;
 global using 仓库管理系统.Global;
 global using Cargo.Shared.Events;
 global using Cargo.SqlSugar.Services;
-global using 仓库管理系统.Parameters;
+global using Cargo.Shared.Parameters;
 global using Cargo.SqlSugar.Providers;
 global using System.Windows.Threading;
 global using Cargo.Core.Common;

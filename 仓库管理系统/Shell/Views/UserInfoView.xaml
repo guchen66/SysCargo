@@ -17,11 +17,15 @@
     Background="AliceBlue"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <ResourceDictionary Source="../../Assets/Styles/DataGridDataCenterStyle.xaml" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Assets/Styles/MyDataGridStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
     <Grid Background="AliceBlue">
         <Grid.RowDefinitions>
-            <RowDefinition Height="40" />
+            <RowDefinition Height="45" />
             <RowDefinition />
         </Grid.RowDefinitions>
 
@@ -32,78 +36,88 @@
             <TextBox
                 x:Name="FilterTextBox"
                 Width="200"
-                Height="30"
+                Height="35"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="20"
                 Text="{Binding SearchContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 TextChanged="TextBox_TextChanged" />
             <Button
                 Width="100"
-                Height="30"
+                Height="35"
                 Margin="10,0,10,0"
                 Command="{Binding QueryCommand}"
-                Content="查询" />
+                Content="查询"
+                FontSize="18" />
             <Button
                 Width="100"
-                Height="30"
+                Height="35"
                 Command="{Binding AddCommand}"
-                Content="新增" />
+                Content="新增"
+                FontSize="18" />
             <Button
                 Width="100"
-                Height="30"
+                Height="35"
                 Margin="10,0,0,0"
                 Command="{Binding DownLoadCommand}"
                 CommandParameter="{Binding SearchContent}"
-                Content="下载" />
+                Content="下载"
+                FontSize="18" />
 
             <Button
                 Width="100"
-                Height="30"
+                Height="35"
                 Margin="10,0,10,0"
                 Command="{Binding RefreshCommand}"
-                Content="刷新" />
+                Content="刷新"
+                FontSize="18" />
         </StackPanel>
 
         <!--  用DataGrid展示数据  -->
         <DataGrid
             Name="down"
             Grid.Row="1"
+            Margin="5"
             VerticalAlignment="Top"
+            AlternationCount="2"
             AutoGenerateColumns="False"
-            Background="AliceBlue"
-            ColumnWidth="*"
+            CanUserAddRows="False"
+            CanUserReorderColumns="False"
+            CanUserResizeColumns="False"
+            CanUserResizeRows="False"
+            CanUserSortColumns="False"
             IsReadOnly="True"
-            ItemsSource="{Binding GridModelList}">
+            ItemsSource="{Binding GridModelList}"
+            RowHeaderWidth="0"
+            SelectionMode="Single"
+            Style="{StaticResource MyDataGridStyle}">
             <DataGrid.Columns>
                 <DataGridTextColumn
+                    Width="150"
                     Binding="{Binding Id}"
-                    ElementStyle="{StaticResource CenterStyle}"
-                    Header="Id"
-                    HeaderStyle="{StaticResource CenteredHeaderStyle}" />
+                    Header="Id" />
 
                 <DataGridTextColumn
+                    Width="120"
                     Binding="{Binding Name}"
-                    ElementStyle="{StaticResource CenterStyle}"
-                    Header="姓名"
-                    HeaderStyle="{StaticResource CenteredHeaderStyle}" />
+                    Header="姓名" />
 
                 <DataGridTextColumn
+                    Width="*"
                     Binding="{Binding Password}"
-                    ElementStyle="{StaticResource CenterStyle}"
-                    Header="密码"
-                    HeaderStyle="{StaticResource CenteredHeaderStyle}" />
+                    Header="密码" />
 
                 <DataGridTextColumn
+                    Width="120"
                     Binding="{Binding Role}"
-                    ElementStyle="{StaticResource CenterStyle}"
-                    Header="职位"
-                    HeaderStyle="{StaticResource CenteredHeaderStyle}" />
+                    Header="职位" />
 
                 <DataGridTextColumn
+                    Width="120"
                     Binding="{Binding CreateTime, StringFormat='yyyy/MM/dd'}"
-                    ElementStyle="{StaticResource CenterStyle}"
-                    Header="创建日期"
-                    HeaderStyle="{StaticResource CenteredHeaderStyle}" />
+                    Header="创建日期" />
 
-                <DataGridTemplateColumn Header="操作" HeaderStyle="{StaticResource CenteredHeaderStyle}">
+                <DataGridTemplateColumn Width="140" Header="操作">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel
@@ -112,15 +126,14 @@
                                 Orientation="Horizontal">
                                 <Button
                                     Width="60"
-                                    Height="25"
+                                    Margin="0,0,5,0"
                                     Background="LightGreen"
                                     Command="{Binding DataContext.UpdateCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
                                     CommandParameter="{Binding Id}"
                                     Content="修改"
                                     Foreground="Black" />
                                 <Button
-                                    Width="50"
-                                    Height="25"
+                                    Width="60"
                                     Background="Red"
                                     Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
                                     CommandParameter="{Binding Id}"

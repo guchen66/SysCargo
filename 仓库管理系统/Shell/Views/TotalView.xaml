@@ -18,7 +18,7 @@
     mc:Ignorable="d">
     <UserControl.Resources>
 
-        <ResourceDictionary Source="../../Assets/Styles/DataGridDataCenterStyle.xaml" />
+        <ResourceDictionary Source="../../Assets/Styles/MyDataGridStyle.xaml" />
     </UserControl.Resources>
     <Grid Background="AliceBlue">
         <Grid.RowDefinitions>
@@ -31,7 +31,7 @@
             Orientation="Horizontal">
             <TextBox
                 Width="200"
-                Height="30"
+                Height="35"
                 Text="{Binding Search}" />
             <Button
                 Width="100"
@@ -60,74 +60,44 @@
         </StackPanel>
 
         <DataGrid
+            Name="down"
             Grid.Row="1"
-            HorizontalAlignment="Center"
+            Margin="5"
             VerticalAlignment="Top"
+            AlternationCount="2"
             AutoGenerateColumns="False"
-            ColumnWidth="*"
+            CanUserAddRows="False"
+            CanUserReorderColumns="False"
+            CanUserResizeColumns="False"
+            CanUserResizeRows="False"
+            CanUserSortColumns="False"
             IsReadOnly="True"
-            ItemsSource="{Binding GridModelList}">
+            ItemsSource="{Binding GridModelList}"
+            RowHeaderWidth="0"
+            SelectionMode="Single"
+            Style="{StaticResource MyDataGridStyle}">
             <DataGrid.Columns>
-                <DataGridTextColumn
-                    Binding="{Binding Id}"
-                    ElementStyle="{StaticResource CenterStyle}"
-                    Header="物资Id"
-                    HeaderStyle="{StaticResource CenteredHeaderStyle}" />
+                <DataGridTextColumn Binding="{Binding Id}" Header="物资Id" Width="120"/>
 
-                <DataGridTextColumn
-                    Binding="{Binding Name}"
-                    ElementStyle="{StaticResource CenterStyle}"
-                    Header="物资名称"
-                    HeaderStyle="{StaticResource CenteredHeaderStyle}" />
+                <DataGridTextColumn Binding="{Binding Name}" Header="物资名称" Width="120"/>
 
-                <DataGridTextColumn
-                    Binding="{Binding MaterialType}"
-                    ElementStyle="{StaticResource CenterStyle}"
-                    Header="物资类型"
-                    HeaderStyle="{StaticResource CenteredHeaderStyle}" />
+                <DataGridTextColumn Binding="{Binding MaterialType}" Header="物资类型" Width="120"/>
 
-                <DataGridTextColumn
-                    Binding="{Binding Amount}"
-                    ElementStyle="{StaticResource CenterStyle}"
-                    Header="物资单位"
-                    HeaderStyle="{StaticResource CenteredHeaderStyle}" />
+                <DataGridTextColumn Binding="{Binding Amount}" Header="物资单位" Width="120"/>
 
-                <DataGridTextColumn
-                    Binding="{Binding Price}"
-                    ElementStyle="{StaticResource CenterStyle}"
-                    Header="价钱"
-                    HeaderStyle="{StaticResource CenteredHeaderStyle}" />
+                <DataGridTextColumn Binding="{Binding Price}" Header="价钱" Width="120"/>
 
-                <DataGridTextColumn
-                    Binding="{Binding Tag}"
-                    ElementStyle="{StaticResource CenterStyle}"
-                    Header="备注"
-                    HeaderStyle="{StaticResource CenteredHeaderStyle}" />
+                <DataGridTextColumn Binding="{Binding Tag}" Header="备注" Width="120"/>
 
-                <DataGridTextColumn
-                    Binding="{Binding CreateTime, StringFormat='yyyy/MM/dd'}"
-                    ElementStyle="{StaticResource CenterStyle}"
-                    Header="创建日期"
-                    HeaderStyle="{StaticResource CenteredHeaderStyle}" />
+                <DataGridTextColumn Binding="{Binding CreateTime, StringFormat='yyyy/MM/dd'}" Header="创建日期" Width="120"/>
 
-                <DataGridTextColumn
-                    Binding="{Binding UserId}"
-                    ElementStyle="{StaticResource CenterStyle}"
-                    Header="操作员Id"
-                    HeaderStyle="{StaticResource CenteredHeaderStyle}" />
+                <DataGridTextColumn Binding="{Binding UserId}" Header="操作员Id" Width="120"/>
 
-                <DataGridTextColumn
-                    Binding="{Binding UserName}"
-                    ElementStyle="{StaticResource CenterStyle}"
-                    Header="操作员"
-                    HeaderStyle="{StaticResource CenteredHeaderStyle}" />
+                <DataGridTextColumn Binding="{Binding UserName}" Header="操作员" Width="120"/>
 
 
 
-                <DataGridTemplateColumn
-                    Width="124"
-                    Header="操作"
-                    HeaderStyle="{StaticResource CenteredHeaderStyle}">
+                <DataGridTemplateColumn Width="*" Header="操作">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">

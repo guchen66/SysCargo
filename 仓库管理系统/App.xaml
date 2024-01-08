@@ -20,6 +20,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml" />
                 <ResourceDictionary Source="/Assets/Styles/RadioButtonStyle.xaml" />
                 <ResourceDictionary Source="/Assets/Styles/SkinColorsStyle.xaml" />
+                <ResourceDictionary Source="/Assets/Styles/MyDataGridStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

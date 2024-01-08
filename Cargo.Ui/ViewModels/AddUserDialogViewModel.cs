@@ -5,41 +5,13 @@ namespace Cargo.Ui.ViewModels
 {
     public class AddUserDialogViewModel : BindableBase, IDialogAware
     {
-        //public DataBaseProvider<User> db = new DataBaseProvider<User>();
 
-        UserService db = new UserService();
-        public AddUserDialogViewModel()
-        {
-
-            RoleList = new ObservableCollection<ComboBoxList>(Enum.GetValues(typeof(ComboBoxList)).Cast<ComboBoxList>());
-
-        }
+        #region 字段、属性
 
         public string Title => "添加用户弹窗";
-
         public event Action<IDialogResult> RequestClose;
         public event Action action;
-        public bool CanCloseDialog()
-        {
-            return true;
-        }
-
-        public void OnDialogClosed()
-        {
-            action();
-        }
-
-        public void OnDialogOpened(IDialogParameters parameters)
-        {
-            if (parameters.ContainsKey("RefreshValue"))
-            {
-                action = parameters.GetValue<Action>("RefreshValue");
-
-            }
-            //action();
-        }
-
-
+        UserService db = new UserService();
         private string _name;
 
         public string InputName
@@ -78,7 +50,36 @@ namespace Cargo.Ui.ViewModels
             set { SetProperty(ref _roleList, value); }
         }
 
+        #endregion
 
+        public AddUserDialogViewModel()
+        {
+            RoleList = new ObservableCollection<ComboBoxList>(Enum.GetValues(typeof(ComboBoxList)).Cast<ComboBoxList>());
+        }
+
+        #region 方法
+
+        public bool CanCloseDialog()
+        {
+            return true;
+        }
+
+        public void OnDialogClosed()
+        {
+            action();
+        }
+
+        public void OnDialogOpened(IDialogParameters parameters)
+        {
+            if (parameters.ContainsKey("RefreshValue"))
+            {
+                action = parameters.GetValue<Action>("RefreshValue");
+
+            }
+        }
+        #endregion
+
+        #region 命令
 
         private DelegateCommand<string> _saveCmd;
         public DelegateCommand<string> SaveCmd =>
@@ -113,6 +114,6 @@ namespace Cargo.Ui.ViewModels
         {
             RequestClose?.Invoke(dialogResult);
         }
-
+        #endregion
     }
 }

@@ -17,8 +17,7 @@
     Background="AliceBlue"
     mc:Ignorable="d">
     <UserControl.Resources>
-
-        <ResourceDictionary Source="../../Assets/Styles/DataGridDataCenterStyle.xaml" />
+        <ResourceDictionary Source="../../Assets/Styles/MyDataGridStyle.xaml" />
     </UserControl.Resources>
     <Grid Background="AliceBlue">
         <Grid.RowDefinitions>
@@ -31,82 +30,73 @@
             Orientation="Horizontal">
             <TextBox
                 Width="200"
-                Height="30"
+                Height="35"
+                FontSize="20"
                 Text="{Binding Search}" />
             <Button
                 Width="100"
-                Height="30"
+                Height="35"
                 Margin="10,0,10,0"
                 Command="{Binding QueryCommand}"
-                Content="查询" />
+                Content="查询"
+                FontSize="20" />
             <Button
                 Width="100"
-                Height="30"
+                Height="35"
                 Command="{Binding AddCommand}"
-                Content="新增" />
+                Content="新增"
+                FontSize="20" />
             <Button
                 Width="100"
-                Height="30"
+                Height="35"
                 Margin="10,0,0,0"
                 Command="{Binding DownLoadCommand}"
                 CommandParameter="{Binding Search}"
-                Content="下载" />
+                Content="下载"
+                FontSize="20" />
             <Button
                 Width="100"
-                Height="30"
+                Height="35"
                 Margin="10,0,10,0"
                 Command="{Binding RefreshCommand}"
-                Content="刷新" />
+                Content="刷新"
+                FontSize="20" />
         </StackPanel>
 
         <DataGrid
+            Name="down"
             Grid.Row="1"
-            HorizontalAlignment="Center"
+            Margin="5"
             VerticalAlignment="Top"
+            AlternationCount="2"
             AutoGenerateColumns="False"
-            ColumnWidth="*"
+            CanUserAddRows="False"
+            CanUserReorderColumns="False"
+            CanUserResizeColumns="False"
+            CanUserResizeRows="False"
+            CanUserSortColumns="False"
             IsReadOnly="True"
-            ItemsSource="{Binding GridModelList}">
+            ItemsSource="{Binding GridModelList}"
+            RowHeaderWidth="0"
+            SelectionMode="Single"
+            Style="{StaticResource MyDataGridStyle}">
             <DataGrid.Columns>
-                <DataGridTextColumn
-                    Binding="{Binding Id}"
-                    ElementStyle="{StaticResource CenterStyle}"
-                    Header="工序Id"
-                    HeaderStyle="{StaticResource CenteredHeaderStyle}" />
-                <DataGridTextColumn
-                    Binding="{Binding WorkPlaceName}"
-                    ElementStyle="{StaticResource CenterStyle}"
-                    Header="所属工位"
-                    HeaderStyle="{StaticResource CenteredHeaderStyle}" />
+                <DataGridTextColumn Binding="{Binding Id}" Header="工序Id" />
+                <DataGridTextColumn Binding="{Binding WorkPlaceName}" Header="所属工位" />
 
-                <DataGridTextColumn
-                    Binding="{Binding ProcessName}"
-                    ElementStyle="{StaticResource CenterStyle}"
-                    Header="工序名称"
-                    HeaderStyle="{StaticResource CenteredHeaderStyle}" />
+                <DataGridTextColumn Binding="{Binding ProcessName}" Header="工序名称" />
 
 
 
-                <DataGridTextColumn
-                    Binding="{Binding CreateTime, StringFormat='yyyy/MM/dd'}"
-                    ElementStyle="{StaticResource CenterStyle}"
-                    Header="创建日期"
-                    HeaderStyle="{StaticResource CenteredHeaderStyle}" />
+                <DataGridTextColumn Binding="{Binding CreateTime, StringFormat='yyyy/MM/dd'}" Header="创建日期" />
 
 
 
-                <DataGridTextColumn
-                    Binding="{Binding UserName}"
-                    ElementStyle="{StaticResource CenterStyle}"
-                    Header="操作员"
-                    HeaderStyle="{StaticResource CenteredHeaderStyle}" />
+                <DataGridTextColumn Binding="{Binding UserName}" Header="操作员" />
 
 
 
-                <DataGridTemplateColumn
-                    Width="124"
-                    Header="操作"
-                    HeaderStyle="{StaticResource CenteredHeaderStyle}">
+                <DataGridTemplateColumn Width="124" Header="操作">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
