@@ -1,28 +1,11 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
-using Prism.Services.Dialogs;
-using SqlSugar.DbAccess.Model.Models;
-using SqlSugar.DbAccess.Providers;
-using SqlSugar;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MahApps.Metro.Controls.Dialogs;
-using SqlSugar.DbAccess.Services;
-using System.Data;
-using System.IO;
-using System.Windows;
-
+﻿
 namespace 仓库管理系统.Shell.ViewModels
 {
 
     public class TotalViewModel : BindableBase
     {
 
-        CargoService db = new CargoService(new DatabaseService());
+        CargoService db = new CargoService();
        
         private readonly IDialogService _dialogService;
         
@@ -34,12 +17,12 @@ namespace 仓库管理系统.Shell.ViewModels
             _dialogService = dialogService;
             _dialogCoordinator = dialogCoordinator;
             //仓储查询结果是List，转成ObservableCollection
-            db.GetAllCargos().ForEach(x => GridModelList.Add(x));
+            db.GetAllCargoModels().ForEach(x => GridModelList.Add(x));
 
         }
 
-        private ObservableCollection<Cargo> gridModelList = new ObservableCollection<Cargo>();//已经封装好的集合列表，提供实时刷新，当做有通知的List<Student>
-        public ObservableCollection<Cargo> GridModelList//和前台要对应
+        private ObservableCollection<CargoModel> gridModelList = new ObservableCollection<CargoModel>();//已经封装好的集合列表，提供实时刷新，当做有通知的List<Student>
+        public ObservableCollection<CargoModel> GridModelList//和前台要对应
         {
             get{ return gridModelList;}
             set{ gridModelList = value;RaisePropertyChanged();}
@@ -47,9 +30,9 @@ namespace 仓库管理系统.Shell.ViewModels
 
 
         //查询全部
-        public ObservableCollection<Cargo> SelectAll()
+        public ObservableCollection<CargoModel> SelectAll()
         {
-            List<Cargo> cargos = new List<Cargo>();
+            List<CargoModel> cargos = new List<CargoModel>();
             if (cargos != null)
             {
                 GridModelList.Clear();
@@ -76,10 +59,10 @@ namespace 仓库管理系统.Shell.ViewModels
         void ExecuteQueryCmd()
         {
             
-            var dataList = db.GetAllCargos().ToList().Where(it => it.Id.ToString().Contains(Search)
+            var dataList = db.GetAllCargoModels().ToList().Where(it => it.Id.ToString().Contains(Search)
             || it.Name.Contains(Search)||it.UserName.Contains(Search)
             );
-            GridModelList = new ObservableCollection<Cargo>();
+            GridModelList = new ObservableCollection<CargoModel>();
             if (dataList != null)
             {
                 dataList.ToList().ForEach(o => GridModelList.Add(o));
@@ -98,7 +81,7 @@ namespace 仓库管理系统.Shell.ViewModels
         {
             DialogParameters paramters = new DialogParameters();
             paramters.Add("RefreshValue", new Action(Refresh));
-            _dialogService.ShowDialog("AddCargoDialogView", paramters,r =>
+            _dialogService.ShowDialog("AddCargoDialog", paramters,r =>
             {
                 /*if (r.Result == ButtonResult.Yes)
                 {
@@ -115,7 +98,7 @@ namespace 仓库管理系统.Shell.ViewModels
 
         private void ExecuteUpdateCmd(int? id)
         {
-            var dataList=db.GetAllCargos().Where(it=>it.Id==id);
+            var dataList=db.GetAllCargoModels().Where(it=>it.Id==id);
             DialogParameters paramters = new DialogParameters();
 
             paramters.Add("dataList", dataList);
@@ -123,7 +106,7 @@ namespace 仓库管理系统.Shell.ViewModels
             paramters.Add("RefreshValue", new Action(Refresh));
 
            
-            _dialogService.ShowDialog("UpdateCargoDialogView", paramters, r =>
+            _dialogService.ShowDialog("UpdateCargoDialog", paramters, r =>
             {
 
             });
@@ -142,9 +125,9 @@ namespace 仓库管理系统.Shell.ViewModels
 
             var data = GridModelList;
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(data);
-            File.WriteAllText(@"E:\VS Workspace\Apply\仓库管理系统\ContentMoudle\DownLoad\Total.json", json);
+            File.WriteAllText(@"E:\VS Workspace\Apply\仓库管理系统\Cargo.Ui\DownLoad\Total.json", json);
 
-            string path = @"E:\VS Workspace\Apply\仓库管理系统\ContentMoudle\DownLoad\Total.json";
+            string path = @"E:\VS Workspace\Apply\仓库管理系统\Cargo.Ui\DownLoad\Total.json";
             if (File.Exists(path))
             {
                 MessageBox.Show("文件下载成功！");
@@ -163,7 +146,7 @@ namespace 仓库管理系统.Shell.ViewModels
 
         private async void ExecuteDeleCommand(int? ids)
         {
-            var model = db.GetAllCargos().Where(it => it.Id == ids);
+            var model = db.GetAllCargoModels().Where(it => it.Id == ids);
 
             if (model != null)
             {
@@ -178,7 +161,7 @@ namespace 仓库管理系统.Shell.ViewModels
                 if (result == MessageDialogResult.Affirmative)
                 {
                     //刷新
-                    db.DeleteCargo((int)ids);
+                    db.DeleteCargoModel((int)ids);
                     Refresh();
                 }
                 if (result == MessageDialogResult.Negative)
@@ -208,12 +191,12 @@ namespace 仓库管理系统.Shell.ViewModels
         //用来刷新界面
         public void Refresh()
         {
-            var dataList = db.GetAllCargos().Where(it => it.Name == Search);
+            var dataList = db.GetAllCargoModels().Where(it => it.Name == Search);
            
-            GridModelList = new ObservableCollection<Cargo>();
+            GridModelList = new ObservableCollection<CargoModel>();
             if (dataList != null)
             {
-                db.GetAllCargos().ForEach(x => GridModelList.Add(x));
+                db.GetAllCargoModels().ForEach(x => GridModelList.Add(x));
             }
         }
 

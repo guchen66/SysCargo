@@ -1,28 +1,40 @@
-﻿using DryIoc;
-using Prism.Commands;
-using Prism.Mvvm;
-using Prism.Regions;
-using SqlSugar;
-using SqlSugar.DbAccess.Model.Models;
-using SqlSugar.DbAccess.Providers;
-using SqlSugar.DbAccess.Services;
-using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using 仓库管理系统.Global;
-using 仓库管理系统.Views;
-
+﻿
 namespace 仓库管理系统.ViewModels
 {
-    public class LoginViewModel:BindableBase
+    public class LoginViewModel : BindableBase
     {
+
+        #region  字段
         public AppData appData { get; set; }=AppData.Instance;
-        public SimpleClient<User> sdb = new SimpleClient<User>(DatabaseService.CreateClient());
-        UserService db = new UserService(new DatabaseService());
+        public SimpleClient<User> sdb = new SimpleClient<User>();
+        UserService db = new UserService();
+        private SignUpArgs _signUpArgs;
+        private bool _isRememberPassword;
+        private bool _isAutoSignIn;
+
+        #endregion
+
+        #region  属性
+
+        /// <summary>
+        /// 记住密码
+        /// </summary>
+        public bool IsRememberPassword
+        {
+            get => _isRememberPassword;
+            set { if (SetProperty(ref _isRememberPassword, value) && !value) IsAutoSignIn = false; }
+        }
+
+        /// <summary>
+        /// 自动登录
+        /// </summary>
+        public bool IsAutoSignIn
+        {
+            get => _isAutoSignIn;
+            set { if (SetProperty(ref _isAutoSignIn, value) && value) IsRememberPassword = true; }
+        }
+        #endregion
+
 
         public LoginViewModel()
         {
@@ -31,7 +43,9 @@ namespace 仓库管理系统.ViewModels
             this.appData.CurrentUser.Password = "0";
         }
 
-        
+       
+
+
         /// <summary>
         /// 带参登录
         /// </summary>
@@ -42,28 +56,19 @@ namespace 仓库管理系统.ViewModels
         private void DoLogin(Window win)
         {
             MD5Encrypt Encrypt = new MD5Encrypt();
-            string encryPwd = Encrypt.GetMD5Provider(appData.CurrentUser.Password,appData.CurrentUser.Name);
-           
+            string encryPwd = Encrypt.GetMD5Provider(appData.CurrentUser.Password, appData.CurrentUser.Name);
 
             var user = db.GetAllUsers().FirstOrDefault(item => item.Name == appData.CurrentUser.Name
             && item.Password == encryPwd);
 
-            //
             if (user == null)
             {
                 MessageBox.Show("用户名和密码错误");
             }
             else
             {
-                
-                //MainWindow mainWindow = new MainWindow();
-                 win.DialogResult = true;
-                 win.Close();
-               // mainWindow.Show();
-                /*var mainWindow = _container.Resolve<MainWindow>();
-                RegionManager.SetRegionManager(mainWindow, _regionManager);
-                mainWindow.Show();
-                win.Close();*/
+                win.DialogResult = true;
+                win.Close();
             }
         }
 
@@ -79,5 +84,9 @@ namespace 仓库管理系统.ViewModels
             //App.Current.Shutdown();
             Application.Current.Shutdown();
         }
+
+        private static bool CanSignIn(string username, string password) => !string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password);
+
+       
     }
 }

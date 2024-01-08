@@ -1,20 +1,4 @@
-﻿using MaterialDesignColors;
-using Prism.Commands;
-using Prism.Mvvm;
-using SqlSugar;
-using SqlSugar.DbAccess.Model.Models;
-using SqlSugar.DbAccess.Providers;
-using SqlSugar.DbAccess.Services;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using 仓库管理系统.Models;
-
+﻿
 namespace 仓库管理系统.Global
 {
     public class  AppData:BindableBase
@@ -39,32 +23,29 @@ namespace 仓库管理系统.Global
         {
             Init();
         }
-        public SimpleClient<User> sdb = new (DatabaseService.CreateClient());
+        public SimpleClient<User> sdb = new ();
 
         public List<User> GetTreeListProducts()
         {
             return sdb.GetList().ToList();
         }
 
-        public ObservableCollection<ModuleInfo> Modules { get; set; }
+        public ObservableCollection<ModuleInfos> Modules { get; set; }
        
         public MenuTitle MenuTitle { get; set; }
         private void Init()
         {
             Modules = new()
             {
-                new ModuleInfo() { IconFont = "\xe626", Title = "首页" },
-                new ModuleInfo() { IconFont = "\xe77a", Title = "设置" },
-                new ModuleInfo() { IconFont = "\xe77a", Title = "用户信息" },
-                new ModuleInfo() { IconFont = "\xe50a", Title = "仓库汇总" },
-                new ModuleInfo() { IconFont = "\xe77a", Title = "入库信息" },
-                new ModuleInfo() { IconFont = "\xe502", Title = "出库信息" },
-                new ModuleInfo() { IconFont = "\xe669", Title = "智能报警" },
+                new ModuleInfos() { IconFont = "\xe626", Title = "首页" },
+                new ModuleInfos() { IconFont = "\xe77a", Title = "设置" },
+                new ModuleInfos() { IconFont = "\xe77a", Title = "用户信息" },
+                new ModuleInfos() { IconFont = "\xe50a", Title = "仓库汇总" },
+                new ModuleInfos() { IconFont = "\xe77a", Title = "工位信息" },
+                new ModuleInfos() { IconFont = "\xe502", Title = "工序信息" },
+                new ModuleInfos() { IconFont = "\xe669", Title = "智能报警" },
 
             };
-
-        }
-
-        
+        }      
     }
 }

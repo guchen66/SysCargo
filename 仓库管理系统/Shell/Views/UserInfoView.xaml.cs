@@ -1,20 +1,4 @@
-﻿using SqlSugar.DbAccess.Model.Models;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
+﻿
 namespace 仓库管理系统.Shell.Views
 {
     /// <summary>
@@ -36,7 +20,22 @@ namespace 仓库管理系统.Shell.Views
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(data);
 
             //保存文件
-            System.IO.File.WriteAllText(@"E:\VS Workspace\Apply\仓库管理系统\ContentMoudle\DownLoad\User.json", json);
+            System.IO.File.WriteAllText(@"E:\VS Workspace\Apply\仓库管理系统\Cargo.Ui\DownLoad\User.json", json);
+
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+            down.Items.Filter = FilterMethod;
+        }
+
+        private bool FilterMethod(object obj)
+        {
+            var user = (User)obj;
+
+            return user.Name.Contains(FilterTextBox.Text, StringComparison.OrdinalIgnoreCase);
+
 
         }
     }

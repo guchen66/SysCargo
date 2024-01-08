@@ -1,19 +1,4 @@
-﻿using MahApps.Metro.Controls;
-using SqlSugar.DbAccess.Db;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-
+﻿
 namespace 仓库管理系统.Views
 {
     /// <summary>
@@ -24,8 +9,25 @@ namespace 仓库管理系统.Views
         public LoginView()
         {
             InitializeComponent();
+          //  LoadBackgroundImage();
+        }
 
-            //SugarGlobal.Initialized(); //初始化数据库自动生成表
+        private async void LoadBackgroundImage()
+        {
+            BitmapImage bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.UriSource = new Uri("../Assets/Images/Header.jpeg", UriKind.Relative);
+            bitmapImage.EndInit();
+
+            await Task.Delay(100); // 添加延迟以确保初始化开始
+
+            // 在 UI 线程上设置图像源
+            Dispatcher.Invoke(() =>
+            {
+                ImageBrush imageBrush = new ImageBrush(bitmapImage);
+                this.Background = imageBrush; // 使用 this.Background
+            });
         }
     }
+
 }

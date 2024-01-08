@@ -1,85 +1,131 @@
-﻿<UserControl x:Class="仓库管理系统.Shell.Views.UserInfoView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:仓库管理系统.Shell.Views"
-             mc:Ignorable="d" 
-             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             xmlns:region="clr-namespace:Moudles.Common;assembly=Moudles"
-             xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-             Dialog:DialogParticipation.Register="{Binding}"
-             xmlns:prism="http://prismlibrary.com/"
-             prism:ViewModelLocator.AutoWireViewModel="True"
-             d:DesignHeight="450" d:DesignWidth="980"
-             Background="AliceBlue">
+﻿<UserControl
+    x:Class="仓库管理系统.Shell.Views.UserInfoView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:local="clr-namespace:仓库管理系统.Shell.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:region="clr-namespace:Cargo.Core.Common;assembly=Cargo.Core"
+    Dialog:DialogParticipation.Register="{Binding}"
+    d:DesignHeight="450"
+    d:DesignWidth="980"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    Background="AliceBlue"
+    mc:Ignorable="d">
     <UserControl.Resources>
-        <ResourceDictionary Source="../../Assets/Styles/DataGridDataCenterStyle.xaml"/>
+        <ResourceDictionary Source="../../Assets/Styles/DataGridDataCenterStyle.xaml" />
     </UserControl.Resources>
     <Grid Background="AliceBlue">
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition/>
+            <RowDefinition Height="40" />
+            <RowDefinition />
         </Grid.RowDefinitions>
-        
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Top"
-                     Margin="5 5 0 0" >
-            <TextBox Width="200" Height="30" Text="{Binding Search,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  />
-            <Button Width="100" Height="30" Content="查询" Margin="10 0 10 0"
-                    Command="{Binding QueryCommand}"/>
-            <Button Width="100" Height="30" Content="新增" Command="{Binding AddCommand}"/>
-            <Button Width="100" Height="30" Content="下载" Command="{Binding DownLoadCommand}" 
-                    CommandParameter="{Binding Search}" Margin="10 0 0 0" />
-            
-            <Button Width="100" Height="30" Content="刷新" Command="{Binding RefreshCommand}" 
-                    Margin="10 0 10 0"/>
+
+        <StackPanel
+            Margin="5,5,0,0"
+            VerticalAlignment="Top"
+            Orientation="Horizontal">
+            <TextBox
+                x:Name="FilterTextBox"
+                Width="200"
+                Height="30"
+                Text="{Binding SearchContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                TextChanged="TextBox_TextChanged" />
+            <Button
+                Width="100"
+                Height="30"
+                Margin="10,0,10,0"
+                Command="{Binding QueryCommand}"
+                Content="查询" />
+            <Button
+                Width="100"
+                Height="30"
+                Command="{Binding AddCommand}"
+                Content="新增" />
+            <Button
+                Width="100"
+                Height="30"
+                Margin="10,0,0,0"
+                Command="{Binding DownLoadCommand}"
+                CommandParameter="{Binding SearchContent}"
+                Content="下载" />
+
+            <Button
+                Width="100"
+                Height="30"
+                Margin="10,0,10,0"
+                Command="{Binding RefreshCommand}"
+                Content="刷新" />
         </StackPanel>
 
-        <!--用DataGrid展示数据-->
-        <DataGrid Grid.Row="1" Name="down" IsReadOnly="True" 
-                  VerticalAlignment="Top" 
-                  ItemsSource="{Binding GridModelList}" 
-                  AutoGenerateColumns="False"
-                  ColumnWidth="*"
-                  Background="AliceBlue"
-                  >
+        <!--  用DataGrid展示数据  -->
+        <DataGrid
+            Name="down"
+            Grid.Row="1"
+            VerticalAlignment="Top"
+            AutoGenerateColumns="False"
+            Background="AliceBlue"
+            ColumnWidth="*"
+            IsReadOnly="True"
+            ItemsSource="{Binding GridModelList}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" Binding="{Binding Id}" 
-                                    ElementStyle="{StaticResource CenterStyle}"
-                                    HeaderStyle="{StaticResource CenteredHeaderStyle}"/>
+                <DataGridTextColumn
+                    Binding="{Binding Id}"
+                    ElementStyle="{StaticResource CenterStyle}"
+                    Header="Id"
+                    HeaderStyle="{StaticResource CenteredHeaderStyle}" />
 
-                <DataGridTextColumn Header="姓名" Binding="{Binding Name}"
-                                    ElementStyle="{StaticResource CenterStyle}"
-                                    HeaderStyle="{StaticResource CenteredHeaderStyle}"/>
-         
-                <DataGridTextColumn Header="密码" Binding="{Binding Password}" 
-                                    ElementStyle="{StaticResource CenterStyle}"
-                                    HeaderStyle="{StaticResource CenteredHeaderStyle}"/>
-              
-                <DataGridTextColumn Header="职位" Binding="{Binding Role}"
-                                    ElementStyle="{StaticResource CenterStyle}"
-                                    HeaderStyle="{StaticResource CenteredHeaderStyle}"/>
-                
-                <DataGridTextColumn Header="创建日期" 
-                                    Binding="{Binding CreateTime, StringFormat='yyyy/MM/dd'}"
-                                    ElementStyle="{StaticResource CenterStyle}"
-                                    HeaderStyle="{StaticResource CenteredHeaderStyle}"/>
+                <DataGridTextColumn
+                    Binding="{Binding Name}"
+                    ElementStyle="{StaticResource CenterStyle}"
+                    Header="姓名"
+                    HeaderStyle="{StaticResource CenteredHeaderStyle}" />
+
+                <DataGridTextColumn
+                    Binding="{Binding Password}"
+                    ElementStyle="{StaticResource CenterStyle}"
+                    Header="密码"
+                    HeaderStyle="{StaticResource CenteredHeaderStyle}" />
+
+                <DataGridTextColumn
+                    Binding="{Binding Role}"
+                    ElementStyle="{StaticResource CenterStyle}"
+                    Header="职位"
+                    HeaderStyle="{StaticResource CenteredHeaderStyle}" />
+
+                <DataGridTextColumn
+                    Binding="{Binding CreateTime, StringFormat='yyyy/MM/dd'}"
+                    ElementStyle="{StaticResource CenterStyle}"
+                    Header="创建日期"
+                    HeaderStyle="{StaticResource CenteredHeaderStyle}" />
 
                 <DataGridTemplateColumn Header="操作" HeaderStyle="{StaticResource CenteredHeaderStyle}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                <Button Content="修改" Width="60" Height="25" 
-                                        Background="LightGreen" Foreground="Black" 
-                                        CommandParameter="{Binding Id}"
-                                        Command="{Binding DataContext.UpdateCommand,
-                                        RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}"/>
-                                <Button Content="删除" Width="50" Height="25"
-                                        Background="Red" Foreground="Black"
-                                        CommandParameter="{Binding Id}"
-                                        Command="{Binding DataContext.DeleteCommand,
-                                    RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}"/>
+                            <StackPanel
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal">
+                                <Button
+                                    Width="60"
+                                    Height="25"
+                                    Background="LightGreen"
+                                    Command="{Binding DataContext.UpdateCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
+                                    CommandParameter="{Binding Id}"
+                                    Content="修改"
+                                    Foreground="Black" />
+                                <Button
+                                    Width="50"
+                                    Height="25"
+                                    Background="Red"
+                                    Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
+                                    CommandParameter="{Binding Id}"
+                                    Content="删除"
+                                    Foreground="Black" />
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

@@ -1,121 +1,150 @@
-﻿<UserControl x:Class="仓库管理系统.Shell.Views.SetView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:仓库管理系统.Shell.Views"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    
+﻿<UserControl
+    x:Class="仓库管理系统.Shell.Views.SetView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:仓库管理系统.Shell.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com/"
+    Dialog:DialogParticipation.Register="{Binding}"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    mc:Ignorable="d">
+
     <Grid Background="AliceBlue">
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
-        <!--第一行-->
-        <StackPanel Margin="0 20 0 0"  Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <!--  第一行  -->
+        <StackPanel
+            Margin="0,20,0,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Orientation="Horizontal">
             <StackPanel Margin="20">
                 <Button>
                     <Image Source="../../Assets/Images/set.png">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseLeftButtonDown">
-                                <i:InvokeCommandAction Command="{Binding OpenSetCommand,
-                                    UpdateSourceTrigger=PropertyChanged}"
-                                                      CommandParameter="SetName"/>
+                                <i:InvokeCommandAction Command="{Binding OpenSetCommand, UpdateSourceTrigger=PropertyChanged}" CommandParameter="Login" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </Image>
                 </Button>
-                <TextBlock Text="设置1" VerticalAlignment="Center" 
-                           HorizontalAlignment="Center"
-                           FontSize="16" Margin="0 15 0 0"/>
-                
+                <TextBlock
+                    Margin="0,15,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="16"
+                    Text="登录弹窗" />
+
             </StackPanel>
             <StackPanel Margin="20">
                 <Button>
                     <Image Source="../../Assets/Images/set.png">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseLeftButtonDown">
-                                <i:InvokeCommandAction Command="{Binding OpenSetCommand,
-                                    UpdateSourceTrigger=PropertyChanged}"
-                                                     CommandParameter="SetName"/>
+                                <i:InvokeCommandAction Command="{Binding OpenSetCommand, UpdateSourceTrigger=PropertyChanged}" CommandParameter="Progress" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </Image>
                 </Button>
-                <TextBlock Text="设置2" VerticalAlignment="Center" 
-                           HorizontalAlignment="Center"
-                           FontSize="16" Margin="0 15 0 0"/>
+                <TextBlock
+                    Margin="0,15,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="16"
+                    Text="进度弹窗" />
             </StackPanel>
             <StackPanel Margin="20">
                 <Button>
                     <Image Source="../../Assets/Images/set.png">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseLeftButtonDown">
-                                <i:InvokeCommandAction Command="{Binding OpenSetCommand,
-                                    UpdateSourceTrigger=PropertyChanged}"
-                                                      CommandParameter="SetName"/>
+                                <i:InvokeCommandAction Command="{Binding OpenSetCommand, UpdateSourceTrigger=PropertyChanged}" CommandParameter="Input" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </Image>
                 </Button>
-                <TextBlock Text="设置3" VerticalAlignment="Center" 
-                           HorizontalAlignment="Center"
-                           FontSize="16" Margin="0 15 0 0"/>
+                <TextBlock
+                    Margin="0,15,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="16"
+                    Text="确定取消弹窗" />
             </StackPanel>
             <StackPanel Margin="20">
                 <Button>
                     <Image Source="../../Assets/Images/set.png">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseLeftButtonDown">
-                                <i:InvokeCommandAction Command="{Binding OpenSetCommand,
-                                    UpdateSourceTrigger=PropertyChanged}"
-                                                       CommandParameter="SetName"/>
+                                <i:InvokeCommandAction Command="{Binding OpenSetCommand, UpdateSourceTrigger=PropertyChanged}" CommandParameter="Message" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </Image>
                 </Button>
-                <TextBlock Text="设置4" VerticalAlignment="Center" 
-                           HorizontalAlignment="Center"
-                           FontSize="16" Margin="0 15 0 0"/>
+                <TextBlock
+                    Margin="0,15,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="16"
+                    Text="消息弹窗" />
             </StackPanel>
         </StackPanel>
 
-        <!--第二行-->
-        <StackPanel Grid.Row="1" Margin="0 20 0 0"  Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <!--  第二行  -->
+        <StackPanel
+            Grid.Row="1"
+            Margin="0,20,0,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Orientation="Horizontal">
             <StackPanel Margin="20">
                 <Button>
-                    <Image Source="../../Assets/Images/set.png"/>
+                    <Image Source="../../Assets/Images/set.png" />
                 </Button>
-                <TextBlock Text="设置1" VerticalAlignment="Center" 
-                           HorizontalAlignment="Center"
-                           FontSize="16" Margin="0 15 0 0"/>
+                <TextBlock
+                    Margin="0,15,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="16"
+                    Text="设置1" />
             </StackPanel>
             <StackPanel Margin="20">
                 <Button>
-                    <Image Source="../../Assets/Images/set.png"/>
+                    <Image Source="../../Assets/Images/set.png" />
                 </Button>
-                <TextBlock Text="设置2" VerticalAlignment="Center" 
-                           HorizontalAlignment="Center"
-                           FontSize="16" Margin="0 15 0 0"/>
+                <TextBlock
+                    Margin="0,15,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="16"
+                    Text="设置2" />
             </StackPanel>
             <StackPanel Margin="20">
                 <Button>
-                    <Image Source="../../Assets/Images/set.png"/>
+                    <Image Source="../../Assets/Images/set.png" />
                 </Button>
-                <TextBlock Text="设置3" VerticalAlignment="Center" 
-                           HorizontalAlignment="Center"
-                           FontSize="16" Margin="0 15 0 0"/>
+                <TextBlock
+                    Margin="0,15,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="16"
+                    Text="设置3" />
             </StackPanel>
             <StackPanel Margin="20">
                 <Button>
-                    <Image Source="../../Assets/Images/set.png"/>
+                    <Image Source="../../Assets/Images/set.png" />
                 </Button>
-                <TextBlock Text="设置4" VerticalAlignment="Center" 
-                           HorizontalAlignment="Center"
-                           FontSize="16" Margin="0 15 0 0"/>
+                <TextBlock
+                    Margin="0,15,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="16"
+                    Text="设置4" />
             </StackPanel>
         </StackPanel>
     </Grid>

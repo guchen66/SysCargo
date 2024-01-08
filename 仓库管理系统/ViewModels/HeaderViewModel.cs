@@ -1,36 +1,52 @@
-﻿using ContentModule.Views;
-using MahApps.Metro.Controls.Dialogs;
-using Moudles.Common;
-using Prism.Commands;
-using Prism.Events;
-using Prism.Mvvm;
-using Prism.Regions;
-using Prism.Services.Dialogs;
-using SqlSugar.DbAccess.Model.Models;
-using SqlSugar.DbAccess.Providers;
-using SqlSugar.DbAccess.Services;
-using SqlSugar;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Threading;
-using 仓库管理系统.Shell.Views;
-using System.Windows;
-
+﻿
 namespace 仓库管理系统.ViewModels
 {
     public class HeaderViewModel : BindableBase
     {
-        public SimpleClient<User> sdb = new SimpleClient<User>(DatabaseService.CreateClient());
+        public SimpleClient<User> sdb = new SimpleClient<User>();
 
 
         public HeaderViewModel()
         {
 
         }
+
+        #region HeaderView Skin颜色修改
+        private SkinColorInfo _selectedSkinColor = new SkinColorInfo {Color=Brushes.AliceBlue };
+        public SkinColorInfo SelectedSkinColor
+        {
+            get { return _selectedSkinColor; }
+            set
+            {
+                if (_selectedSkinColor != value)
+                {
+                    _selectedSkinColor = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        public IEnumerable<SkinColorInfo> SkinColorItemsProvider
+        {
+           /* get
+            {
+                return Enum.GetValues(typeof(SkinColorInfo))
+                           .Cast<SkinColorInfo>()
+                           .ToList();
+            }
+*/
+            get
+            {
+                var colors = new List<SkinColorInfo>();
+                colors.Add(new SkinColorInfo() { Name = "Blue", Color = Brushes.Blue });
+                colors.Add(new SkinColorInfo() { Name = "Green", Color = Brushes.Green });
+                colors.Add(new SkinColorInfo() { Name = "Red", Color = Brushes.Red });
+                colors.Add(new SkinColorInfo() { Name = "Yellow", Color = Brushes.Yellow });
+                return colors;
+            }
+
+        }
+
+        #endregion
         //TextBox初始为Empty
         private string search = string.Empty;
 

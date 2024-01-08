@@ -1,17 +1,4 @@
-﻿using Microsoft.Win32;
-using Prism.Services.Dialogs;
-using SqlSugar.DbAccess.Services;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace 仓库管理系统.Global
 {
     public class FileData

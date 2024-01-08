@@ -1,0 +1,9 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:colors="clr-namespace:仓库管理系统.Models"
+    xmlns:local="clr-namespace:仓库管理系统.Views">
+    <Style TargetType="{x:Type local:HeaderView}">
+        <Setter Property="Background" Value="{Binding Path=SelectedSkinColor.Color}" />
+    </Style>
+</ResourceDictionary>

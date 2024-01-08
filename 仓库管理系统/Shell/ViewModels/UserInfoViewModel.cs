@@ -1,27 +1,4 @@
-﻿using Prism.Mvvm;
-using SqlSugar.DbAccess.Model.Models;
-using SqlSugar.DbAccess.Providers;
-using SqlSugar;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.ObjectModel;
-using Prism.Commands;
-using Prism.Services.Dialogs;
-using MahApps.Metro.Controls.Dialogs;
-using SqlSugar.DbAccess.Services;
-using ContentModule.Views;
-using Prism.Events;
-using 仓库管理系统.Global;
-using System.Windows.Controls.Primitives;
-using System.Windows.Controls;
-using System.Windows;
-using System.Data;
-using System.IO;
-using HandyControl.Controls;
-using System.Windows.Threading;
+﻿
 using MessageBox = System.Windows.MessageBox;
 
 namespace 仓库管理系统.Shell.ViewModels
@@ -29,7 +6,7 @@ namespace 仓库管理系统.Shell.ViewModels
     public class UserInfoViewModel : BindableBase
     {
        
-        public SimpleClient<User> sdb = new SimpleClient<User>(DatabaseService.CreateClient());
+        public SimpleClient<User> sdb = new SimpleClient<User>(DatabaseService.GetClient());
         public DataBaseProvider<User> db = new DataBaseProvider<User>();
         private readonly IDialogService _dialogService;
         private readonly IDialogCoordinator _dialogCoordinator;
@@ -47,7 +24,7 @@ namespace 仓库管理系统.Shell.ViewModels
             _eventAggregator = eventAggregator;
             //仓储查询结果是List，转成ObservableCollection
             sdb.GetList().ForEach(x=>GridModelList.Add(x));
-            //db.Queryable.ToList().ForEach(x => GridModelList.Add(x));
+           // db.Queryable.ToList().ForEach(x => GridModelList.Add(x));
         }
 
         private ObservableCollection<User> gridModelList = new ObservableCollection<User>();//已经封装好的集合列表，提供实时刷新，当做有通知的List<Student>
@@ -78,14 +55,14 @@ namespace 仓库管理系统.Shell.ViewModels
         }*/
 
         //TextBox初始为Empty
-        private string search = string.Empty;
+        private string searchContent = string.Empty;
 
-        public string Search
+        public string SearchContent
         {
-            get { return search; }
+            get { return searchContent; }
             set 
-            { 
-                search = value; RaisePropertyChanged();
+            {
+                searchContent = value; RaisePropertyChanged();
                 if (_timer == null)
                 {
                     _timer = new DispatcherTimer();
@@ -119,9 +96,9 @@ namespace 仓库管理系统.Shell.ViewModels
 
         private void ExecuteQueryCmd()
         {
-            var dataList = sdb.GetList().Where(it=>it.Id.ToString().Contains(Search)
-            ||it.Name.Contains(Search)
-            ||it.Password.Contains(Search));
+            var dataList = sdb.GetList().Where(it=>it.Id.ToString().Contains(SearchContent)
+            ||it.Name.Contains(SearchContent)
+            ||it.Password.Contains(SearchContent));
             GridModelList = new ObservableCollection<User>();
             if (dataList != null)
             {
@@ -143,7 +120,7 @@ namespace 仓库管理系统.Shell.ViewModels
 
             paramters.Add("RefreshValue", new Action(Refresh));
             // _dialogService.ShowDialog("AddUserDialogView");
-            _dialogService.ShowDialog("AddUserDialogView", paramters, arg =>
+            _dialogService.ShowDialog("AddUserDialog", paramters, arg =>
             {
                /* if (arg.Result == ButtonResult.OK)
                 {
@@ -171,7 +148,7 @@ namespace 仓库管理系统.Shell.ViewModels
            
             paramters.Add("RefreshValue", new Action(Refresh));
 
-            _dialogService.ShowDialog("UpdateUserDialogView", paramters, r =>
+            _dialogService.ShowDialog("UpdateUserDialog", paramters, r =>
             {
                /* if (r.Result == ButtonResult.Yes)
                 {
@@ -335,7 +312,7 @@ namespace 仓库管理系统.Shell.ViewModels
         public void Refresh()
         {
             //var dataList = db.Queryable.ToList(it => it.Name == Search);
-            var dataList = sdb.GetList().Where(it => it.Name == Search);
+            var dataList = sdb.GetList().Where(it => it.Name == SearchContent);
             GridModelList.Clear();// = new ObservableCollection<User>();
             if (dataList != null)
             {
@@ -358,7 +335,7 @@ namespace 仓库管理系统.Shell.ViewModels
             var controller = await this._dialogCoordinator.ShowProgressAsync(this, "请稍等", "正在刷新数据...", settings: mySettings);
 
             controller.SetIndeterminate();
-            Search = string.Empty;
+            SearchContent = string.Empty;
             
             this.Refresh();
             await Task.Delay(3000); // Wait for 3 seconds

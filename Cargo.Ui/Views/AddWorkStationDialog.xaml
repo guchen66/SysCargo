@@ -1,0 +1,87 @@
+﻿<UserControl
+    x:Class="Cargo.Ui.Views.AddWorkStationDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:Cargo.Ui.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:pwd="clr-namespace:Cargo.Ui.Helpers"
+    xmlns:vw="clr-namespace:Cargo.Ui.ViewModels"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary Source="pack://application:,,,/Cargo.Ui;component/Properties/DesignResources.xaml" />
+    </UserControl.Resources>
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock
+                    Width="80"
+                    VerticalAlignment="Center"
+                    FontSize="18"
+                    Text="工位Id：" />
+                <TextBox
+                    Width="200"
+                    VerticalAlignment="Center"
+                    Text="{Binding WorkPlaceId}" />
+            </StackPanel>
+
+            <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                <TextBlock
+                    Width="80"
+                    VerticalAlignment="Center"
+                    FontSize="18"
+                    Text="工位名称：" />
+                <TextBox
+                    Width="200"
+                    VerticalAlignment="Center"
+                    Text="{Binding WorkStationName}" />
+            </StackPanel>
+
+            <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                <TextBlock
+                    Width="80"
+                    VerticalAlignment="Center"
+                    FontSize="18"
+                    Text="创建日期：" />
+                <hc:DatePicker
+                    Width="200"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    SelectedDate="{Binding DateValue, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Button
+                    Width="80"
+                    Margin="10"
+                    Background="Green"
+                    Command="{Binding SaveCmd}"
+                    CommandParameter="true"
+                    Content="保存" />
+                <Button
+                    Width="80"
+                    Margin="10"
+                    Background="Red"
+                    Command="{Binding CloseCmd}"
+                    CommandParameter="false"
+                    Content="取消" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

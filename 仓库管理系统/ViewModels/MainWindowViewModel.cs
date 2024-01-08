@@ -1,30 +1,10 @@
-﻿using ImTools;
-using Moudles.Common;
-using Prism.Commands;
-using Prism.Events;
-using Prism.Mvvm;
-using Prism.Regions;
-using Prism.Services.Dialogs;
-using SqlSugar;
-using SqlSugar.DbAccess.Model.Models;
-using SqlSugar.DbAccess.Providers;
-using SqlSugar.DbAccess.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Windows;
-using 仓库管理系统.Global;
-using 仓库管理系统.Models;
-using 仓库管理系统.Shell.Views;
-using 仓库管理系统.Views;
-
+﻿
 namespace 仓库管理系统.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
         public AppData appData { get; set; } = AppData.Instance;
-        public SimpleClient<User> sdb = new SimpleClient<User>(DatabaseService.CreateClient());
+        public SimpleClient<User> sdb = new SimpleClient<User>();
 
        
         //public BaseOperate<User> BaseOperate { get; set; }
@@ -42,7 +22,6 @@ namespace 仓库管理系统.ViewModels
             _navigationJournal= navigationJournal;
 
             regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, typeof(HomeView));
-            regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, typeof(SetView));
             regionManager.RegisterViewWithRegion(RegionNames.HeaderRegion, typeof(HeaderView));
             regionManager.RegisterViewWithRegion(RegionNames.FooterRegion, typeof(FooterView));
             /*_eventAggregator.GetEvent<MyEvent2>().Subscribe(DoGoBack);
@@ -78,11 +57,11 @@ namespace 仓库管理系统.ViewModels
                 case "仓库汇总":
                     Navigate("Total");
                     break;
-                case "入库信息":
-                    Navigate("StorageView");
+                case "工位信息":
+                    Navigate("WorkStationView");
                     break;
-                case "出库信息":
-                    Navigate("Outbound");
+                case "工序信息":
+                    Navigate("ProcessView");
                     break;
                 case "智能报警":
                     Navigate("Alarm");

@@ -1,0 +1,113 @@
+﻿<UserControl
+    x:Class="Cargo.Ui.Views.UpdateProcessDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:Cargo.Ui.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:pwd="clr-namespace:Cargo.Ui.Helpers"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary Source="pack://application:,,,/Cargo.Ui;component/Properties/DesignResources.xaml" />
+    </UserControl.Resources>
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock
+                    Width="80"
+                    VerticalAlignment="Center"
+                    FontSize="18"
+                    Text="Id：" />
+                <TextBox
+                    Width="200"
+                    VerticalAlignment="Center"
+                    IsReadOnly="True"
+                    Text="{Binding CurrentId}" />
+            </StackPanel>
+            <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                <TextBlock
+                    Width="80"
+                    VerticalAlignment="Center"
+                    FontSize="18"
+                    Text="所属工位：" />
+                <ComboBox
+                    x:Name="Combobox1"
+                    Width="200"
+                    VerticalAlignment="Center"
+                    DisplayMemberPath="WorkPlaceName"
+                    ItemsSource="{Binding WorkStationList}"
+                    SelectedItem="{Binding WorkStationName}"
+                    SelectedValue="{Binding WorkStationName}"
+                    SelectedValuePath="WorkPlaceName" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock
+                    Width="80"
+                    VerticalAlignment="Center"
+                    FontSize="18"
+                    Text="操作员：" />
+                <TextBox
+                    Width="200"
+                    Margin="0,10,0,0"
+                    VerticalAlignment="Center"
+                    Text="{Binding OperateName, UpdateSourceTrigger=PropertyChanged}" />
+
+            </StackPanel>
+
+            <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                <TextBlock
+                    Width="80"
+                    VerticalAlignment="Center"
+                    FontSize="18"
+                    Text="工序名称：" />
+                <TextBox
+                    Width="200"
+                    VerticalAlignment="Center"
+                    Text="{Binding ProcessName, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+            <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                <TextBlock
+                    Width="80"
+                    VerticalAlignment="Center"
+                    FontSize="18"
+                    Text="创建日期：" />
+                <hc:DatePicker
+                    Width="200"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    SelectedDate="{Binding DateValue, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Button
+                    Width="80"
+                    Margin="10"
+                    Background="Green"
+                    Command="{Binding SaveCmd}"
+                    CommandParameter="{Binding CurrentId}"
+                    Content="保存" />
+                <Button
+                    Width="80"
+                    Margin="10"
+                    Background="Red"
+                    Command="{Binding CloseCmd}"
+                    CommandParameter="false"
+                    Content="取消" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>
