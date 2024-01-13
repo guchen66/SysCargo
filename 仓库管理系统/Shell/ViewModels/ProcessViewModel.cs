@@ -3,34 +3,52 @@ namespace 仓库管理系统.Shell.ViewModels
 {
     public class ProcessViewModel : BindableBase//, IConfirmNavigationRequest
     {
+        #region 属性、字段
 
-        ProcessService db = new ProcessService();
-       
         private readonly IDialogService _dialogService;
         private readonly IEventAggregator _eventAggregator;
-        private IDialogCoordinator _dialogCoordinator;
-        //  IEnumerable<ProcessModel> dataList=null;
+        private readonly IDialogCoordinator _dialogCoordinator;
+        ProcessService db = new ProcessService();
+
+        private ObservableCollection<ProcessModel> gridModelList;
+        public ObservableCollection<ProcessModel> GridModelList
+        {
+            get { return gridModelList; }
+            set { gridModelList = value; RaisePropertyChanged(); }
+        }
+        #endregion
+
+        
+
+       
+        
         public ProcessViewModel(IDialogService dialogService, IDialogCoordinator dialogCoordinator,IEventAggregator eventAggregator)
         {
 
             _dialogService = dialogService;
             _dialogCoordinator = dialogCoordinator;
             _eventAggregator = eventAggregator;
-            //仓储查询结果是List，转成ObservableCollection
-           
+            GridModelList = new ObservableCollection<ProcessModel>();
             db.GetAllProcessModels().ForEach(x => GridModelList.Add(x));
             
             //可以使用事件管理器，也可以使用导航跳转时进行刷新
             _eventAggregator.GetEvent<WorkStationDelEvent>().Subscribe(Refresh);
+            QueryCommand = new DelegateCommand(ExecuteQuery);
+            AddCommand = new DelegateCommand(ExecuteAdd);
+            UpdateCommand = new DelegateCommand<int?>(ExecuteUpdate);
+            DeleteCommand = new DelegateCommand<int?>(ExecuteDelete);
+            RefreshCommand = new DelegateCommand(ExecuteRefresh);
+        }
+        #region 命令
 
-        }
-      
-        private ObservableCollection<ProcessModel> gridModelList = new ObservableCollection<ProcessModel>();//已经封装好的集合列表，提供实时刷新，当做有通知的List<Student>
-        public ObservableCollection<ProcessModel> GridModelList//和前台要对应
-        {
-            get { return gridModelList; }
-            set { gridModelList = value; RaisePropertyChanged(); }
-        }
+        public ICommand QueryCommand { get; set; }
+        public ICommand AddCommand { get; set; }
+        public ICommand UpdateCommand { get; set; }
+        public ICommand DeleteCommand { get; set; }
+        public ICommand RefreshCommand { get; set; }
+        #endregion
+
+        #region 方法
 
 
         //查询全部
@@ -55,12 +73,7 @@ namespace 仓库管理系统.Shell.ViewModels
         }
 
 
-        //查询
-        private DelegateCommand _queryCommand;
-        public DelegateCommand QueryCommand =>
-            _queryCommand ?? (_queryCommand = new DelegateCommand(ExecuteQueryCmd));
-
-        void ExecuteQueryCmd()
+        private void ExecuteQuery()
         {
 
             var dataList = db.GetAllProcessModels().ToList().Where(it => it.Id.ToString().Contains(Search)
@@ -74,14 +87,9 @@ namespace 仓库管理系统.Shell.ViewModels
             }
         }
 
-        #region 命令
-
         //新增
-        private DelegateCommand _addCommand;
-        public DelegateCommand AddCommand =>
-            _addCommand ?? (_addCommand = new DelegateCommand(ExecuteAddCmd));
 
-        void ExecuteAddCmd()
+        private void ExecuteAdd()
         {
             DialogParameters paramters = new DialogParameters();
             paramters.Add("RefreshValue", new Action(Refresh));
@@ -96,11 +104,8 @@ namespace 仓库管理系统.Shell.ViewModels
 
 
         //修改
-        private DelegateCommand<int?> _updateCommand;
-        public DelegateCommand<int?> UpdateCommand =>
-            _updateCommand ?? (_updateCommand = new DelegateCommand<int?>(ExecuteUpdateCmd));
-
-        private void ExecuteUpdateCmd(int? id)
+ 
+        private void ExecuteUpdate(int? id)
         {
             var dataList = db.GetAllProcessModels().Where(it => it.Id == id);
             DialogParameters paramters = new DialogParameters();
@@ -116,36 +121,9 @@ namespace 仓库管理系统.Shell.ViewModels
             });
         }
 
-        //下载
-        private DelegateCommand<string> _downloadCommand;
-        public DelegateCommand<string> DownLoadCommand =>
-            _downloadCommand ?? (_downloadCommand = new DelegateCommand<string>(ExecuteDownLoadCommand));
-
-        private void ExecuteDownLoadCommand(string search)
-        {
-
-            //var dataList = sdb.GetList();
-            // DataTable dt = FileData.ListToDataTable(dataList);
-
-            var data = GridModelList;
-            string json = Newtonsoft.Json.JsonConvert.SerializeObject(data);
-            File.WriteAllText(@"E:\VS Workspace\Apply\仓库管理系统\ContentMoudle\DownLoad\Total.json", json);
-
-            string path = @"E:\VS Workspace\Apply\仓库管理系统\ContentMoudle\DownLoad\Total.json";
-            if (File.Exists(path))
-            {
-                MessageBox.Show("文件下载成功！");
-            }
-        }
-
         //删除  跟据主键Id删除对应工序
-        private DelegateCommand<int?> _deleteCommand { get; set; }
-        public DelegateCommand<int?> DeleteCommand
-        {
-            get => _deleteCommand ?? (_deleteCommand = new DelegateCommand<int?>(ExecuteDeleCommand));
-            set => _deleteCommand = value;
-        }
-        private async void ExecuteDeleCommand(int? ids)
+
+        private async void ExecuteDelete(int? ids)
         {
             var model = db.GetAllProcessModels().Where(it => it.Id == ids);
 
@@ -192,11 +170,8 @@ namespace 仓库管理系统.Shell.ViewModels
 
 
         //刷新
-        private DelegateCommand _refreshCommand;
-        public DelegateCommand RefreshCommand =>
-            _refreshCommand ?? (_refreshCommand = new DelegateCommand(ExecuteRefreshCmd));
 
-        private void ExecuteRefreshCmd()
+        private void ExecuteRefresh()
         {
             DoRefresh();
         }
@@ -235,7 +210,7 @@ namespace 仓库管理系统.Shell.ViewModels
             await Task.Delay(3000); // Wait for 3 seconds
             await controller.CloseAsync();
         }
-        #endregion
+     
 
         public void ConfirmNavigationRequest(NavigationContext navigationContext, Action<bool> continuationCallback)
         {
@@ -264,5 +239,6 @@ namespace 仓库管理系统.Shell.ViewModels
             Refresh();
         }
 
+        #endregion
     }
 }

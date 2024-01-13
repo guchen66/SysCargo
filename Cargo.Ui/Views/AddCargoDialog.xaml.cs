@@ -9,6 +9,6 @@ namespace Cargo.Ui.Views
         public AddCargoDialog()
         {
             InitializeComponent();
-        }
+        }   
     }
 }

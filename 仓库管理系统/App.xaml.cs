@@ -1,8 +1,6 @@
 ﻿
-using ILogger = Cargo.Core.Log.ILogger;
-using Cargo.Core.Log;
-using 仓库管理系统.ViewModels;
-using Cargo.Ui;
+using ILogger = Cargo.Core.Loggers.ILogger;
+
 
 namespace 仓库管理系统
 {
@@ -61,11 +59,10 @@ namespace 仓库管理系统
             containerRegistry.RegisterDialog<MyDialogView, MyDialogViewModel>();
 
             containerRegistry.RegisterForNavigation<UserInfoView>("User");  //用户信息
-            containerRegistry.RegisterForNavigation<OutboundView>("Outbound");  //出库信息
-            containerRegistry.RegisterForNavigation<StorageView>();  //入库信息
             containerRegistry.RegisterForNavigation<TotalView>("Total");  //库存总量
             containerRegistry.RegisterForNavigation<WorkStationView>();  //工位信息
             containerRegistry.RegisterForNavigation<ProcessView>();  //工序信息
+            containerRegistry.RegisterForNavigation<CountView>();  //统计数据
             containerRegistry.RegisterForNavigation<AlarmView>("Alarm");  //报警信息
             containerRegistry.RegisterForNavigation<SetView>();
 

@@ -29,7 +29,7 @@ namespace 仓库管理系统.ViewModels
                     LogInfo = ex.Message, // 记录异常信息
                     StackTrace = ex.StackTrace // 记录堆栈信息
                 };
-                _loggerHelper.Log(Cargo.Core.Log.LogLevel.Error, logMessage); // 记录日志
+                _loggerHelper.Log(Cargo.Core.Loggers.LogLevel.Error, logMessage); // 记录日志
             }
         }
     }

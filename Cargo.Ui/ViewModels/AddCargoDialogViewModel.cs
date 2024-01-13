@@ -1,15 +1,11 @@
-﻿
+﻿using Cargo.SqlSugar.Services;
+
 namespace Cargo.Ui.ViewModels
 {
     public class AddCargoDialogViewModel : BindableBase, IDialogAware
     {
-
         public Action action { get; set; }
         CargoService db = new CargoService();
-        public AddCargoDialogViewModel()
-        {
-
-        }
 
         public string Title => "添加Cargo弹窗";
 

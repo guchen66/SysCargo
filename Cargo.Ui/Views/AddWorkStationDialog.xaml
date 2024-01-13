@@ -70,7 +70,7 @@
                 <Button
                     Width="80"
                     Margin="10"
-                    Background="Green"
+                    Background="#71c4ef"
                     Command="{Binding SaveCmd}"
                     CommandParameter="true"
                     Content="保存" />

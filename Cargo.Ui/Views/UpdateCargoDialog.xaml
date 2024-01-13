@@ -83,7 +83,7 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="1" Orientation="Horizontal">
                 <Button Content="保存" Margin="10"  Width="80"
-                        Background="Green"
+                        Background="#71c4ef"
                         Command="{Binding SaveCmd}"
                         CommandParameter="{Binding CurrentId}"/>
                 <Button Content="取消" Margin="10"

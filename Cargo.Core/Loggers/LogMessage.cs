@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cargo.Core.Log
+namespace Cargo.Core.Loggers
 {
     /// <summary>
     /// 日志消息

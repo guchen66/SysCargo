@@ -24,15 +24,11 @@ namespace Cargo.SqlSugar.Services
 
         public bool AddUser(User user)
         {
-            using (db)
+            if (db.Insertable(user).ExecuteCommand() > 0)
             {
-                if (db.Insertable(user).ExecuteCommand() > 0)
-                {
-                    return true;
-                }
-                return false;
+                return true;
             }
-
+            return false;
         }
 
         public void UpdateUser(User user)

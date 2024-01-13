@@ -10,8 +10,5 @@ namespace Cargo.Ui.Models
     {
         管理员,
         操作员,
-
     }
-
-
 }

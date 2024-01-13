@@ -1,4 +1,5 @@
-﻿
+﻿using Cargo.SqlSugar.Services;
+
 namespace Cargo.Ui.ViewModels
 {
     public class AddWorkStationDialogViewModel : BindableBase, IDialogAware

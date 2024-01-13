@@ -5,7 +5,7 @@
         <Setter Property="CanUserResizeColumns" Value="false" />
         <Setter Property="Background" Value="#71c4ef" />
         <Setter Property="BorderBrush" Value="#FFF5F7F5" />
-        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontSize" Value="16" />
         <Setter Property="HorizontalGridLinesBrush">
             <Setter.Value>
                 <SolidColorBrush Color="#d4eaf7" />

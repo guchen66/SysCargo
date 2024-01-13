@@ -1,4 +1,6 @@
 ﻿
+using MahApps.Metro.Controls;
+
 namespace Cargo.Ui.Views
 {
     /// <summary>

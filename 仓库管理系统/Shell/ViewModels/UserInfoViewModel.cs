@@ -1,58 +1,204 @@
 ﻿
+using Cargo.Shared.Dtos;
+using Mapster;
 using MessageBox = System.Windows.MessageBox;
 
 namespace 仓库管理系统.Shell.ViewModels
 {
     public class UserInfoViewModel : BindableBase
     {
-       
-        public SimpleClient<User> sdb = new SimpleClient<User>(DatabaseService.GetClient());
-        public DataBaseProvider<User> db = new DataBaseProvider<User>();
+        #region 属性、字段
+
         private readonly IDialogService _dialogService;
         private readonly IDialogCoordinator _dialogCoordinator;
         private readonly IEventAggregator _eventAggregator;  //事件管理器发布订阅消息
+
+        private ObservableCollection<UserDto> gridModelList;
+        public ObservableCollection<UserDto> GridModelList
+        {
+            get { return gridModelList; }
+            set { gridModelList = value; RaisePropertyChanged(); }
+        }
+        private DataBaseProvider<User> db = new DataBaseProvider<User>();
+        
+        #endregion
+
+        #region 命令
+
+        public ICommand InitingCommand {  get; set; }
+        public ICommand QueryUserCommand { get; set; }
+        public ICommand AddUserCommand { get; set; }
+        public ICommand UpdateUserCommand { get; set; }
+        public ICommand DelUserCommand { get; set; }
+        public ICommand RefreshCommand { get; set; }
+        #endregion
+     
         List<User> dataList = new List<User>();
 
         private DispatcherTimer _timer;
         private bool _isDelaying;
-        public UserInfoViewModel(IDialogService dialogService,
-            IDialogCoordinator dialogCoordinator, IEventAggregator eventAggregator)
+        public UserInfoViewModel(IDialogService dialogService,IDialogCoordinator dialogCoordinator, IEventAggregator eventAggregator)
         {
 
             _dialogService = dialogService;
             _dialogCoordinator = dialogCoordinator;
             _eventAggregator = eventAggregator;
-            //仓储查询结果是List，转成ObservableCollection
-            sdb.GetList().ForEach(x=>GridModelList.Add(x));
-           // db.Queryable.ToList().ForEach(x => GridModelList.Add(x));
+
+            InitingCommand = new DelegateCommand(ExecuteIniting);
+            QueryUserCommand = new DelegateCommand(ExecuteQueryUser);
+            AddUserCommand = new DelegateCommand(ExecuteAddUser);
+            UpdateUserCommand = new DelegateCommand<int?>(ExecuteUpdateUser);
+            DelUserCommand = new DelegateCommand<int?>(ExecuteDelUser);
+            RefreshCommand = new DelegateCommand(ExecuteRefresh);
+            GridModelList = new ObservableCollection<UserDto>();
+        }
+        #region 方法
+
+        /// <summary>
+        /// 界面初始化
+        /// </summary>
+        private async void ExecuteIniting()
+        {
+            await LoadDataAsync();
         }
 
-        private ObservableCollection<User> gridModelList = new ObservableCollection<User>();//已经封装好的集合列表，提供实时刷新，当做有通知的List<Student>
-        public ObservableCollection<User> GridModelList//和前台要对应
+        public async Task LoadDataAsync()
         {
-            get
+            try
             {
-                return gridModelList;
+                using (var db = DatabaseService.GetClient())
+                {
+                    var users = await db.Queryable<User>().Includes(x => x.Role).ToListAsync();
+
+                    GridModelList = new ObservableCollection<UserDto>(
+                    users.Select(x =>
+                    {
+                        var dto = x.Adapt<UserDto>();
+                        dto.RoleName = x.Role?.RoleName ?? string.Empty;
+                        return dto;
+                    }));
+                }
             }
-            set
+            catch (Exception ex)
             {
-                gridModelList = value;
-                RaisePropertyChanged();
-            }//两种属性通知都可
+                // 错误处理，例如记录日志或显示错误提示
+                ShowProgressDialogAsync();
+            }
+        }
+        public async void ShowProgressDialogAsync()
+        {
+            var controller = await _dialogCoordinator.ShowProgressAsync(this, "请稍等", "正在进行操作...");
+            controller.SetIndeterminate();
+
+            // 执行长时间运行的操作
+            await Task.Delay(2000);
+
+            await controller.CloseAsync();
+        }
+        /// <summary>
+        /// 查询User
+        /// </summary>
+        private void ExecuteQueryUser()
+        {
+            /*var dataList = db.Queryable.Where(it => it.Id.ToString().Contains(SearchContent)
+                                                  || it.Name.Contains(SearchContent)
+                                                  || it.Password.Contains(SearchContent));
+            GridModelList = new ObservableCollection<UserDto>();
+            if (dataList != null)
+            {
+                dataList.ToList().ForEach(o => GridModelList.Add(o));
+            }*/
         }
 
-
-        //查询全部
-      /*  public ObservableCollection<User> SelectAll()
+        /// <summary>
+        /// 添加
+        /// </summary>
+        private void ExecuteAddUser()
         {
-            List<User> users = new List<User>();
-            if (users != null)
+            DialogParameters paramters = new DialogParameters();
+
+            paramters.Add("RefreshValue", new Action(Refresh));
+            // _dialogService.ShowDialog("AddUserDialogView");
+            _dialogService.ShowDialog("AddUserDialog", paramters, arg =>
             {
-                GridModelList.Clear();
-                users.ForEach(x => GridModelList.Add(x));
+                /* if (arg.Result == ButtonResult.OK)
+                 {
+
+                    // HandyControl.Controls.Dialog.Show(new ErrorDialog());
+                     Refresh();
+                 }
+                 else
+                 {
+                     HandyControl.Controls.Dialog.Show(new ErrorDialog());
+                 }*/
+            });
+        }
+
+        /// <summary>
+        /// 修改
+        /// </summary>
+        /// <param name="id"></param>
+        private void ExecuteUpdateUser(int? id)
+        {
+            var dataList = db.Queryable.Where(it => it.Id == id).ToList();
+            DialogParameters paramters = new DialogParameters();
+            paramters.Add("dataList", dataList);
+
+            paramters.Add("RefreshValue", new Action(Refresh));
+
+            _dialogService.ShowDialog("UpdateUserDialog", paramters, r =>
+            {
+                /* if (r.Result == ButtonResult.Yes)
+                 {
+                     //刷新
+                     //AddUser = GetLessUserGrad();
+                 }*/
+            });
+        }
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="ids"></param>
+        private async void ExecuteDelUser(int? ids)
+        {
+            var model = db.Queryable.Where(it => it.Id == ids);
+
+            if (model != null)
+            {
+                var settings = new MetroDialogSettings
+                {
+                    ColorScheme = MetroDialogColorScheme.Accented,
+                    AnimateShow = false,
+                    AnimateHide = false,
+                    AffirmativeButtonText = "确认"
+                };
+                var result = await this._dialogCoordinator.ShowMessageAsync(this, "是否删除该用户?", "删除用户", MessageDialogStyle.AffirmativeAndNegative, settings);
+                if (result == MessageDialogResult.Affirmative)
+                {
+                    //刷新
+                    db.DeleteById(ids);
+                    Refresh();
+                }
+                if (result == MessageDialogResult.Negative)
+                {
+                    Refresh();
+                }
             }
-            return GridModelList;
-        }*/
+        }
+
+        /// <summary>
+        /// 刷新
+        /// </summary>
+        private void ExecuteRefresh()
+        {
+            var dataList = db.Queryable.Where(it => it.Name == SearchContent);
+            GridModelList.Clear();// = new ObservableCollection<User>();
+            if (dataList != null)
+            {
+              //  db.Queryable.ForEach(x => GridModelList.Add(x));
+            }
+        }
 
         //TextBox初始为Empty
         private string searchContent = string.Empty;
@@ -60,7 +206,7 @@ namespace 仓库管理系统.Shell.ViewModels
         public string SearchContent
         {
             get { return searchContent; }
-            set 
+            set
             {
                 searchContent = value; RaisePropertyChanged();
                 if (_timer == null)
@@ -82,160 +228,15 @@ namespace 仓库管理系统.Shell.ViewModels
         {
             //取消上一次操作
             _timer.Stop();
-            _isDelaying=false;
+            _isDelaying = false;
 
             //执行搜索操作
-            ExecuteQueryCmd();
-        }
-
-
-        //查询
-        private DelegateCommand _queryCommand;
-        public DelegateCommand QueryCommand =>
-            _queryCommand ?? (_queryCommand = new DelegateCommand(ExecuteQueryCmd));
-
-        private void ExecuteQueryCmd()
-        {
-            var dataList = sdb.GetList().Where(it=>it.Id.ToString().Contains(SearchContent)
-            ||it.Name.Contains(SearchContent)
-            ||it.Password.Contains(SearchContent));
-            GridModelList = new ObservableCollection<User>();
-            if (dataList != null)
-            {
-                dataList.ToList().ForEach(o => GridModelList.Add(o));
-            }
+            //   ExecuteQueryCmd();
         }
 
 
 
-        //新增
-        private DelegateCommand _addCommand;
-        public DelegateCommand AddCommand =>
-            _addCommand ?? (_addCommand = new DelegateCommand(ExecuteAddCmd));
-      
-        private void ExecuteAddCmd()
-        {
 
-            DialogParameters paramters = new DialogParameters();
-
-            paramters.Add("RefreshValue", new Action(Refresh));
-            // _dialogService.ShowDialog("AddUserDialogView");
-            _dialogService.ShowDialog("AddUserDialog", paramters, arg =>
-            {
-               /* if (arg.Result == ButtonResult.OK)
-                {
-
-                   // HandyControl.Controls.Dialog.Show(new ErrorDialog());
-                    Refresh();
-                }
-                else
-                {
-                    HandyControl.Controls.Dialog.Show(new ErrorDialog());
-                }*/
-            });
-        }
-
-        //修改
-        private DelegateCommand<int?> _updateCommand;
-        public DelegateCommand<int?> UpdateCommand =>
-            _updateCommand ?? (_updateCommand = new DelegateCommand<int?>(ExecuteUpdateCmd));
-
-        private void ExecuteUpdateCmd(int? id)
-        {
-            var dataList=sdb.GetList().Where(it => it.Id==id);
-            DialogParameters paramters = new DialogParameters();
-            paramters.Add("dataList", dataList);
-           
-            paramters.Add("RefreshValue", new Action(Refresh));
-
-            _dialogService.ShowDialog("UpdateUserDialog", paramters, r =>
-            {
-               /* if (r.Result == ButtonResult.Yes)
-                {
-                    //刷新
-                    //AddUser = GetLessUserGrad();
-                }*/
-            });
-        }
-
-
-        //通过SimpleClient写通过id删除
-        private DelegateCommand<int?> _deleteCommand { get; set; }
-        public DelegateCommand<int?> DeleteCommand
-        {
-            get => _deleteCommand ?? (_deleteCommand = new DelegateCommand<int?>(ExecuteDeleCommand));
-            set => _deleteCommand = value;
-        }
-
-        
-        
-        private async void ExecuteDeleCommand(int? ids)
-        {
-            var model = sdb.GetList().Where(it => it.Id == ids);
-
-            if (model != null)
-            {
-                var settings = new MetroDialogSettings
-                {
-                    ColorScheme = MetroDialogColorScheme.Accented,
-                    AnimateShow = false,
-                    AnimateHide = false,
-                    AffirmativeButtonText = "确认"
-                };
-                var result = await this._dialogCoordinator.ShowMessageAsync(this, "是否删除该用户?", "删除用户", MessageDialogStyle.AffirmativeAndNegative,settings);
-                if (result == MessageDialogResult.Affirmative)
-                {
-                    //刷新
-                    sdb.DeleteById(ids);
-                    Refresh();
-                }
-                if (result==MessageDialogResult.Negative)
-                {
-                    Refresh();
-                }
-            }
-
-           
-        }
-
-        //下载
-        private DelegateCommand<string> _downLoadCommand { get; set; }
-        public DelegateCommand<string> DownLoadCommand
-        {
-            get => _downLoadCommand ?? (_downLoadCommand = new DelegateCommand<string>(ExecuteDownLoadCommand));
-            set => _downLoadCommand = value;
-        }
-
-        private void ExecuteDownLoadCommand(string search)
-        {
-            
-            //var dataList = sdb.GetList();
-           // DataTable dt = FileData.ListToDataTable(dataList);
-
-            var data = GridModelList;
-            string json = Newtonsoft.Json.JsonConvert.SerializeObject(data);
-            File.WriteAllText(@"E:\VS Workspace\Apply\仓库管理系统\ContentMoudle\DownLoad\User.json", json);
-
-            string path = @"E:\VS Workspace\Apply\仓库管理系统\ContentMoudle\DownLoad\User.json";
-            if (File.Exists(path))
-            {
-                MessageBox.Show("文件下载成功！");
-            }
-        }
-
-
-
-        //刷新
-        private DelegateCommand _refreshCommand;
-        public DelegateCommand RefreshCommand =>
-            _refreshCommand ?? (_refreshCommand = new DelegateCommand(ExecuteRefreshCmd));
-
-        private void ExecuteRefreshCmd()
-        {
-            DoRefresh();
-           
-        }
-       
         //当前页码的属性
         private int _currentPage = 1;
         public int CurrentPage
@@ -259,7 +260,7 @@ namespace 仓库管理系统.Shell.ViewModels
         //更新数据的方法
         private void UpdateData()
         {
-            int pageSize = 15; //每页展示的数据数量
+            /*int pageSize = 15; //每页展示的数据数量
             int startIndex = (CurrentPage - 1) * pageSize;
             int endIndex = CurrentPage * pageSize;
 
@@ -271,14 +272,14 @@ namespace 仓库管理系统.Shell.ViewModels
             }
 
             //计算总页数
-            TotalPages = (int)Math.Ceiling((double)dataList.Count / pageSize);
+            TotalPages = (int)Math.Ceiling((double)dataList.Count / pageSize);*/
         }
 
         //处理用户输入的方法
         public void HandleInput(string input)
         {
             //根据用户输入执行相应的操作
-            switch (input)
+          /*  switch (input)
             {
                 case "add":
                     User newData = new User();
@@ -305,23 +306,23 @@ namespace 仓库管理系统.Shell.ViewModels
                         UpdateData();
                     }
                     break;
-            }
+            }*/
         }
 
         //用来刷新界面
         public void Refresh()
         {
             //var dataList = db.Queryable.ToList(it => it.Name == Search);
-            var dataList = sdb.GetList().Where(it => it.Name == SearchContent);
+            var dataList = db.Queryable.Where(it => it.Name == SearchContent);
             GridModelList.Clear();// = new ObservableCollection<User>();
             if (dataList != null)
             {
-                sdb.GetList().ForEach(x => GridModelList.Add(x));
+              //  db.Queryable.ForEach(x => GridModelList.Add(x));
             }
         }
 
 
-        private  async void DoRefresh()
+        private async void DoRefresh()
         {
             var mySettings = new MetroDialogSettings()
             {
@@ -336,7 +337,7 @@ namespace 仓库管理系统.Shell.ViewModels
 
             controller.SetIndeterminate();
             SearchContent = string.Empty;
-            
+
             this.Refresh();
             await Task.Delay(3000); // Wait for 3 seconds
             await controller.CloseAsync();
@@ -344,8 +345,9 @@ namespace 仓库管理系统.Shell.ViewModels
 
         private void OnDialogClosed(string result)
         {
-           // _eventAggregator.GetEvent<DialogColsedEvent>().Publish(result);
+            // _eventAggregator.GetEvent<DialogColsedEvent>().Publish(result);
         }
 
+        #endregion
     }
 }

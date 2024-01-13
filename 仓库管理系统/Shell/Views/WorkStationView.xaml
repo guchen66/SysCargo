@@ -21,7 +21,7 @@
     </UserControl.Resources>
     <Grid Background="AliceBlue">
         <Grid.RowDefinitions>
-            <RowDefinition Height="40" />
+            <RowDefinition Height="45" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <StackPanel
@@ -30,32 +30,29 @@
             Orientation="Horizontal">
             <TextBox
                 Width="200"
-                Height="30"
+                Height="35"
+                FontSize="20"
                 Text="{Binding Search}" />
             <Button
                 Width="100"
-                Height="30"
+                Height="35"
                 Margin="10,0,10,0"
-                Command="{Binding QueryCommand}"
-                Content="查询" />
+                Command="{Binding QueryWorkStationCommand}"
+                Content="查询"
+                FontSize="18" />
             <Button
                 Width="100"
-                Height="30"
-                Command="{Binding AddCommand}"
-                Content="新增" />
+                Height="35"
+                Command="{Binding AddWorkStationCommand}"
+                Content="新增"
+                FontSize="18" />
             <Button
                 Width="100"
-                Height="30"
-                Margin="10,0,0,0"
-                Command="{Binding DownLoadCommand}"
-                CommandParameter="{Binding Search}"
-                Content="下载" />
-            <Button
-                Width="100"
-                Height="30"
+                Height="35"
                 Margin="10,0,10,0"
                 Command="{Binding RefreshCommand}"
-                Content="刷新" />
+                Content="刷新"
+                FontSize="18" />
         </StackPanel>
         <DataGrid
             Name="down"
@@ -75,31 +72,44 @@
             SelectionMode="Single"
             Style="{StaticResource MyDataGridStyle}">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Id}" Header="Id" Width="150"/>
-                <DataGridTextColumn Binding="{Binding WorkPlaceId}" Header="工位Id" Width="150"/>
+                <DataGridTextColumn
+                    Width="150"
+                    Binding="{Binding Id}"
+                    Header="Id" />
+                <DataGridTextColumn
+                    Width="150"
+                    Binding="{Binding WorkPlaceId}"
+                    Header="工位Id" />
 
-                <DataGridTextColumn Binding="{Binding WorkPlaceName}" Header="工位名称" Width="150"/>
+                <DataGridTextColumn
+                    Width="150"
+                    Binding="{Binding WorkPlaceName}"
+                    Header="工位名称" />
 
-                <DataGridTextColumn Binding="{Binding CreateTime, StringFormat='yyyy/MM/dd'}" Header="创建日期" Width="150"/>
+                <DataGridTextColumn
+                    Width="150"
+                    Binding="{Binding CreateTime, StringFormat='yyyy/MM/dd'}"
+                    Header="创建日期" />
                 <DataGridTemplateColumn Width="*" Header="操作">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <Button
-                                    Width="60"
-                                    Height="25"
-                                    Background="Green"
-                                    Command="{Binding DataContext.UpdateCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
+                                    Width="70"
+                                    Margin="0,0,15,0"
+                                    Background="LightGreen"
+                                    Command="{Binding DataContext.UpdateWorkStationCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
                                     CommandParameter="{Binding Id}"
                                     Content="修改"
+                                    FontSize="14"
                                     Foreground="Black" />
                                 <Button
-                                    Width="60"
-                                    Height="25"
+                                    Width="70"
                                     Background="Red"
-                                    Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
+                                    Command="{Binding DataContext.DelWorkStationCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
                                     CommandParameter="{Binding WorkPlaceId}"
                                     Content="删除"
+                                    FontSize="14"
                                     Foreground="Black" />
                             </StackPanel>
                         </DataTemplate>

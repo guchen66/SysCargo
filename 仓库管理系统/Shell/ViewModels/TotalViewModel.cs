@@ -1,34 +1,52 @@
 ﻿
+using MiniExcelLibs;
+
 namespace 仓库管理系统.Shell.ViewModels
 {
 
     public class TotalViewModel : BindableBase
     {
+        #region 属性、字段
 
-        CargoService db = new CargoService();
-       
         private readonly IDialogService _dialogService;
-        
-        private IDialogCoordinator _dialogCoordinator;
-      //  IEnumerable<Cargo> dataList=null;
+        private readonly IDialogCoordinator _dialogCoordinator;
+        CargoService db = new CargoService();
+
+        private ObservableCollection<CargoModel> gridModelList;
+        public ObservableCollection<CargoModel> GridModelList
+        {
+            get { return gridModelList; }
+            set { gridModelList = value; RaisePropertyChanged(); }
+        }
+        #endregion
+
+        #region 命令
+
+        public ICommand QueryCommand { get; set; }
+        public ICommand AddCommand { get; set; }
+        public ICommand UpdateCommand { get; set; }
+        public ICommand DeleteCommand { get; set; }
+        public ICommand DownLoadCommand { get; set; }
+        public ICommand RefreshCommand { get; set; }
+        #endregion      
+       
         public TotalViewModel(IDialogService dialogService, IDialogCoordinator dialogCoordinator)
         {
 
             _dialogService = dialogService;
             _dialogCoordinator = dialogCoordinator;
-            //仓储查询结果是List，转成ObservableCollection
+            GridModelList = new ObservableCollection<CargoModel>();
             db.GetAllCargoModels().ForEach(x => GridModelList.Add(x));
 
+            QueryCommand = new DelegateCommand(ExecuteQuery);
+            AddCommand = new DelegateCommand(ExecuteAdd);
+            UpdateCommand = new DelegateCommand<int?>(ExecuteUpdate);
+            DeleteCommand = new DelegateCommand<int?>(ExecuteDelete);
+            DownLoadCommand = new DelegateCommand<string>(ExecuteDownLoad);
+            RefreshCommand = new DelegateCommand(ExecuteRefresh);
+           
         }
-
-        private ObservableCollection<CargoModel> gridModelList = new ObservableCollection<CargoModel>();//已经封装好的集合列表，提供实时刷新，当做有通知的List<Student>
-        public ObservableCollection<CargoModel> GridModelList//和前台要对应
-        {
-            get{ return gridModelList;}
-            set{ gridModelList = value;RaisePropertyChanged();}
-        }
-
-
+        #region 方法
         //查询全部
         public ObservableCollection<CargoModel> SelectAll()
         {
@@ -50,18 +68,12 @@ namespace 仓库管理系统.Shell.ViewModels
             set { search = value; RaisePropertyChanged(); }
         }
 
-
-        //查询
-        private DelegateCommand _queryCommand;
-        public DelegateCommand QueryCommand =>
-            _queryCommand ?? (_queryCommand = new DelegateCommand(ExecuteQueryCmd));
-
-        void ExecuteQueryCmd()
+        /// <summary>
+        /// 查询
+        /// </summary>
+        private void ExecuteQuery()
         {
-            
-            var dataList = db.GetAllCargoModels().ToList().Where(it => it.Id.ToString().Contains(Search)
-            || it.Name.Contains(Search)||it.UserName.Contains(Search)
-            );
+            var dataList = db.GetAllCargoModels().ToList().Where(it => it.Id.ToString().Contains(Search) || it.Name.Contains(Search) || it.UserName.Contains(Search));
             GridModelList = new ObservableCollection<CargoModel>();
             if (dataList != null)
             {
@@ -70,19 +82,16 @@ namespace 仓库管理系统.Shell.ViewModels
             }
         }
 
-
-        
-        //新增
-        private DelegateCommand _addCommand;
-        public DelegateCommand AddCommand =>
-            _addCommand ?? (_addCommand = new DelegateCommand(ExecuteAddCmd));
-
-        void ExecuteAddCmd()
+        /// <summary>
+        /// 添加
+        /// </summary>
+        private void ExecuteAdd()
         {
             DialogParameters paramters = new DialogParameters();
             paramters.Add("RefreshValue", new Action(Refresh));
-            _dialogService.ShowDialog("AddCargoDialog", paramters,r =>
+            _dialogService.ShowDialog("AddCargoDialog", paramters, r =>
             {
+                //触发回调
                 /*if (r.Result == ButtonResult.Yes)
                 {
                     Refresh();
@@ -90,61 +99,67 @@ namespace 仓库管理系统.Shell.ViewModels
             });
         }
 
-      
-        //修改
-        private DelegateCommand<int?> _updateCommand;
-        public DelegateCommand<int?> UpdateCommand =>
-            _updateCommand ?? (_updateCommand = new DelegateCommand<int?>(ExecuteUpdateCmd));
-
-        private void ExecuteUpdateCmd(int? id)
+        /// <summary>
+        /// 修改
+        /// </summary>
+        /// <param name="id"></param>
+        private void ExecuteUpdate(int? id)
         {
-            var dataList=db.GetAllCargoModels().Where(it=>it.Id==id);
+            var dataList = db.GetAllCargoModels().Where(it => it.Id == id);
             DialogParameters paramters = new DialogParameters();
-
             paramters.Add("dataList", dataList);
-
             paramters.Add("RefreshValue", new Action(Refresh));
-
-           
             _dialogService.ShowDialog("UpdateCargoDialog", paramters, r =>
             {
 
             });
         }
 
-        //下载
-        private DelegateCommand<string> _downloadCommand;
-        public DelegateCommand<string> DownLoadCommand =>
-            _downloadCommand ?? (_downloadCommand = new DelegateCommand<string>(ExecuteDownLoadCommand));
-
-        private void ExecuteDownLoadCommand(string search)
+        /// <summary>
+        /// 下载
+        /// </summary>
+        /// <param name="search"></param>
+        private async void ExecuteDownLoad(string search)
         {
-
-            //var dataList = sdb.GetList();
-            // DataTable dt = FileData.ListToDataTable(dataList);
-
-            var data = GridModelList;
-            string json = Newtonsoft.Json.JsonConvert.SerializeObject(data);
-            File.WriteAllText(@"E:\VS Workspace\Apply\仓库管理系统\Cargo.Ui\DownLoad\Total.json", json);
-
-            string path = @"E:\VS Workspace\Apply\仓库管理系统\Cargo.Ui\DownLoad\Total.json";
-            if (File.Exists(path))
+            var fileName = $"{DateTime.Now:yyyyMMddHHmmss}-Cargo.xlsx";
+            var filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), fileName);
+            var dataList = db.GetAllCargoModels().ToList();
+            MiniExcel.SaveAs(filePath, RewriteTitle(dataList));
+            var settings = new MetroDialogSettings
             {
-                MessageBox.Show("文件下载成功！");
+                AffirmativeButtonText = "确认",
+                AnimateHide = true,
+                AnimateShow = true,
+                ColorScheme = MetroDialogColorScheme.Accented
+            };
+
+            await _dialogCoordinator.ShowMessageAsync(this, "提示", "操作成功！", MessageDialogStyle.Affirmative, settings);
+        }
+
+        private IEnumerable<Dictionary<string,object>> RewriteTitle(List<CargoModel> cargoModels)
+        {
+            foreach (var item in cargoModels)
+            {
+                var dict = new Dictionary<string,object>();
+                dict.Add("物资Id",item.Id);
+                dict.Add("物资名称", item.Name);
+                dict.Add("物资类型", item.MaterialType);
+                dict.Add("物资单位", item.Amount);
+                dict.Add("价格", item.Price);
+                dict.Add("备注", item.Tag);
+                dict.Add("创建日期", item.CreateTime);
+                dict.Add("操作员Id", item.UserId);
+                dict.Add("操作员", item.UserName);
+
+                yield return dict;
             }
         }
 
-        //删除
-        private DelegateCommand<int?> _deleteCommand { get; set; }
-        public DelegateCommand<int?> DeleteCommand
-        {
-            get => _deleteCommand ?? (_deleteCommand = new DelegateCommand<int?>(ExecuteDeleCommand));
-            set => _deleteCommand = value;
-        }
-
-
-
-        private async void ExecuteDeleCommand(int? ids)
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="ids"></param>
+        private async void ExecuteDelete(int? ids)
         {
             var model = db.GetAllCargoModels().Where(it => it.Id == ids);
 
@@ -170,36 +185,27 @@ namespace 仓库管理系统.Shell.ViewModels
 
                 }
             }
-
-
         }
 
-        //刷新
-        private DelegateCommand _refreshCommand;
-        public DelegateCommand RefreshCommand =>
-            _refreshCommand ?? (_refreshCommand = new DelegateCommand(ExecuteRefreshCmd));
-
-        private void ExecuteRefreshCmd()
+        /// <summary>
+        /// 刷新
+        /// </summary>
+        private void ExecuteRefresh()
         {
             DoRefresh();
-
-
         }
-
-        
 
         //用来刷新界面
         public void Refresh()
         {
             var dataList = db.GetAllCargoModels().Where(it => it.Name == Search);
-           
+
             GridModelList = new ObservableCollection<CargoModel>();
             if (dataList != null)
             {
                 db.GetAllCargoModels().ForEach(x => GridModelList.Add(x));
             }
         }
-
 
         private async void DoRefresh()
         {
@@ -221,6 +227,7 @@ namespace 仓库管理系统.Shell.ViewModels
             await controller.CloseAsync();
         }
 
+        #endregion
     }
 }
 

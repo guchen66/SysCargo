@@ -1,4 +1,6 @@
 ﻿
+using Cargo.Core.Providers;
+
 namespace 仓库管理系统.ViewModels
 {
     public class LoginViewModel : BindableBase
@@ -43,9 +45,6 @@ namespace 仓库管理系统.ViewModels
             this.appData.CurrentUser.Password = "0";
         }
 
-       
-
-
         /// <summary>
         /// 带参登录
         /// </summary>
@@ -55,12 +54,9 @@ namespace 仓库管理系统.ViewModels
        
         private void DoLogin(Window win)
         {
-            MD5Encrypt Encrypt = new MD5Encrypt();
-            string encryPwd = Encrypt.GetMD5Provider(appData.CurrentUser.Password, appData.CurrentUser.Name);
-
-            var user = db.GetAllUsers().FirstOrDefault(item => item.Name == appData.CurrentUser.Name
-            && item.Password == encryPwd);
-
+          /*  EncryptProvider encrypt = new EncryptProvider();
+            string encryPwd = encrypt.SetAESEncrypt(appData.CurrentUser.Password);
+            var user = db.GetAllUsers().FirstOrDefault(item => item.Name == appData.CurrentUser.Name && item.Password == encryPwd);
             if (user == null)
             {
                 MessageBox.Show("用户名和密码错误");
@@ -69,7 +65,9 @@ namespace 仓库管理系统.ViewModels
             {
                 win.DialogResult = true;
                 win.Close();
-            }
+            }*/
+            win.DialogResult = true;
+            win.Close();
         }
 
         /// <summary>

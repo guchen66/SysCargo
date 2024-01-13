@@ -1,4 +1,5 @@
-﻿
+﻿using Cargo.SqlSugar.Services;
+
 namespace Cargo.Ui.ViewModels
 {
     internal class TestViewModel : BindableBase, IDialogAware

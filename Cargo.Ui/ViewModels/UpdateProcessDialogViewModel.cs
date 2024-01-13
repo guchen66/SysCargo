@@ -1,4 +1,5 @@
-﻿
+﻿using Cargo.SqlSugar.Services;
+
 namespace Cargo.Ui.ViewModels
 {
     public class UpdateProcessDialogViewModel : BindableBase, IDialogAware

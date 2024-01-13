@@ -43,6 +43,11 @@ namespace Cargo.SqlSugar.Providers
             //_db.Saveable(entity).ExecuteReturnEntity(); 过时
             _db.Storageable(entity).ExecuteCommand();
         }
+        public void DeleteById(object id)
+        {
+            _db.Deleteable<TEntity>().In(id).ExecuteCommand();
+        }
+
 
     }
 

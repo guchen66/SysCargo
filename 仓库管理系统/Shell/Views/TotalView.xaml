@@ -22,7 +22,7 @@
     </UserControl.Resources>
     <Grid Background="AliceBlue">
         <Grid.RowDefinitions>
-            <RowDefinition Height="40" />
+            <RowDefinition Height="45" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <StackPanel
@@ -32,28 +32,33 @@
             <TextBox
                 Width="200"
                 Height="35"
+                FontSize="20"
                 Text="{Binding Search}" />
             <Button
                 Width="100"
-                Height="30"
+                Height="35"
                 Margin="10,0,10,0"
+                FontSize="18"
                 Command="{Binding QueryCommand}"
                 Content="查询" />
             <Button
                 Width="100"
-                Height="30"
+                Height="35"
+                FontSize="18"
                 Command="{Binding AddCommand}"
                 Content="新增" />
             <Button
                 Width="100"
-                Height="30"
+                Height="35"
+                FontSize="18"
                 Margin="10,0,0,0"
                 Command="{Binding DownLoadCommand}"
                 CommandParameter="{Binding Search}"
                 Content="下载" />
             <Button
                 Width="100"
-                Height="30"
+                Height="35"
+                FontSize="18"
                 Margin="10,0,10,0"
                 Command="{Binding RefreshCommand}"
                 Content="刷新" />
@@ -95,23 +100,22 @@
 
                 <DataGridTextColumn Binding="{Binding UserName}" Header="操作员" Width="120"/>
 
-
-
                 <DataGridTemplateColumn Width="*" Header="操作">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <Button
-                                    Width="60"
-                                    Height="25"
-                                    Background="Green"
+                                    Width="70"
+                                   FontSize="14"
+                                    Background="LightGreen"
+                                    Margin="0 0 15 0"
                                     Command="{Binding DataContext.UpdateCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
                                     CommandParameter="{Binding Id}"
                                     Content="修改"
                                     Foreground="Black" />
                                 <Button
-                                    Width="60"
-                                    Height="25"
+                                    Width="70"
+                                     FontSize="14"
                                     Background="Red"
                                     Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
                                     CommandParameter="{Binding Id}"

@@ -16,16 +16,28 @@ namespace 仓库管理系统.Shell.ViewModels
      * 可以通过共享一个数据模型（DTO或实体类）来实现ViewModel之间的通信*/
     public class HomeViewModel : BindableBase, INavigationAware
     {
+        #region  属性、字段
 
-        IRegionManager _regionManager;
-        IRegionNavigationJournal _journal;
+        private readonly IRegionManager _regionManager;
+        private readonly IRegionNavigationJournal _journal;
         private readonly IRegionNavigationService _navigationService;
+        #endregion
+
+        #region  命令
+
+        public ICommand BackDeskTopCommand {  get; set; }
+        #endregion
+
         public HomeViewModel(IRegionManager regionManager, IRegionNavigationJournal journal, IRegionNavigationService navigationService)
         {
             _journal = journal;
             _regionManager = regionManager;
             _navigationService = navigationService;
+            BackDeskTopCommand = new DelegateCommand(ShowDesktop);
         }
+
+        #region  方法
+
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
             return true;
@@ -47,16 +59,12 @@ namespace 仓库管理系统.Shell.ViewModels
             */
         }
 
-        private DelegateCommand _backDeskTopCmd;
-        public DelegateCommand BackDeskTopCmd =>
-            _backDeskTopCmd ?? (_backDeskTopCmd = new DelegateCommand(ShowDesktop));
-
         private void ShowDesktop()
         {
             // 执行显示桌面的逻辑，例如使用 Shell
             var shell = new Shell32.Shell();
             shell.MinimizeAll();
         }
-
+        #endregion
     }
 }

@@ -6,4 +6,8 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Cargo.SqlSugar\Cargo.SqlSugar.csproj" />
+  </ItemGroup>
+
 </Project>

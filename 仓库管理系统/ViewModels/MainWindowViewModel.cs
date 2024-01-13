@@ -48,9 +48,6 @@ namespace 仓库管理系统.ViewModels
                 case "首页":
                     Navigate("HomeView");
                     break;
-                case "设置":
-                    Navigate("SetView");
-                    break;
                 case "用户信息":
                     Navigate("User");
                     break;
@@ -63,8 +60,14 @@ namespace 仓库管理系统.ViewModels
                 case "工序信息":
                     Navigate("ProcessView");
                     break;
+                case "统计数据":
+                    Navigate("CountView");
+                    break;
                 case "智能报警":
                     Navigate("Alarm");
+                    break;
+                case "设置":
+                    Navigate("SetView");
                     break;
             }
 

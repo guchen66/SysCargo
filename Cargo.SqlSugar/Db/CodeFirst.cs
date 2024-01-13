@@ -10,7 +10,7 @@
             {
                 DbType = DbType.SqlServer,
                 ConnectionString = "Data Source=.;" +
-                                    "Initial Catalog=CargoModelDB;" +
+                                    "Initial Catalog=CargoDB;" +
                                     //"Integrated Security=True"+集成验证
                                     "User ID=sa;" +
                                     "Password=211314",
@@ -29,8 +29,9 @@
             {
                 {
                     db.DbMaintenance.CreateDatabase();    //如果没有数据库创建
-                    db.CodeFirst.InitTables(typeof(WorkPlace), typeof(ProcessModel));//通过实体类创建表
-                                                                                     // db.CodeFirst.SetStringDefaultLength(200).InitTables(typeof(Menu), typeof(Dept),typeof(User),typeof(SnowFlake));
+                    db.CodeFirst.InitTables(typeof(Role));
+                    //通过实体类创建表
+                 // db.CodeFirst.SetStringDefaultLength(200).InitTables(typeof(Menu), typeof(Dept),typeof(User),typeof(SnowFlake));
                 }
                 //批量创建表
 
@@ -62,7 +63,7 @@
                 db.Storageable<User>(list).ExecuteCommand();*/
 
 
-                List<CargoModel> list = new List<CargoModel>();
+             /*   List<CargoModel> list = new List<CargoModel>();
                 for (int i = 0; i < 20; i++)
                 {
                     list.Add(new CargoModel()
@@ -78,7 +79,7 @@
 
                     });
                 }
-                db.Storageable(list).ExecuteCommand();
+                db.Storageable(list).ExecuteCommand();*/
 
 
 

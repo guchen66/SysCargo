@@ -9,8 +9,7 @@ namespace 仓库管理系统.Views
         public MainWindow()
         {
             InitializeComponent();
-            //Ctrl Alt J打开对象浏览器
-          
+            //Ctrl Alt J打开对象浏览器        
         }
     }
 }

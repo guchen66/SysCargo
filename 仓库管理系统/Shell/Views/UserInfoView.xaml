@@ -16,6 +16,11 @@
     prism:ViewModelLocator.AutoWireViewModel="True"
     Background="AliceBlue"
     mc:Ignorable="d">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding InitingCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -37,8 +42,6 @@
                 x:Name="FilterTextBox"
                 Width="200"
                 Height="35"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
                 FontSize="20"
                 Text="{Binding SearchContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 TextChanged="TextBox_TextChanged" />
@@ -46,24 +49,15 @@
                 Width="100"
                 Height="35"
                 Margin="10,0,10,0"
-                Command="{Binding QueryCommand}"
+                Command="{Binding QueryUserCommand}"
                 Content="查询"
                 FontSize="18" />
             <Button
                 Width="100"
                 Height="35"
-                Command="{Binding AddCommand}"
+                Command="{Binding AddUserCommand}"
                 Content="新增"
                 FontSize="18" />
-            <Button
-                Width="100"
-                Height="35"
-                Margin="10,0,0,0"
-                Command="{Binding DownLoadCommand}"
-                CommandParameter="{Binding SearchContent}"
-                Content="下载"
-                FontSize="18" />
-
             <Button
                 Width="100"
                 Height="35"
@@ -109,7 +103,7 @@
 
                 <DataGridTextColumn
                     Width="120"
-                    Binding="{Binding Role}"
+                    Binding="{Binding RoleName}"
                     Header="职位" />
 
                 <DataGridTextColumn
@@ -117,7 +111,7 @@
                     Binding="{Binding CreateTime, StringFormat='yyyy/MM/dd'}"
                     Header="创建日期" />
 
-                <DataGridTemplateColumn Width="140" Header="操作">
+                <DataGridTemplateColumn Width="200" Header="操作">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel
@@ -125,19 +119,21 @@
                                 VerticalAlignment="Center"
                                 Orientation="Horizontal">
                                 <Button
-                                    Width="60"
-                                    Margin="0,0,5,0"
+                                    Width="70"
+                                    Margin="0,0,15,0"
                                     Background="LightGreen"
-                                    Command="{Binding DataContext.UpdateCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
+                                    Command="{Binding DataContext.UpdateUserCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
                                     CommandParameter="{Binding Id}"
                                     Content="修改"
+                                    FontSize="14"
                                     Foreground="Black" />
                                 <Button
-                                    Width="60"
+                                    Width="70"
                                     Background="Red"
-                                    Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
+                                    Command="{Binding DataContext.DelUserCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
                                     CommandParameter="{Binding Id}"
                                     Content="删除"
+                                    FontSize="14"
                                     Foreground="Black" />
                             </StackPanel>
                         </DataTemplate>

@@ -3,6 +3,9 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+#数据库不推送
+*.SqlSugar/
+
 # User-specific files
 *.rsuser
 *.suo

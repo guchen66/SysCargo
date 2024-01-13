@@ -8,6 +8,8 @@
     <PackageReference Include="Prism.Wpf" Version="8.1.97" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Cargo.Core\Cargo.Core.csproj" />
+    <ProjectReference Include="..\Cargo.Shared\Cargo.Shared.csproj" />
     <ProjectReference Include="..\Cargo.SqlSugar\Cargo.SqlSugar.csproj" />
   </ItemGroup>
 </Project>

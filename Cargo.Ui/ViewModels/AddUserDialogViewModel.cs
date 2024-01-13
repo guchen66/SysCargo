@@ -1,4 +1,6 @@
-﻿
+﻿using Cargo.Core.Providers;
+using Cargo.SqlSugar.Services;
+
 using MessageBox = System.Windows.MessageBox;
 
 namespace Cargo.Ui.ViewModels
@@ -87,15 +89,14 @@ namespace Cargo.Ui.ViewModels
 
         private void ExecuteSaveCmd(string parameter)
         {
-            MD5Helper mD5Helper = new MD5Helper();
+            EncryptProvider encrypt = new EncryptProvider();
             User user = new User()
             {
                 Name = InputName,
-                Password = mD5Helper.GetMD5Provider(InputPassword, InputName),
+                Password = encrypt.SetAESEncrypt(InputPassword),
                 CreateTime = DateValue,
-                Role = Role
+             //   Role = Role
             };
-
             db.AddUser(user);
             RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
         }

@@ -1,4 +1,5 @@
-﻿namespace 仓库管理系统.Global
+﻿
+namespace 仓库管理系统.Global
 {
     public class  AppData:BindableBase
     {
@@ -35,13 +36,14 @@
         {
             Modules = new()
             {
-                new ModuleInfos() { IconFont = "\xe626", Title = "首页" },
-                new ModuleInfos() { IconFont = "\xe77a", Title = "设置" },
-                new ModuleInfos() { IconFont = "\xe77a", Title = "用户信息" },
-                new ModuleInfos() { IconFont = "\xe50a", Title = "仓库汇总" },
-                new ModuleInfos() { IconFont = "\xe77a", Title = "工位信息" },
-                new ModuleInfos() { IconFont = "\xe502", Title = "工序信息" },
-                new ModuleInfos() { IconFont = "\xe669", Title = "智能报警" },
+                new ModuleInfos() { IconFont = "\xe623", Title = "首页" },
+                new ModuleInfos() { IconFont = "\xe64a", Title = "用户信息" },
+                new ModuleInfos() { IconFont = "\xe66c", Title = "仓库汇总" },
+                new ModuleInfos() { IconFont = "\xe60b", Title = "工位信息" },
+                new ModuleInfos() { IconFont = "\xe685", Title = "工序信息" },
+                new ModuleInfos() { IconFont = "\xe60a", Title = "统计数据" },
+                new ModuleInfos() { IconFont = "\xe872", Title = "智能报警" },
+                new ModuleInfos() { IconFont = "\xe892", Title = "设置" },
 
             };
         }      

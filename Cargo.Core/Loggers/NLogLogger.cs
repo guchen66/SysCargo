@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace Cargo.Core.Log
+namespace Cargo.Core.Loggers
 {
     public class NLogLogger : ILogger
     {
-        private readonly NLog.Logger _logger;
+        private readonly Logger _logger;
         private readonly string _logDirectory;
 
         public NLogLogger(string logDirectory = null)

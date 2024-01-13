@@ -76,7 +76,7 @@
                 Title="Desktop"
                 Margin="3"
                 mah:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
-                Command="{Binding BackDeskTopCmd}"
+                Command="{Binding BackDeskTopCommand}"
                 Style="{StaticResource LargeTileStyle}">
                 <iconPacks:PackIconFontAwesome
                     Width="40"
