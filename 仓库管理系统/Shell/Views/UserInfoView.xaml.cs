@@ -1,4 +1,6 @@
 ﻿
+using Cargo.Shared.Dtos;
+
 namespace 仓库管理系统.Shell.Views
 {
     /// <summary>
@@ -27,15 +29,15 @@ namespace 仓库管理系统.Shell.Views
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
-            down.Items.Filter = FilterMethod;
+          //  down.Items.Filter = FilterMethod;
         }
 
         private bool FilterMethod(object obj)
         {
-            var user = (User)obj;
+            var user = (UserDto)obj;
 
+            //跟据Name快速查询
             return user.Name.Contains(FilterTextBox.Text, StringComparison.OrdinalIgnoreCase);
-
 
         }
     }

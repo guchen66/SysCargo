@@ -23,6 +23,11 @@ namespace Cargo.SqlSugar.Providers
             get { return _db.Queryable<TEntity>(); }
         }
 
+        public ISugarQueryable<TEntity> QueryableList()
+        {
+            return _db.Queryable<TEntity>();
+        }
+
         public void Insert(TEntity entity)
         {
             _db.Insertable(entity).ExecuteCommand();

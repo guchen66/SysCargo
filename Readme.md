@@ -13,6 +13,8 @@
 |   Role    |    int    | 0=管理员，1=操作员 |
 | InserDate | DateTime  |      插入时间      |
 
+
+
 #### 2、物资表Cargo
 
 |    Id     |   int    |      自增      |

@@ -50,8 +50,9 @@ namespace 仓库管理系统.Shell.ViewModels
             UpdateUserCommand = new DelegateCommand<int?>(ExecuteUpdateUser);
             DelUserCommand = new DelegateCommand<int?>(ExecuteDelUser);
             RefreshCommand = new DelegateCommand(ExecuteRefresh);
-            GridModelList = new ObservableCollection<UserDto>();
+          //  GridModelList = new ObservableCollection<UserDto>();
         }
+
         #region 方法
 
         /// <summary>
@@ -66,18 +67,15 @@ namespace 仓库管理系统.Shell.ViewModels
         {
             try
             {
-                using (var db = DatabaseService.GetClient())
-                {
-                    var users = await db.Queryable<User>().Includes(x => x.Role).ToListAsync();
+                var users = await db.Queryable.Includes(x => x.Role).ToListAsync();
 
-                    GridModelList = new ObservableCollection<UserDto>(
-                    users.Select(x =>
-                    {
-                        var dto = x.Adapt<UserDto>();
-                        dto.RoleName = x.Role?.RoleName ?? string.Empty;
-                        return dto;
-                    }));
-                }
+                GridModelList = new ObservableCollection<UserDto>(
+                users.Select(x =>
+                {
+                    var dto = x.Adapt<UserDto>();
+                    dto.RoleName = x.Role?.RoleName ?? string.Empty;
+                    return dto;
+                }));
             }
             catch (Exception ex)
             {
@@ -87,7 +85,7 @@ namespace 仓库管理系统.Shell.ViewModels
         }
         public async void ShowProgressDialogAsync()
         {
-            var controller = await _dialogCoordinator.ShowProgressAsync(this, "请稍等", "正在进行操作...");
+            var controller = await _dialogCoordinator.ShowProgressAsync(this, "请稍等", "操作失败...");
             controller.SetIndeterminate();
 
             // 执行长时间运行的操作
@@ -98,16 +96,29 @@ namespace 仓库管理系统.Shell.ViewModels
         /// <summary>
         /// 查询User
         /// </summary>
-        private void ExecuteQueryUser()
+        private async void ExecuteQueryUser()
         {
-            /*var dataList = db.Queryable.Where(it => it.Id.ToString().Contains(SearchContent)
+            var dataList =await db.Queryable.Includes(x=>x.Role).Where(it => it.Id.ToString().Contains(SearchContent)
                                                   || it.Name.Contains(SearchContent)
-                                                  || it.Password.Contains(SearchContent));
+                                                  || it.Password.Contains(SearchContent)).ToListAsync();
             GridModelList = new ObservableCollection<UserDto>();
+            /* if (dataList != null)
+             {
+                 dataList.ForEach(o => GridModelList.Add(o));
+             }*/
+
             if (dataList != null)
             {
-                dataList.ToList().ForEach(o => GridModelList.Add(o));
-            }*/
+                dataList.ForEach(x =>
+                {
+                    var dto = x.Adapt<UserDto>();
+                    dto.RoleName = x.Role?.RoleName ?? string.Empty;
+                    //  return dto;
+                    GridModelList.Add(dto);
+                });
+
+
+            }
         }
 
         /// <summary>
@@ -192,11 +203,19 @@ namespace 仓库管理系统.Shell.ViewModels
         /// </summary>
         private void ExecuteRefresh()
         {
-            var dataList = db.Queryable.Where(it => it.Name == SearchContent);
+            var dataList = db.Queryable.Includes(x=>x.Role).Where(it => it.Name == SearchContent);
             GridModelList.Clear();// = new ObservableCollection<User>();
             if (dataList != null)
             {
-              //  db.Queryable.ForEach(x => GridModelList.Add(x));
+                //  db.Queryable.ForEach(x => GridModelList.Add(x));
+                dataList.ForEach(x =>
+                {
+                    var dto = x.Adapt<UserDto>();
+                    dto.RoleName = x.Role?.RoleName ?? string.Empty;
+                    //  return dto;
+                    GridModelList.Add(dto);
+                });
+
             }
         }
 
@@ -313,11 +332,18 @@ namespace 仓库管理系统.Shell.ViewModels
         public void Refresh()
         {
             //var dataList = db.Queryable.ToList(it => it.Name == Search);
-            var dataList = db.Queryable.Where(it => it.Name == SearchContent);
+            var dataList = db.Queryable.Includes(x => x.Role).Where(it => it.Name == SearchContent);
             GridModelList.Clear();// = new ObservableCollection<User>();
             if (dataList != null)
             {
-              //  db.Queryable.ForEach(x => GridModelList.Add(x));
+                dataList.ForEach(x =>
+                {
+                    var dto = x.Adapt<UserDto>();
+                    dto.RoleName = x.Role?.RoleName ?? string.Empty;
+                    //  return dto;
+                    GridModelList.Add(dto);
+                });
+
             }
         }
 

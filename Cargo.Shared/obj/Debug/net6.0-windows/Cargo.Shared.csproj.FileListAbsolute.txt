@@ -1,0 +1,12 @@
+E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.Shared\bin\Debug\net6.0-windows\Cargo.Shared.deps.json
+E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.Shared\bin\Debug\net6.0-windows\Cargo.Shared.dll
+E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.Shared\bin\Debug\net6.0-windows\Cargo.Shared.pdb
+E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.Shared\obj\Debug\net6.0-windows\Cargo.Shared.csproj.AssemblyReference.cache
+E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.Shared\obj\Debug\net6.0-windows\Cargo.Shared.GeneratedMSBuildEditorConfig.editorconfig
+E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.Shared\obj\Debug\net6.0-windows\Cargo.Shared.AssemblyInfoInputs.cache
+E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.Shared\obj\Debug\net6.0-windows\Cargo.Shared.AssemblyInfo.cs
+E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.Shared\obj\Debug\net6.0-windows\Cargo.Shared.csproj.CoreCompileInputs.cache
+E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.Shared\obj\Debug\net6.0-windows\Cargo.Shared.dll
+E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.Shared\obj\Debug\net6.0-windows\refint\Cargo.Shared.dll
+E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.Shared\obj\Debug\net6.0-windows\Cargo.Shared.pdb
+E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.Shared\obj\Debug\net6.0-windows\ref\Cargo.Shared.dll

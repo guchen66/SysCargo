@@ -63,7 +63,7 @@
                         VerticalAlignment="Center"
                         FontSize="16"
                         ItemsSource="{Binding RoleList}"
-                        SelectedItem="{Binding Role}" />
+                        SelectedItem="{Binding RoleName}" />
                 </StackPanel>
                 <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
                     <TextBlock
@@ -93,7 +93,7 @@
                         Margin="10"
                         Padding="0,0,0,3"
                         Background="#71c4ef"
-                        Command="{Binding SaveCmd}"
+                        Command="{Binding SaveCommand}"
                         CommandParameter="true"
                         Content="保存"
                         FontSize="20" />
@@ -103,7 +103,7 @@
                         Margin="10"
                         Padding="0,0,0,3"
                         Background="Red"
-                        Command="{Binding CloseCmd}"
+                        Command="{Binding CancelCommand}"
                         CommandParameter="false"
                         Content="取消"
                         FontSize="20" />

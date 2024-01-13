@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "dgSpecHash": "Bw9w19PzPfpFN3Vh57iAh+TGl6GT6gbEn1AAcOhiQBzT8aWAf6Sz6ownFsdKoB6nfo54zX5mIvGo8zOdmniDpA==",
+  "success": true,
+  "projectFilePath": "E:\\CSharp Project\\ApplyClient\\仓库管理系统\\Cargo.Shared\\Cargo.Shared.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\liuxin\\.nuget\\packages\\controlzex\\4.4.0\\controlzex.4.4.0.nupkg.sha512",
+    "C:\\Users\\liuxin\\.nuget\\packages\\mahapps.metro\\2.4.10\\mahapps.metro.2.4.10.nupkg.sha512",
+    "C:\\Users\\liuxin\\.nuget\\packages\\mapster\\7.4.0\\mapster.7.4.0.nupkg.sha512",
+    "C:\\Users\\liuxin\\.nuget\\packages\\mapster.core\\1.2.1\\mapster.core.1.2.1.nupkg.sha512",
+    "C:\\Users\\liuxin\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\liuxin\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.19\\microsoft.xaml.behaviors.wpf.1.1.19.nupkg.sha512",
+    "C:\\Users\\liuxin\\.nuget\\packages\\prism.core\\8.1.97\\prism.core.8.1.97.nupkg.sha512",
+    "C:\\Users\\liuxin\\.nuget\\packages\\system.text.json\\4.7.2\\system.text.json.4.7.2.nupkg.sha512"
+  ],
+  "logs": []
+}

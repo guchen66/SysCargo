@@ -1,0 +1,20 @@
+﻿Cargo.Ui
+
+
+library
+C#
+.cs
+E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.Ui\obj\Debug\net6.0-windows\
+Cargo.Ui
+none
+false
+TRACE;DEBUG;NET;NET6_0;NETCOREAPP
+
+13-1055074554
+
+25-246314221
+2361686630098
+Properties\DesignResources.xaml;Views\AddCargoDialog.xaml;Views\AddProcessDialog.xaml;Views\AddUserDialog.xaml;Views\AddWorkStationDialog.xaml;Views\ErrorDialog.xaml;Views\SetGridDialogView.xaml;Views\SucessDialog.xaml;Views\TestView.xaml;Views\UpdateCargoDialog.xaml;Views\UpdateProcessDialog.xaml;Views\UpdateUserDialog.xaml;Views\UpdateWorkPlaceDialog.xaml;
+
+False
+
