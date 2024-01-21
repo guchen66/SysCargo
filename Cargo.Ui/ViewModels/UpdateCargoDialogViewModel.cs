@@ -1,4 +1,5 @@
-﻿using Cargo.SqlSugar.Services;
+﻿using Cargo.SqlSugar.Providers;
+using Cargo.SqlSugar.Services;
 
 namespace Cargo.Ui.ViewModels
 {
@@ -6,13 +7,7 @@ namespace Cargo.Ui.ViewModels
     {
 
         CargoService db = new CargoService();
-        public UpdateCargoDialogViewModel()
-        {
-
-
-
-        }
-
+        DataBaseProvider<CargoModel> _db=new DataBaseProvider<CargoModel>();
         public string Title => "修改Cargo弹窗";
 
         public event Action<IDialogResult> RequestClose;
@@ -30,7 +25,6 @@ namespace Cargo.Ui.ViewModels
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
-
 
             if (parameters.ContainsKey("dataList"))
             {

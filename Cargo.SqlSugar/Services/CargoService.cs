@@ -1,56 +1,38 @@
 ﻿
+using Cargo.SqlSugar.Repositorys;
+
 namespace Cargo.SqlSugar.Services
 {
     public class CargoService
     {
-        private readonly SqlSugarClient db;
+        private readonly BaseRepository<CargoModel> db;
         public CargoService()
         {
-            db = DatabaseService.GetClient();
+            db = new BaseRepository<CargoModel>();
         }
         public List<CargoModel> GetAllCargoModels()
         {
-            using (db)
-            {
-                return db.Queryable<CargoModel>().ToList();
-            }
-
+            return db.GetList();
         }
 
         public CargoModel GetCargoModelById(int id)
         {
-            using (db)
-            {
-                return db.Queryable<CargoModel>().Where(u => u.Id == id).First();
-            }
-
+           return db.GetById(id);
         }
 
         public void AddCargoModel(CargoModel CargoModel)
         {
-            using (db)
-            {
-                db.Insertable(CargoModel).ExecuteCommand();
-            }
-
+           db.Insert(CargoModel);
         }
 
         public void UpdateCargoModel(CargoModel CargoModel)
         {
-            using (db)
-            {
-                db.Updateable(CargoModel).ExecuteCommand();
-            }
-
+           db.Update(CargoModel);
         }
 
         public void DeleteCargoModel(int id)
         {
-            using (db)
-            {
-                db.Deleteable<CargoModel>().Where(u => u.Id == id).ExecuteCommand();
-            }
-
+          db.DeleteById(id);
         }
     }
 }

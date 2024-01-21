@@ -1,52 +1,38 @@
 ﻿
+using Cargo.SqlSugar.Repositorys;
+
 namespace Cargo.SqlSugar.Services
 {
-    public class UserService
+    public class UserService:BaseRepository<User>
     {
-        private readonly SqlSugarClient db;
+        private readonly BaseRepository<User> db;
         public UserService()
         {
-            db = DatabaseService.GetClient();
-        }
-        public List<User> GetAllUsers()
-        {
-            return db.Queryable<User>().ToList();
-
+            db =new BaseRepository<User>();
         }
 
-        public User GetUserById(int id)
+        public List<User> GetUserList() 
         {
-            using (db)
-            {
-                return db.Queryable<User>().Where(u => u.Id == id).First();
-            }
+            return db.GetList();
+        }
+        public User GetCargoModelById(int id)
+        {
+            return db.GetById(id);
         }
 
-        public bool AddUser(User user)
+        public void AddCargoModel(User user)
         {
-            if (db.Insertable(user).ExecuteCommand() > 0)
-            {
-                return true;
-            }
-            return false;
+            db.Insert(user);
         }
 
-        public void UpdateUser(User user)
+        public void UpdateCargoModel(User user)
         {
-            using (db)
-            {
-                db.Updateable(user).ExecuteCommand();
-            }
-
+            db.Update(user);
         }
 
-        public void DeleteUser(int id)
+        public void DeleteCargoModel(int id)
         {
-            using (db)
-            {
-                db.Deleteable<User>().Where(u => u.Id == id).ExecuteCommand();
-            }
-
+            db.DeleteById(id);
         }
     }
 }

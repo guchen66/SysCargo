@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Cargo.SqlSugar.Services.UserSign
 {
-    internal class IUserService
+    public class IUserService
     {
     }
 }

@@ -1,4 +1,6 @@
 ﻿
+using Cargo.SqlSugar.Db;
+
 namespace Cargo.SqlSugar.Providers
 {
     public class DataBaseProvider<TEntity> where TEntity : class, new()
@@ -50,10 +52,9 @@ namespace Cargo.SqlSugar.Providers
         }
         public void DeleteById(object id)
         {
-            _db.Deleteable<TEntity>().In(id).ExecuteCommand();
+            _db.Deleteable<TEntity>(id).ExecuteCommand();
+           // _db.Deleteable<TEntity>().In(id).ExecuteCommand();
         }
-
-
     }
 
 }

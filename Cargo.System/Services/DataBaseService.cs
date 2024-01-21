@@ -1,4 +1,6 @@
-﻿namespace Cargo.System.Services
+﻿using Cargo.SqlSugar.Db;
+
+namespace Cargo.System.Services
 {
     public class DatabaseService
     {

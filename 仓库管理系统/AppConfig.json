@@ -1,0 +1,5 @@
+{
+  "SqlConnection": {
+    "ConnectionString": "server=.;uid=sa;pwd=211314;database=CargoDb;Trusted_Connection=true;"
+  }
+}

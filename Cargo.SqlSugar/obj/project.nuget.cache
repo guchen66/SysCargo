@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "o90FmwJjbd63Ga4BC0VxLnL4mWSEbmcI7zka6FoYX3JCNKpmVourAbUokwOCCRbXbDW5hqXaakeeMKs4iNdPrw==",
+  "dgSpecHash": "eAsRyCPKGdNtPiIZTyuQ8E1BqeLeyPm3UYiU/+2XJmCpOEexmEzo9DnkD0lXMvONOXTqscdf395FUVfi7Qhm6A==",
   "success": true,
   "projectFilePath": "E:\\CSharp Project\\ApplyClient\\仓库管理系统\\Cargo.SqlSugar\\Cargo.SqlSugar.csproj",
   "expectedPackageFiles": [
@@ -9,6 +9,7 @@
     "C:\\Users\\liuxin\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\2.1.1\\microsoft.data.sqlclient.sni.runtime.2.1.1.nupkg.sha512",
     "C:\\Users\\liuxin\\.nuget\\packages\\microsoft.data.sqlite\\8.0.0\\microsoft.data.sqlite.8.0.0.nupkg.sha512",
     "C:\\Users\\liuxin\\.nuget\\packages\\microsoft.data.sqlite.core\\8.0.0\\microsoft.data.sqlite.core.8.0.0.nupkg.sha512",
+    "C:\\Users\\liuxin\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\5.0.0\\microsoft.extensions.dependencyinjection.abstractions.5.0.0.nupkg.sha512",
     "C:\\Users\\liuxin\\.nuget\\packages\\microsoft.identity.client\\4.21.1\\microsoft.identity.client.4.21.1.nupkg.sha512",
     "C:\\Users\\liuxin\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\6.8.0\\microsoft.identitymodel.jsonwebtokens.6.8.0.nupkg.sha512",
     "C:\\Users\\liuxin\\.nuget\\packages\\microsoft.identitymodel.logging\\6.8.0\\microsoft.identitymodel.logging.6.8.0.nupkg.sha512",
@@ -27,6 +28,7 @@
     "C:\\Users\\liuxin\\.nuget\\packages\\sqlitepclraw.core\\2.1.6\\sqlitepclraw.core.2.1.6.nupkg.sha512",
     "C:\\Users\\liuxin\\.nuget\\packages\\sqlitepclraw.lib.e_sqlite3\\2.1.6\\sqlitepclraw.lib.e_sqlite3.2.1.6.nupkg.sha512",
     "C:\\Users\\liuxin\\.nuget\\packages\\sqlitepclraw.provider.e_sqlite3\\2.1.6\\sqlitepclraw.provider.e_sqlite3.2.1.6.nupkg.sha512",
+    "C:\\Users\\liuxin\\.nuget\\packages\\sqlsugar.ioc\\2.0.0\\sqlsugar.ioc.2.0.0.nupkg.sha512",
     "C:\\Users\\liuxin\\.nuget\\packages\\sqlsugarcore\\5.1.4.132\\sqlsugarcore.5.1.4.132.nupkg.sha512",
     "C:\\Users\\liuxin\\.nuget\\packages\\sqlsugarcore.dm\\1.2.0\\sqlsugarcore.dm.1.2.0.nupkg.sha512",
     "C:\\Users\\liuxin\\.nuget\\packages\\sqlsugarcore.kdbndp\\7.4.0\\sqlsugarcore.kdbndp.7.4.0.nupkg.sha512",
@@ -51,6 +53,7 @@
     "C:\\Users\\liuxin\\.nuget\\packages\\system.runtime.caching\\4.7.0\\system.runtime.caching.4.7.0.nupkg.sha512",
     "C:\\Users\\liuxin\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.6.0\\system.runtime.compilerservices.unsafe.4.6.0.nupkg.sha512",
     "C:\\Users\\liuxin\\.nuget\\packages\\system.runtime.extensions\\4.3.0\\system.runtime.extensions.4.3.0.nupkg.sha512",
+    "C:\\Users\\liuxin\\.nuget\\packages\\system.runtime.loader\\4.3.0\\system.runtime.loader.4.3.0.nupkg.sha512",
     "C:\\Users\\liuxin\\.nuget\\packages\\system.security.accesscontrol\\6.0.0\\system.security.accesscontrol.6.0.0.nupkg.sha512",
     "C:\\Users\\liuxin\\.nuget\\packages\\system.security.cryptography.cng\\4.5.0\\system.security.cryptography.cng.4.5.0.nupkg.sha512",
     "C:\\Users\\liuxin\\.nuget\\packages\\system.security.cryptography.protecteddata\\6.0.0\\system.security.cryptography.protecteddata.6.0.0.nupkg.sha512",

@@ -12,9 +12,9 @@ TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 E:\CSharp Project\ApplyClient\仓库管理系统\仓库管理系统\App.xaml
 1958693430
 1-913308027
-42560849623
-276-1287154129
+43628904872
+285-590045557
 Assets\Styles\MyDataGridStyle.xaml;Assets\Styles\RadioButtonStyle.xaml;Assets\Styles\SkinColorsStyle.xaml;Shell\Views\AlarmView.xaml;Shell\Views\CountView.xaml;Shell\Views\HomeView.xaml;Shell\Views\ProcessView.xaml;Shell\Views\SetdetailView.xaml;Shell\Views\SetView.xaml;Shell\Views\TotalView.xaml;Shell\Views\UserInfoView.xaml;Shell\Views\WorkStationView.xaml;Views\FooterView.xaml;Views\HeaderView.xaml;Views\LoginView.xaml;Views\MainWindow.xaml;Views\MyDialogView.xaml;Views\MyLoading.xaml;Views\RegisterView.xaml;
 
-False
+True
 

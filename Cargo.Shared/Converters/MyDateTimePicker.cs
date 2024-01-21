@@ -9,16 +9,16 @@ namespace Cargo.Shared.Converters
 {
     public class MyDateTimePicker : DateTimePicker
     {
-        /* protected override string GetValueForTextBox()
-         {
-             return SelectedDateTime?.ToString("yyyy-MM-dd HH:mm:ss")!;
-         }
-      */
-
-      /*  protected override string GetValueForTextBox()
+       /* protected override string GetValueForTextBox()
         {
-            return string.Empty;
+            return SelectedDateTime?.ToString("yyyy-MM-dd HH:mm:ss")!;
         }*/
+
+
+        /*  protected override string GetValueForTextBox()
+          {
+              return string.Empty;
+          }*/
 
         protected override string GetValueForTextBox()
         {

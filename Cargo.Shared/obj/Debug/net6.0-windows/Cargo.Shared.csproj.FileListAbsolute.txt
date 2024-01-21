@@ -10,3 +10,6 @@ E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.Shared\obj\Debug\net6.0-w
 E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.Shared\obj\Debug\net6.0-windows\refint\Cargo.Shared.dll
 E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.Shared\obj\Debug\net6.0-windows\Cargo.Shared.pdb
 E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.Shared\obj\Debug\net6.0-windows\ref\Cargo.Shared.dll
+E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.Shared\bin\Debug\net6.0-windows\Cargo.Core.dll
+E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.Shared\bin\Debug\net6.0-windows\Cargo.Core.pdb
+E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.Shared\obj\Debug\net6.0-windows\Cargo.Shared.csproj.CopyComplete

@@ -1,56 +1,38 @@
 ﻿
+using Cargo.SqlSugar.Repositorys;
+
 namespace Cargo.SqlSugar.Services
 {
     public class FlowMeterService
     {
-        private readonly SqlSugarClient db;
+        private readonly BaseRepository<FlowMeter> db;
         public FlowMeterService()
         {
-            db = DatabaseService.GetClient();
+            db = new BaseRepository<FlowMeter>();
         }
         public List<FlowMeter> GetAllFlowMeters()
         {
-            using (db)
-            {
-                return db.Queryable<FlowMeter>().ToList();
-            }
-
+            return db.GetList();
         }
 
         public FlowMeter GetFlowMeterById(int id)
         {
-            using (db)
-            {
-                return db.Queryable<FlowMeter>().Where(u => u.CargoId == id).First();
-            }
-
+           return db.GetById(id);
         }
 
         public void AddFlowMeter(FlowMeter FlowMeter)
         {
-            using (db)
-            {
-                db.Insertable(FlowMeter).ExecuteCommand();
-            }
-
+          db.Insert(FlowMeter);
         }
 
         public void UpdateFlowMeter(FlowMeter FlowMeter)
         {
-            using (db)
-            {
-                db.Updateable(FlowMeter).ExecuteCommand();
-            }
-
+            db.Delete(FlowMeter);
         }
 
         public void DeleteFlowMeter(int id)
         {
-            using (db)
-            {
-                db.Deleteable<FlowMeter>().Where(u => u.CargoId == id).ExecuteCommand();
-            }
-
+           db.DeleteById(id);
         }
     }
 }

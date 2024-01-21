@@ -11,7 +11,6 @@ global using Prism.Services.Dialogs;
 global using System.Collections.ObjectModel;
 global using System.Data;
 global using System.Windows;
-global using Cargo.SqlSugar.Config;
 global using Cargo.Ui.Helpers;
 global using Cargo.Ui.Models;
 //global using Cargo.System;

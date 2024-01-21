@@ -92,7 +92,6 @@
                     </ListBox.ItemContainerStyle>
 
                     <ListBox.ItemTemplate>
-
                         <DataTemplate>
                             <RadioButton
                                 VerticalContentAlignment="Center"
@@ -122,9 +121,7 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-
             </StackPanel>
-
         </Grid>
 
         <!--  右侧  -->

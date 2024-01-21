@@ -123,7 +123,11 @@
         "frameworks": {
           "net6.0-windows7.0": {
             "targetAlias": "net6.0-windows",
-            "projectReferences": {}
+            "projectReferences": {
+              "E:\\CSharp Project\\ApplyClient\\仓库管理系统\\Cargo.Core\\Cargo.Core.csproj": {
+                "projectPath": "E:\\CSharp Project\\ApplyClient\\仓库管理系统\\Cargo.Core\\Cargo.Core.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -220,6 +224,10 @@
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
           "dependencies": {
+            "SqlSugar.IOC": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
             "SqlSugarCore": {
               "target": "Package",
               "version": "[5.1.4.132, )"
@@ -479,6 +487,10 @@
             "MaterialDesignThemes": {
               "target": "Package",
               "version": "[4.8.0, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             },
             "Microsoft.Xaml.Behaviors.Wpf": {
               "target": "Package",

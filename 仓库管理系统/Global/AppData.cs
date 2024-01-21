@@ -1,4 +1,6 @@
 ﻿
+using Cargo.Shared.Dtos;
+
 namespace 仓库管理系统.Global
 {
     public class  AppData:BindableBase
@@ -12,8 +14,8 @@ namespace 仓库管理系统.Global
             set { systemName = value; RaisePropertyChanged(); }
         }
 
-        private User user =new ();
-        public User CurrentUser
+        private UserDto user =new ();
+        public UserDto CurrentUser
         {
             get { return user; }
             set { user = value; RaisePropertyChanged(nameof(CurrentUser)); }

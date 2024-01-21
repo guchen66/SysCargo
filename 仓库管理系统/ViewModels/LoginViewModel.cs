@@ -1,5 +1,6 @@
 ﻿
 using Cargo.Core.Providers;
+using Cargo.Shared.Dtos;
 
 namespace 仓库管理系统.ViewModels
 {
@@ -42,7 +43,7 @@ namespace 仓库管理系统.ViewModels
         {
 
             this.appData.CurrentUser.Name = "admin";
-            this.appData.CurrentUser.Password = "0";
+           // this.appData.CurrentUser.Password = "1";
         }
 
         /// <summary>
@@ -54,20 +55,25 @@ namespace 仓库管理系统.ViewModels
        
         private void DoLogin(Window win)
         {
-          /*  EncryptProvider encrypt = new EncryptProvider();
-            string encryPwd = encrypt.SetAESEncrypt(appData.CurrentUser.Password);
-            var user = db.GetAllUsers().FirstOrDefault(item => item.Name == appData.CurrentUser.Name && item.Password == encryPwd);
-            if (user == null)
-            {
-                MessageBox.Show("用户名和密码错误");
-            }
-            else
+            /* EncryptProvider encrypt = new EncryptProvider();
+             string encryPwd = encrypt.SetAESEncrypt(appData.CurrentUser.Password);
+             var user = db.GetUserList().FirstOrDefault(item => item.Name == appData.CurrentUser.Name && item.Password == encryPwd);
+             if (user == null)
+             {
+                 MessageBox.Show("用户名和密码错误");
+             }
+             else
+             {
+                 win.DialogResult = true;
+                 win.Close();
+             }*/
+            
+            if (UserExtension.Vailde(this.appData.CurrentUser)) 
             {
                 win.DialogResult = true;
                 win.Close();
-            }*/
-            win.DialogResult = true;
-            win.Close();
+            }
+           
         }
 
         /// <summary>

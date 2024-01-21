@@ -7,7 +7,7 @@ namespace Cargo.Ui.ViewModels
 
         #region 字段、属性
         public string Title => "修改工位弹窗";
-        public SimpleClient<WorkPlace> sdb = new SimpleClient<WorkPlace>(DatabaseService.GetClient());
+        public SimpleClient<WorkPlace> sdb = new SimpleClient<WorkPlace>();
 
         /// <summary>
         /// 工位的自增Id

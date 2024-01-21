@@ -1,4 +1,6 @@
 ﻿
+using Cargo.SqlSugar.Repositorys;
+
 namespace Cargo.SqlSugar.Services
 {
     /// <summary>
@@ -6,10 +8,10 @@ namespace Cargo.SqlSugar.Services
     /// </summary>
     public class WorkStationService
     {
-        private readonly SqlSugarClient db;
+        private readonly BaseRepository<WorkPlace> db;
         public WorkStationService()
         {
-            db = DatabaseService.GetClient();
+            db =new BaseRepository<WorkPlace>();
         }
         /// <summary>
         /// 查询所有工位
@@ -17,10 +19,7 @@ namespace Cargo.SqlSugar.Services
         /// <returns></returns>
         public List<WorkPlace> GetAllWorkPlaces()
         {
-            using (db)
-            {
-                return db.Queryable<WorkPlace>().ToList();
-            }
+            return db.GetList();
         }
 
         /// <summary>
@@ -29,14 +28,8 @@ namespace Cargo.SqlSugar.Services
         /// <returns></returns>
         public List<WorkPlace> GetAllWorkPlacesNames()
         {
-            using (db)
-            {
-                return db.Queryable<WorkPlace>().ToList();
-            }
-
+            return db.GetList();
         }
-
-
         /// <summary>
         /// 按照工位Id查询工位
         /// </summary>
@@ -44,10 +37,7 @@ namespace Cargo.SqlSugar.Services
         /// <returns></returns>
         public WorkPlace GetWorkPlaceById(int id)
         {
-            using (db)
-            {
-                return db.Queryable<WorkPlace>().Where(u => u.Id == id).First();
-            }
+            return db.GetById(id);
         }
 
         /// <summary>
@@ -57,32 +47,21 @@ namespace Cargo.SqlSugar.Services
         /// <returns></returns>
         public WorkPlace GetWorkPlaceByName(string name)
         {
-            using (db)
-            {
-                return db.Queryable<WorkPlace>().Where(u => u.WorkPlaceName == name).First();
-            }
+            return db.GetSingle(x=>x.WorkPlaceName==name);
         }
 
         public bool AddWorkPlace(WorkPlace workPlace)
         {
-            using (db)
+            if (db.Insert(workPlace))
             {
-                if (db.Insertable(workPlace).ExecuteCommand() > 0)
-                {
-                    return true;
-                }
-                return false;
+                return true;
             }
-
+            return db.Insert(workPlace);
         }
 
         public void UpdateWorkPlace(WorkPlace workPlace)
         {
-            using (db)
-            {
-                db.Updateable(workPlace).ExecuteCommand();
-            }
-
+            db.Update(workPlace);
         }
 
         public void DeleteWorkPlace(int id)
@@ -100,7 +79,7 @@ namespace Cargo.SqlSugar.Services
 
                }*/
 
-            using (db)
+           /* using (db)
             {
                 db.Ado.BeginTran(); // 开启事务
                 try
@@ -118,7 +97,7 @@ namespace Cargo.SqlSugar.Services
                     db.Ado.RollbackTran();// 回滚事务
                     throw; // 抛出异常
                 }
-            }
+            }*/
         }
     }
 

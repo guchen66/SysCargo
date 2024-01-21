@@ -1,6 +1,8 @@
 ﻿
+using Microsoft.Extensions.Configuration;
+using NewLife.Configuration;
+using SqlSugar.IOC;
 using ILogger = Cargo.Core.Loggers.ILogger;
-
 
 namespace 仓库管理系统
 {
@@ -22,7 +24,7 @@ namespace 仓库管理系统
             //  SugarGlobal.Initialized(); //初始化数据库自动生成表
             // ThemeManager.Current.ChangeTheme(this, "Dark.Green");
             // 设置日志级别
-           
+            AppStartup.AddSqlSugar();                 //注册
         }
 
         protected override void OnExit(ExitEventArgs e)
@@ -68,7 +70,7 @@ namespace 仓库管理系统
 
             containerRegistry.RegisterSingleton<ILogger, NLogLogger>();
             containerRegistry.RegisterSingleton<LoggerHelper>();
-
+           
         }
 
         //新建类库，通过模块化传入用户控件
@@ -120,5 +122,7 @@ namespace 仓库管理系统
         {
             return base.CreateContainerRules();
         }
+
+       
     }
 }

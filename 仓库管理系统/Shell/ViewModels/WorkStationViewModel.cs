@@ -27,7 +27,7 @@ namespace 仓库管理系统.Shell.ViewModels
         #endregion
 
         WorkStationService db = new WorkStationService();
-        public SimpleClient<ProcessModel> sdb = new SimpleClient<ProcessModel>(DatabaseService.GetClient());
+        public SimpleClient<ProcessModel> sdb = new SimpleClient<ProcessModel>();
         ProcessService db2 = new ProcessService();
        
         public WorkStationViewModel(IDialogService dialogService, IDialogCoordinator dialogCoordinator,IEventAggregator eventAggregator)

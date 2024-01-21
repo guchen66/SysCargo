@@ -27,6 +27,7 @@ namespace 仓库管理系统.Shell.ViewModels
         #endregion
         public CountViewModel()
         {
+            StartTime= DateTime.Now;
             QueryCommand = new DelegateCommand(ExecuteQuery);
             ImportCommand = new DelegateCommand(ExecuteImport);
             ExportCommand = new DelegateCommand(ExecuteExport);
@@ -42,9 +43,9 @@ namespace 仓库管理系统.Shell.ViewModels
         
         private void ExecuteQuery()
         {
-            if (StartTime==null)
+            if (StartTime==DateTime.Now)
             {
-
+                MessageBox.Show("1111111");
             }
         }
 

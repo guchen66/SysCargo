@@ -12,10 +12,6 @@
     prism:ViewModelLocator.AutoWireViewModel="True"
     mc:Ignorable="d">
     <Grid Background="AliceBlue">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="MouseLeftButtonDown">
                 <i:InvokeCommandAction Command="{Binding DragMoveCommand}" />
@@ -42,8 +38,5 @@
                 Command="{Binding ForWardCommand}"
                 Content="下一页" />
         </StackPanel>
-
-
-
     </Grid>
 </UserControl>

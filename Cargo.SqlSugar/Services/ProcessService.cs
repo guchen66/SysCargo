@@ -1,12 +1,14 @@
 ﻿
+using Cargo.SqlSugar.Repositorys;
+
 namespace Cargo.SqlSugar.Services
 {
     public class ProcessService
     {
-        private readonly SqlSugarClient db;
+        private readonly BaseRepository<ProcessModel> db;
         public ProcessService()
         {
-            db = DatabaseService.GetClient();
+            db = new BaseRepository<ProcessModel>();
         }
         /// <summary>
         /// 查询所有工序信息
@@ -15,49 +17,28 @@ namespace Cargo.SqlSugar.Services
         /// <returns></returns>
         public List<ProcessModel> GetAllProcessModels()
         {
-            using (db)
-            {
-                return db.Queryable<ProcessModel>().ToList();
-            }
-
+            return db.GetList();
         }
 
         public ProcessModel GetProcessModelById(int id)
         {
-            using (db)
-            {
-                return db.Queryable<ProcessModel>().Where(u => u.Id == id).First();
-            }
+            return db.GetById(id);
         }
 
         public bool AddProcessModel(ProcessModel processModel)
         {
-            using (db)
-            {
-                if (db.Insertable(processModel).ExecuteCommand() > 0)
-                {
-                    return true;
-                }
-                return false;
-            }
+           return db.Insert(processModel);
 
         }
 
         public void UpdateProcessModel(ProcessModel processModel)
         {
-            using (db)
-            {
-                db.Updateable(processModel).ExecuteCommand();
-            }
-
+           db.Update(processModel);
         }
 
         public void DeleteProcessModel(int id)
         {
-            using (db)
-            {
-                db.Deleteable<ProcessModel>().Where(u => u.Id == id).ExecuteCommand();
-            }
+            db.DeleteById(id);
         }
 
         /// <summary>
@@ -66,10 +47,7 @@ namespace Cargo.SqlSugar.Services
         /// <param name="id"></param>
         public void DeleteWorkStationList(int id)
         {
-            using (db)
-            {
-                db.Deleteable<ProcessModel>().Where(u => u.WorkPlaceId == id).ExecuteCommand();
-            }
+            db.Delete(x=>x.WorkPlaceId==id);//.Where(u => u.WorkPlaceId == id).ExecuteCommand();
         }
     }
 }

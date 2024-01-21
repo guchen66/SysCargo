@@ -69,6 +69,7 @@ namespace Cargo.Ui.ViewModels
         public ICommand SaveCommand { get; set; }
         public ICommand CancelCommand { get; set; }
         #endregion
+
         #region 方法
 
         public bool CanCloseDialog()
@@ -93,20 +94,18 @@ namespace Cargo.Ui.ViewModels
         private void ExecuteSave(string parameter)
         {
             EncryptProvider encrypt = new EncryptProvider();
-            UserDto user = new UserDto()
+            User user = new User()
             {
                 Name = InputName,
                 Password = encrypt.SetAESEncrypt(InputPassword),
                 CreateTime = DateValue,
-                RoleName = RoleName
+             //   RoleName = RoleName
             };
-            User user2 = new User();
-         //   user2.RoleId = user.Id;
-            var dto = user2.Adapt<UserDto>();
-         //   dto.Id = user2.Id;
-            dto.RoleName = user2.Role?.RoleName ?? string.Empty;
+          
+            var dto = user.Adapt<UserDto>();
+            dto.RoleName = user.Role?.RoleName ?? string.Empty;
            
-            db.Insert(user2);
+            db.Insert(user);
             RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
         }
 

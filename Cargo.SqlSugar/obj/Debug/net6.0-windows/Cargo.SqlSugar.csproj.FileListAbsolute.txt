@@ -1,11 +1,11 @@
-E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.SqlSugar\bin\Debug\net6.0-windows\Cargo.SqlSugar.deps.json
-E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.SqlSugar\bin\Debug\net6.0-windows\Cargo.SqlSugar.dll
-E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.SqlSugar\bin\Debug\net6.0-windows\Cargo.SqlSugar.pdb
 E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.SqlSugar\obj\Debug\net6.0-windows\Cargo.SqlSugar.csproj.AssemblyReference.cache
 E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.SqlSugar\obj\Debug\net6.0-windows\Cargo.SqlSugar.GeneratedMSBuildEditorConfig.editorconfig
 E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.SqlSugar\obj\Debug\net6.0-windows\Cargo.SqlSugar.AssemblyInfoInputs.cache
 E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.SqlSugar\obj\Debug\net6.0-windows\Cargo.SqlSugar.AssemblyInfo.cs
 E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.SqlSugar\obj\Debug\net6.0-windows\Cargo.SqlSugar.csproj.CoreCompileInputs.cache
+E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.SqlSugar\bin\Debug\net6.0-windows\Cargo.SqlSugar.deps.json
+E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.SqlSugar\bin\Debug\net6.0-windows\Cargo.SqlSugar.dll
+E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.SqlSugar\bin\Debug\net6.0-windows\Cargo.SqlSugar.pdb
 E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.SqlSugar\obj\Debug\net6.0-windows\Cargo.SqlSugar.dll
 E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.SqlSugar\obj\Debug\net6.0-windows\refint\Cargo.SqlSugar.dll
 E:\CSharp Project\ApplyClient\仓库管理系统\Cargo.SqlSugar\obj\Debug\net6.0-windows\Cargo.SqlSugar.pdb

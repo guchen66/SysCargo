@@ -38,7 +38,6 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     FontSize="16"
-                    SelectedDateFormat="Long"
                     SelectedDateTime="{Binding StartTime, UpdateSourceTrigger=PropertyChanged}" />
                 <TextBlock
                     Width="80"

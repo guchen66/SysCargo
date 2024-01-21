@@ -1,4 +1,5 @@
-﻿using Cargo.SqlSugar.Services;
+﻿using Cargo.SqlSugar.Repositorys;
+using Cargo.SqlSugar.Services;
 
 namespace Cargo.Ui.ViewModels
 {
@@ -8,7 +9,7 @@ namespace Cargo.Ui.ViewModels
         #region  字段、属性
         public string Title => "添加工序弹窗";
         ProcessService db = new ProcessService();
-        public SimpleClient<WorkPlace> sdb = new SimpleClient<WorkPlace>(DatabaseService.GetClient());
+        public BaseRepository<WorkPlace> sdb = new BaseRepository<WorkPlace>();
 
 
         /// <summary>

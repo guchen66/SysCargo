@@ -13,4 +13,8 @@
     <PackageReference Include="Prism.Core" Version="8.1.97" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Cargo.Core\Cargo.Core.csproj" />
+  </ItemGroup>
+
 </Project>

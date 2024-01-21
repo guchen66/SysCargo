@@ -14,7 +14,6 @@ global using System.Windows;
 global using System.Windows.Controls;
 global using System.Windows.Input;
 global using 仓库管理系统.Shell.Views;
-global using Cargo.SqlSugar.Config;
 global using MahApps.Metro.Controls.Dialogs;
 global using NLog;
 global using NLog.Config;
