@@ -38,21 +38,26 @@ namespace 仓库管理系统.ViewModels
         }
         #endregion
 
+        #region 命令
+
+        public ICommand LoginCommand { get; set; }
+        public ICommand CancelCommand { get; set; }
+        #endregion
 
         public LoginViewModel()
         {
-
             this.appData.CurrentUser.Name = "admin";
            // this.appData.CurrentUser.Password = "1";
+
+            LoginCommand = new DelegateCommand<Window>(DoLogin);
+            CancelCommand= new DelegateCommand(DoCancel);
         }
+
+        #region 方法
 
         /// <summary>
         /// 带参登录
         /// </summary>
-        private DelegateCommand<Window> _loginCommand;
-        public DelegateCommand<Window> LoginCommand =>
-            _loginCommand ?? (_loginCommand = new DelegateCommand<Window>(DoLogin));
-       
         private void DoLogin(Window win)
         {
             /* EncryptProvider encrypt = new EncryptProvider();
@@ -79,10 +84,6 @@ namespace 仓库管理系统.ViewModels
         /// <summary>
         /// 取消
         /// </summary>
-        private DelegateCommand _cancelCommand;
-        public DelegateCommand CancelCommand =>
-            _cancelCommand ?? (_cancelCommand = new DelegateCommand(DoCancel));
-
         private void DoCancel()
         {
             //App.Current.Shutdown();
@@ -90,7 +91,7 @@ namespace 仓库管理系统.ViewModels
         }
 
         private static bool CanSignIn(string username, string password) => !string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password);
+        #endregion
 
-       
     }
 }
