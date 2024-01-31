@@ -1,4 +1,5 @@
 ﻿using Cargo.SqlSugar.Db;
+using SqlSugar.IOC;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,8 @@ namespace Cargo.SqlSugar.Repositorys
     {
         public BaseRepository(ISqlSugarClient context = null) : base(context)
         {
-            base.Context = Context;
-
+          //  base.Context = Context;
+            base.Context = DbScoped.Sugar;
         }
 
         public new ISqlSugarClient Context

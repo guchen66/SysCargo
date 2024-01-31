@@ -47,8 +47,8 @@ namespace 仓库管理系统.ViewModels
         public LoginViewModel()
         {
             this.appData.CurrentUser.Name = "admin";
-           // this.appData.CurrentUser.Password = "1";
-
+            this.appData.CurrentUser.Password = "1";
+            
             LoginCommand = new DelegateCommand<Window>(DoLogin);
             CancelCommand= new DelegateCommand(DoCancel);
         }
@@ -60,27 +60,22 @@ namespace 仓库管理系统.ViewModels
         /// </summary>
         private void DoLogin(Window win)
         {
-            /* EncryptProvider encrypt = new EncryptProvider();
-             string encryPwd = encrypt.SetAESEncrypt(appData.CurrentUser.Password);
-             var user = db.GetUserList().FirstOrDefault(item => item.Name == appData.CurrentUser.Name && item.Password == encryPwd);
-             if (user == null)
-             {
-                 MessageBox.Show("用户名和密码错误");
-             }
-             else
-             {
-                 win.DialogResult = true;
-                 win.Close();
-             }*/
-            
-            if (UserExtension.Vailde(this.appData.CurrentUser)) 
+            EncryptProvider encrypt = new EncryptProvider();
+            string encryPwd = encrypt.SetAESEncrypt(appData.CurrentUser.Password);
+            var user = db.GetUserList().FirstOrDefault(item => item.Name == appData.CurrentUser.Name && item.Password == encryPwd);
+            if (user == null)
             {
-                win.DialogResult = true;
-                win.Close();
+                MessageBox.Show("用户名和密码错误");
             }
-           
+            else
+            {
+                if (UserExtension.Vailde(this.appData.CurrentUser))
+                {
+                    win.DialogResult = true;
+                    win.Close();
+                }
+            }
         }
-
         /// <summary>
         /// 取消
         /// </summary>

@@ -85,7 +85,7 @@ namespace Cargo.Ui.ViewModels
             SaveCommand = new DelegateCommand<int?>(ExecuteSave);
             CancelCommand = new DelegateCommand<string>(ExecuteCancel);
         }
-
+      
         #region 命令
 
         public ICommand SaveCommand { get; set; }
@@ -99,6 +99,7 @@ namespace Cargo.Ui.ViewModels
             return true;
         }
 
+        
         public void OnDialogClosed()
         {
             action();

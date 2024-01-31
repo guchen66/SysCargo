@@ -18,13 +18,13 @@ namespace 仓库管理系统
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
         protected override void OnStartup(StartupEventArgs e)
         {
-            
+            AppStartup.AddSqlSugar();                 //注册
             base.OnStartup(e);
             //Ctrl Alt J打开对象浏览器
             //  SugarGlobal.Initialized(); //初始化数据库自动生成表
             // ThemeManager.Current.ChangeTheme(this, "Dark.Green");
             // 设置日志级别
-          //  AppStartup.AddSqlSugar();                 //注册
+           
         }
 
         protected override void OnExit(ExitEventArgs e)
