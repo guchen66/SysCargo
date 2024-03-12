@@ -1,4 +1,6 @@
 ﻿
+using System.Windows.Navigation;
+
 namespace 仓库管理系统.Shell.ViewModels
 {
 
@@ -14,7 +16,7 @@ namespace 仓库管理系统.Shell.ViewModels
      * 可以通过导航过程中传递参数来实现ViewModel之间的通信。
      * 5. 共享模型（Shared Model）：
      * 可以通过共享一个数据模型（DTO或实体类）来实现ViewModel之间的通信*/
-    public class HomeViewModel : BindableBase, INavigationAware
+    public class HomeViewModel : BaseViewModel, INavigationAware
     {
         #region  属性、字段
 
@@ -28,11 +30,9 @@ namespace 仓库管理系统.Shell.ViewModels
         public ICommand BackDeskTopCommand {  get; set; }
         #endregion
 
-        public HomeViewModel(IRegionManager regionManager, IRegionNavigationJournal journal, IRegionNavigationService navigationService)
+        public HomeViewModel(IContainerProvider provider):base(provider)
         {
-            _journal = journal;
-            _regionManager = regionManager;
-            _navigationService = navigationService;
+            _navigationService=provider.Resolve<IRegionNavigationService>();
             BackDeskTopCommand = new DelegateCommand(ShowDesktop);
         }
 

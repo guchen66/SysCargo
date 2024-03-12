@@ -4,11 +4,10 @@ using MiniExcelLibs;
 namespace 仓库管理系统.Shell.ViewModels
 {
 
-    public class TotalViewModel : BindableBase
+    public class TotalViewModel : BaseViewModel
     {
         #region 属性、字段
 
-        private readonly IDialogService _dialogService;
         private readonly IDialogCoordinator _dialogCoordinator;
         CargoService db = new CargoService();
 
@@ -30,10 +29,8 @@ namespace 仓库管理系统.Shell.ViewModels
         public ICommand RefreshCommand { get; set; }
         #endregion      
        
-        public TotalViewModel(IDialogService dialogService, IDialogCoordinator dialogCoordinator)
+        public TotalViewModel(IDialogCoordinator dialogCoordinator, IContainerProvider provider):base(provider)
         {
-
-            _dialogService = dialogService;
             _dialogCoordinator = dialogCoordinator;
             GridModelList = new ObservableCollection<CargoModel>();
             db.GetAllCargoModels().ForEach(x => GridModelList.Add(x));
@@ -89,7 +86,7 @@ namespace 仓库管理系统.Shell.ViewModels
         {
             DialogParameters paramters = new DialogParameters();
             paramters.Add("RefreshValue", new Action(Refresh));
-            _dialogService.ShowDialog("AddCargoDialog", paramters, r =>
+            DialogService.ShowDialog("AddCargoDialog", paramters, r =>
             {
                 //触发回调
                 /*if (r.Result == ButtonResult.Yes)
@@ -109,9 +106,9 @@ namespace 仓库管理系统.Shell.ViewModels
             DialogParameters paramters = new DialogParameters();
             paramters.Add("dataList", dataList);
             paramters.Add("RefreshValue", new Action(Refresh));
-            _dialogService.ShowDialog("UpdateCargoDialog", paramters, r =>
+            DialogService.ShowDialog("UpdateCargoDialog", paramters, r =>
             {
-
+                
             });
         }
 

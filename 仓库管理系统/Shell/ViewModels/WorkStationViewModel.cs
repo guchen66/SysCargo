@@ -1,12 +1,10 @@
 ﻿
 namespace 仓库管理系统.Shell.ViewModels
 {
-    public class WorkStationViewModel : BindableBase
+    public class WorkStationViewModel : BaseViewModel
     {
         #region 属性、字段
 
-        private readonly IDialogService _dialogService;
-        private readonly IEventAggregator _eventAggregator;
         private readonly IDialogCoordinator _dialogCoordinator;
 
         private ObservableCollection<WorkPlace> gridModelList;
@@ -30,11 +28,9 @@ namespace 仓库管理系统.Shell.ViewModels
         public SimpleClient<ProcessModel> sdb = new SimpleClient<ProcessModel>();
         ProcessService db2 = new ProcessService();
        
-        public WorkStationViewModel(IDialogService dialogService, IDialogCoordinator dialogCoordinator,IEventAggregator eventAggregator)
+        public WorkStationViewModel(IContainerProvider provider):base(provider) 
         {
-            _eventAggregator = eventAggregator;
-            _dialogService = dialogService;
-            _dialogCoordinator = dialogCoordinator;
+            _dialogCoordinator = provider.Resolve<IDialogCoordinator>();
 
             QueryWorkStationCommand = new DelegateCommand(ExecuteQuery);
             AddWorkStationCommand = new DelegateCommand(ExecuteAdd);
@@ -67,7 +63,7 @@ namespace 仓库管理系统.Shell.ViewModels
         {
             DialogParameters paramters = new DialogParameters();
             paramters.Add("RefreshValue", new Action(Refresh));
-            _dialogService.ShowDialog("AddWorkStationDialog", paramters, r =>
+            DialogService.ShowDialog("AddWorkStationDialog", paramters, r =>
             {
                 /*if (r.Result == ButtonResult.Yes)
                 {
@@ -85,7 +81,7 @@ namespace 仓库管理系统.Shell.ViewModels
             DialogParameters paramters = new DialogParameters();
             paramters.Add("dataList", dataList);
             paramters.Add("RefreshValue", new Action(Refresh));
-            _dialogService.ShowDialog("UpdateWorkPlaceDialog", paramters, r =>
+            DialogService.ShowDialog("UpdateWorkPlaceDialog", paramters, r =>
             {
 
             });
@@ -125,7 +121,7 @@ namespace 仓库管理系统.Shell.ViewModels
                     Refresh();
                     //通知工序表界面实时刷新
                     // _eventAggregator.GetEvent<WorkPlaceDeletedEvent>().Publish((int)ids);
-                    _eventAggregator.GetEvent<WorkStationDelEvent>().Publish();
+                    EventAggregator.GetEvent<WorkStationDelEvent>().Publish();
                 }
                 if (result == MessageDialogResult.Negative)
                 {

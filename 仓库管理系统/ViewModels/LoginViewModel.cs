@@ -4,11 +4,11 @@ using Cargo.Shared.Dtos;
 
 namespace 仓库管理系统.ViewModels
 {
-    public class LoginViewModel : BindableBase
+    public class LoginViewModel : BaseViewModel
     {
 
         #region  字段
-        public AppData appData { get; set; }=AppData.Instance;
+      //  public AppData appData { get; set; }=AppData.Instance;
         public SimpleClient<User> sdb = new SimpleClient<User>();
         UserService db = new UserService();
         private SignUpArgs _signUpArgs;
@@ -44,7 +44,7 @@ namespace 仓库管理系统.ViewModels
         public ICommand CancelCommand { get; set; }
         #endregion
 
-        public LoginViewModel()
+        public LoginViewModel(IContainerProvider provider) : base(provider)
         {
             this.appData.CurrentUser.Name = "admin";
             this.appData.CurrentUser.Password = "1";

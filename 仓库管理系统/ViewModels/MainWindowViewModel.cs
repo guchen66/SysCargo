@@ -1,46 +1,24 @@
 ﻿
 namespace 仓库管理系统.ViewModels
 {
-    public class MainWindowViewModel : BindableBase
+    public class MainWindowViewModel : BaseViewModel
     {
-        public AppData appData { get; set; } = AppData.Instance;
         public SimpleClient<User> sdb = new SimpleClient<User>();
 
-       
-        //public BaseOperate<User> BaseOperate { get; set; }
-      
-
-        IRegionNavigationJournal _navigationJournal;//导航日志，上一页，下一页
-        IRegionManager _regionManager;//区域管理
-        IDialogService _dialogService;
-        IEventAggregator _eventAggregator;
-        public MainWindowViewModel(IDialogService dialogService, IRegionManager regionManager, IEventAggregator eventAggregator, IRegionNavigationJournal navigationJournal)
+        public MainWindowViewModel(IContainerProvider provider):base(provider)  
         {
-            _dialogService = dialogService;
-            _regionManager = regionManager;
-            _eventAggregator = eventAggregator;
-            _navigationJournal= navigationJournal;
-
-            regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, typeof(HomeView));
-            regionManager.RegisterViewWithRegion(RegionNames.HeaderRegion, typeof(HeaderView));
-            regionManager.RegisterViewWithRegion(RegionNames.FooterRegion, typeof(FooterView));
+            RegionManager.RegisterViewWithRegion(RegionNames.ContentRegion, typeof(HomeView));
+            RegionManager.RegisterViewWithRegion(RegionNames.HeaderRegion, typeof(HeaderView));
+            RegionManager.RegisterViewWithRegion(RegionNames.FooterRegion, typeof(FooterView));
             /*_eventAggregator.GetEvent<MyEvent2>().Subscribe(DoGoBack);
             _eventAggregator.GetEvent<MyEvent3>().Subscribe(DoForWard);*/
-
-            
+            SelectedViewCommand = new DelegateCommand<string>(ExecuteSelected);
         }
 
-        private DelegateCommand<string> _selectCommand;
-        public DelegateCommand<string> SelectCommand
-        { 
-            get
-            {
-                return _selectCommand = new DelegateCommand<string>(DoSelect);
-            }
-            set { _selectCommand = value; }
-        }
+        public ICommand SelectedViewCommand { get; set; }
+
        
-        public void DoSelect(string menuTitle)
+        public void ExecuteSelected(string menuTitle)
         {
             //switch ((MenuTitle)Enum.Parse(typeof(MenuTitle), menuTitle))
             switch (menuTitle)
@@ -72,19 +50,14 @@ namespace 仓库管理系统.ViewModels
             }
 
         }
-
-       
+     
         private void Navigate(string navigatePath)
         {
             if (navigatePath != null)
-                _regionManager.RequestNavigate(RegionNames.ContentRegion, navigatePath, arg =>
+                RegionManager.RequestNavigate(RegionNames.ContentRegion, navigatePath, arg =>
                 {
-                    _navigationJournal = arg.Context.NavigationService.Journal;
+                    NavigationJournal = arg.Context.NavigationService.Journal;
                 });
-
-        }
-
-        
-        
+        }      
     }
 }

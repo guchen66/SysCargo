@@ -95,7 +95,7 @@
                         <DataTemplate>
                             <RadioButton
                                 VerticalContentAlignment="Center"
-                                Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}, Path=DataContext.SelectCommand, Mode=TwoWay}"
+                                Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}, Path=DataContext.SelectedViewCommand, Mode=TwoWay}"
                                 CommandParameter="{Binding Title}"
                                 Style="{StaticResource RadioButtonStyle}">
                                 <RadioButton.IsChecked>

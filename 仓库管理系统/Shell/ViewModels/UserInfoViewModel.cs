@@ -5,13 +5,11 @@ using MessageBox = System.Windows.MessageBox;
 
 namespace 仓库管理系统.Shell.ViewModels
 {
-    public class UserInfoViewModel : BindableBase
+    public class UserInfoViewModel : BaseViewModel
     {
         #region 属性、字段
 
-        private readonly IDialogService _dialogService;
         private readonly IDialogCoordinator _dialogCoordinator;
-        private readonly IEventAggregator _eventAggregator;  //事件管理器发布订阅消息
 
         private ObservableCollection<UserDto> gridModelList;
         public ObservableCollection<UserDto> GridModelList
@@ -37,12 +35,10 @@ namespace 仓库管理系统.Shell.ViewModels
 
         private DispatcherTimer _timer;
         private bool _isDelaying;
-        public UserInfoViewModel(IDialogService dialogService,IDialogCoordinator dialogCoordinator, IEventAggregator eventAggregator)
+        public UserInfoViewModel(IContainerProvider provider):base(provider) 
         {
 
-            _dialogService = dialogService;
-            _dialogCoordinator = dialogCoordinator;
-            _eventAggregator = eventAggregator;
+            _dialogCoordinator = provider.Resolve<IDialogCoordinator>();
 
             InitingCommand = new DelegateCommand(ExecuteIniting);
             QueryUserCommand = new DelegateCommand(ExecuteQueryUser);
@@ -130,7 +126,7 @@ namespace 仓库管理系统.Shell.ViewModels
 
             paramters.Add("RefreshValue", new Action(Refresh));
             // _dialogService.ShowDialog("AddUserDialogView");
-            _dialogService.ShowDialog("AddUserDialog", paramters, arg =>
+            DialogService.ShowDialog("AddUserDialog", paramters, arg =>
             {
                 /* if (arg.Result == ButtonResult.OK)
                  {
@@ -157,7 +153,7 @@ namespace 仓库管理系统.Shell.ViewModels
 
             paramters.Add("RefreshValue", new Action(Refresh));
 
-            _dialogService.ShowDialog("UpdateUserDialog", paramters, r =>
+            DialogService.ShowDialog("UpdateUserDialog", paramters, r =>
             {
                 /* if (r.Result == ButtonResult.Yes)
                  {

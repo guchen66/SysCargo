@@ -1,28 +1,31 @@
 ﻿
 namespace 仓库管理系统.ViewModels
 {
-    public class HeaderViewModel : BindableBase
+    public class HeaderViewModel : BaseViewModel
     {
         public SimpleClient<User> sdb = new SimpleClient<User>();
 
 
-        public HeaderViewModel()
+        public HeaderViewModel(IContainerProvider provider) : base(provider)
         {
 
         }
 
         #region HeaderView Skin颜色修改
-        private SkinColorInfo _selectedSkinColor = new SkinColorInfo {Color=Brushes.AliceBlue };
+        private SkinColorInfo _selectedSkinColor;
         public SkinColorInfo SelectedSkinColor
         {
             get { return _selectedSkinColor; }
             set
             {
-                if (_selectedSkinColor != value)
-                {
-                    _selectedSkinColor = value;
-                    RaisePropertyChanged();
-                }
+                /* if (_selectedSkinColor != value)
+                 {
+                     _selectedSkinColor = value;
+                     RaisePropertyChanged();
+                 }*/
+                _selectedSkinColor = value;
+                RaisePropertyChanged();
+
             }
         }
         public IEnumerable<SkinColorInfo> SkinColorItemsProvider
@@ -56,10 +59,10 @@ namespace 仓库管理系统.ViewModels
             set { search = value; RaisePropertyChanged(); }
         }
 
-        private ObservableCollection<User> gridModelList = new ObservableCollection<User>();//已经封装好的集合列表，提供实时刷新，当做有通知的List<Student>
+        private ObservableCollection<User> gridModelList;                     //已经封装好的集合列表，提供实时刷新，当做有通知的List<Student>
         public ObservableCollection<User> GridModelList//和前台要对应
         {
-            get { return gridModelList; }
+            get { return gridModelList ?? (gridModelList=new ObservableCollection<User>()); }
             set { gridModelList = value; RaisePropertyChanged(); }
         }
 

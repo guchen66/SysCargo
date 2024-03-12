@@ -1,27 +1,11 @@
 ﻿
 namespace 仓库管理系统.ViewModels
 {
-    public class FooterViewModel : BindableBase,INavigationAware
+    public class FooterViewModel : BaseViewModel, INavigationAware
     {
-
-        IRegionNavigationJournal _navigationJournal;//导航日志，上一页，下一页
-        IRegionManager _regionManager;//区域管理
-        IDialogService _dialogService;
-        IEventAggregator _eventAggregator;
-        private IRegionNavigationJournal _journal;
-        public FooterViewModel()
+        public FooterViewModel(IContainerProvider provider) : base(provider)
         {
 
-        }
-        public FooterViewModel(IDialogService dialogService,
-                                        IRegionManager regionManager, IRegionNavigationJournal navigationJournal,
-                                        IEventAggregator eventAggregator, IRegionNavigationJournal journal)
-        {
-            _dialogService = dialogService;
-            _regionManager = regionManager;
-            _navigationJournal = navigationJournal;
-            _eventAggregator = eventAggregator;
-            _journal = journal;
             // regionManager.RegisterViewWithRegion("ContentRegion", typeof(HomeView));
 
         }
@@ -35,8 +19,8 @@ namespace 仓库管理系统.ViewModels
         public void DoGoBack()
         {
             //返回有这种，其他的应该也有类似的,
-            _regionManager.Regions["ContentRegion"].NavigationService.Journal.GoBack();
-            //_journal.GoBack(); // 失败因为各个模块之间没有通信
+            RegionManager.Regions["ContentRegion"].NavigationService.Journal.GoBack();
+          //  NavigationJournal.GoBack(); // 失败因为各个模块之间没有通信
         }
 
         private DelegateCommand _forWardCommand;
@@ -45,8 +29,8 @@ namespace 仓库管理系统.ViewModels
 
         public void DoForWard()
         {
-            _regionManager.Regions["ContentRegion"].NavigationService.Journal.GoForward();
-           // _journal.GoForward();
+            RegionManager.Regions["ContentRegion"].NavigationService.Journal.GoForward();
+          //  NavigationJournal.GoForward();
         }
 
 
@@ -67,9 +51,10 @@ namespace 仓库管理系统.ViewModels
             return true;
         }
         #endregion
+
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            _journal = navigationContext.NavigationService.Journal;
+           // _journal = navigationContext.NavigationService.Journal;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
